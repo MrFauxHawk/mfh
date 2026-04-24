@@ -7,6 +7,7 @@ Read the following files:
 - `.mfh/design/roadmap.md` — project vision, tech stack, goals
 - `.mfh/design/milestones.md` — milestone and phase details
 - All files in `.mfh/library/` — coding standards and architectural rules that apply
+- `.mfh/state/decisions.md` — review past decisions before making new ones; don't contradict them without discussion
 
 **Step 2 — Draft a plan and present it to the user:**
 

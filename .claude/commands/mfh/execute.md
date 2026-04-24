@@ -12,8 +12,10 @@ Read `.mfh/state/progress.md` to find:
 **Step 2 — Read plan (if one exists):**
 If a plan file is referenced, read it from `.mfh/plans/`.
 
-**Step 3 — Read library:**
+**Step 3 — Read library and decisions:**
 Read all files in `.mfh/library/`. These contain the coding standards, conventions, and architectural rules you must follow throughout all work in this session.
+
+Also read `.mfh/state/decisions.md`. This is the project's key decisions log — non-obvious choices made during implementation and why. Do not contradict or work around these decisions without discussing it first.
 
 **Step 4 — Summarize context:**
 Tell the user:
@@ -30,4 +32,4 @@ Throughout all work:
 - Follow the task order from the plan
 - After completing each task, briefly note it so the user can track progress
 
-**IMPORTANT**: This command is read-only with respect to MFH state files. Do not update progress.md or built.md during execution — that is done by `/mfh-update` and `/mfh-done`.
+**IMPORTANT**: This command is read-only with respect to MFH state files. Do not update progress.md or built.md during execution — that is done by `/mfh-update` and `/mfh-done`. However, if a non-obvious decision is made during work, append it to `.mfh/state/decisions.md` immediately so it isn't lost.

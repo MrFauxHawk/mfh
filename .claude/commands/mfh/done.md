@@ -45,5 +45,7 @@ _(none)_
 **Step 5 — Delete the plan file (if one exists):**
 If a plan file was referenced (e.g. `.mfh/plans/m7-p12-plan.md`), delete it.
 
+**Note:** Do not touch `.mfh/state/decisions.md` — it is a permanent append-only log and is never cleaned up during phase close-out.
+
 **Step 6 — Confirm:**
 Tell the user: "Phase complete. Run `/mfh-status` to see the updated project picture, or `/mfh-commit` to commit the work."

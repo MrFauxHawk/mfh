@@ -16,6 +16,7 @@ A lightweight planning system for software projects built with [Claude Code](htt
   state/
     progress.md       ← active session state (gitignored)
     built.md          ← permanent changelog (tracked in git)
+    decisions.md      ← non-obvious decisions and their rationale (tracked in git)
 
 .claude/
   commands/
@@ -71,5 +72,6 @@ These are loaded by `/mfh-execute` and `/mfh-plan` so Claude always works within
 | `.mfh/design/` | ✅ yes |
 | `.mfh/library/` | ✅ yes |
 | `.mfh/state/built.md` | ✅ yes |
+| `.mfh/state/decisions.md` | ✅ yes |
 | `.mfh/state/progress.md` | ❌ no (local session state) |
 | `.mfh/plans/` | ❌ no (ephemeral) |
