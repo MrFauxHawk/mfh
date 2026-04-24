@@ -1,3 +1,7 @@
+---
+description: Group changes into logical Conventional Commits
+---
+
 # /mfh-commit
 
 You are committing completed work to git using Conventional Commits format.
@@ -19,14 +23,14 @@ type(scope): description
 ```
 
 Types: `feat`, `fix`, `chore`, `refactor`, `docs`, `style`, `test`
-Scope: the area of the codebase affected (e.g. `draftboard`, `backend`, `rankings`, `keepers`, `admin`, `ui`, `db`, `config`, `mfh`)
+Scope: the area of the codebase affected (e.g. `schedule`, `fleet`, `tools`, `material`, `employee`, `safety`, `portal`, `sysadmin`, `db`, `config`, `mfh`)
 
 Examples:
-- `feat(draftboard): add league overview dashboard with draft status cards`
-- `fix(keepers): correct manual keeper sync when draft is pending`
-- `refactor(rankings): extract tier calculation into tieringHelpers`
-- `docs(mfh): initialize MFH planning system`
-- `chore(config): update .gitignore for .mfh state files`
+- `feat(schedule): add Gantt drag-and-drop job assignment`
+- `fix(fleet): correct tire escalation logic for single-tire threshold`
+- `refactor(tools): extract manage-tools from library page`
+- `docs(mfh): update milestones and progress to MFH format`
+- `chore(config): add sage package to workspace`
 
 **Step 4 — Present the full commit list:**
 Show the user the proposed commits in order, with the files that belong in each one. Ask: "Does this commit plan look good?"

@@ -1,3 +1,7 @@
+---
+description: Create an implementation plan for the active phase
+---
+
 # /mfh-plan
 
 You are creating an implementation plan for a phase that was just established by `/mfh-start`. The active milestone and phase context has been passed to you.

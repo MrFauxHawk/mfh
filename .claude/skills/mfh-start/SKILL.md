@@ -1,3 +1,7 @@
+---
+description: Start a new milestone and phase of work
+---
+
 # /mfh-start
 
 You are starting a new phase of work.

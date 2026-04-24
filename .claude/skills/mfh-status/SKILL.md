@@ -1,3 +1,7 @@
+---
+description: Show a snapshot of all milestones, phases, and active work
+---
+
 # /mfh-status
 
 Read `.mfh/design/milestones.md` and `.mfh/state/progress.md`. Then output a clean snapshot in this exact format:

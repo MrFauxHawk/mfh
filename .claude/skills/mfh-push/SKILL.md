@@ -1,3 +1,7 @@
+---
+description: Push commits to the remote and handle errors
+---
+
 # /mfh-push
 
 Run `git push` and report the result.

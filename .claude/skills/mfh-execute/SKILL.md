@@ -1,3 +1,7 @@
+---
+description: Pick up active work and begin executing the plan
+---
+
 # /mfh-execute
 
 You are picking up active work and executing it according to the plan and progress notes.

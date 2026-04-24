@@ -1,3 +1,7 @@
+---
+description: Add a new milestone or phase to the project
+---
+
 # /mfh-newfeature
 
 You are adding a new feature to the MFH planning system. Ask the user these questions in order:

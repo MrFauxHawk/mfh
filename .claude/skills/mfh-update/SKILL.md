@@ -1,3 +1,7 @@
+---
+description: Log progress, decisions, and what remains for the active phase
+---
+
 # /mfh-update
 
 You are logging a progress update for the current active phase.
