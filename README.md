@@ -4,34 +4,66 @@ A lightweight planning system for software projects built with [Claude Code](htt
 
 ---
 
-## Structure
+## How it works
 
-```
-.mfh/
-  design/
-    roadmap.md        ← vision, tech stack, goals (tracked in git)
-    milestones.md     ← milestone + phase breakdown (tracked in git)
-  library/            ← coding standards, conventions, architecture rules (tracked in git)
-  plans/              ← active plan files, one per phase (gitignored)
-  state/
-    progress.md       ← active session state (gitignored)
-    built.md          ← permanent changelog (tracked in git)
-    decisions.md      ← non-obvious decisions and their rationale (tracked in git)
+MFH has two parts:
 
-.claude/
-  commands/
-    mfh/              ← slash commands
-```
+- **Skills** — Claude Code slash commands installed once at the user level (`~/.claude/skills/`). Available in every project automatically.
+- **Project structure** — The `.mfh/` folder inside each project, scaffolded by `/mfh-init`.
 
 ---
 
 ## Setup
 
-1. Copy this repo's contents into your project root
-2. Merge the `.gitignore` entries if your project already has one
-3. Seed `.mfh/design/roadmap.md` and `.mfh/design/milestones.md` for your project
-4. Add any coding standards or architectural rules to `.mfh/library/`
-5. Start a Claude Code session and run `/mfh-status`
+### 1. Install the skills (once per machine)
+
+Clone this repo and copy the skills to your user-level Claude directory:
+
+```bash
+git clone https://github.com/MrFauxHawk/mfh.git ~/mfh
+cp -r ~/mfh/.claude/skills/* ~/.claude/skills/
+```
+
+To update skills in the future:
+
+```bash
+cd ~/mfh && git pull && cp -r .claude/skills/* ~/.claude/skills/
+```
+
+### 2. Initialize a project
+
+Open any project in Claude Code and run:
+
+```
+/mfh-init
+```
+
+This scaffolds the `.mfh/` folder structure into your project and adds the required `.gitignore` entries.
+
+### 3. Seed your project
+
+Fill in:
+- `.mfh/design/roadmap.md` — your project vision, tech stack, and goals
+- `.mfh/design/milestones.md` — your milestone and phase breakdown
+
+Then run `/mfh-start` to begin your first phase.
+
+---
+
+## Project structure
+
+```
+.mfh/
+  design/
+    roadmap.md        ← vision, tech stack, goals (git-tracked)
+    milestones.md     ← milestone + phase breakdown (git-tracked)
+  library/            ← coding standards, conventions, architecture rules (git-tracked)
+  plans/              ← active plan files, one per phase (gitignored)
+  state/
+    progress.md       ← all active phases (gitignored)
+    built.md          ← permanent changelog (git-tracked)
+    decisions.md      ← non-obvious decisions and rationale (git-tracked)
+```
 
 ---
 
@@ -39,15 +71,50 @@ A lightweight planning system for software projects built with [Claude Code](htt
 
 | Command | What it does |
 |---|---|
+| `/mfh-init` | Scaffold `.mfh/` structure into a new project |
 | `/mfh-status` | Snapshot of all milestones, phases, and active work |
 | `/mfh-start` | Start a new milestone + phase |
 | `/mfh-plan` | Create an implementation plan for the active phase |
-| `/mfh-execute` | Pick up active work and begin executing the plan |
-| `/mfh-update` | Log progress, decisions, and what remains |
-| `/mfh-done` | Close out a completed phase, update changelog |
+| `/mfh-execute [M#-P#]` | Pick up active work and begin executing |
+| `/mfh-update [M#-P#]` | Log progress, decisions, and what remains |
+| `/mfh-done [M#-P#]` | Close out a completed phase, update changelog |
 | `/mfh-newfeature` | Add a new milestone or phase to the project |
 | `/mfh-commit` | Group changes into logical Conventional Commits |
 | `/mfh-push` | Push to remote and handle errors |
+
+Commands marked `[M#-P#]` accept an optional phase argument (e.g. `/mfh-done M4-P3`). If omitted and only one phase is active, it uses that automatically. If multiple phases are active, it asks.
+
+---
+
+## Multiple active phases
+
+MFH supports running multiple phases in parallel. Each active phase gets its own section in `progress.md`:
+
+```markdown
+---
+
+## M4-P3
+
+**Milestone:** M4 — Technician Scheduling
+**Phase:** P3 — Gantt
+**Plan:** m4-p3-plan.md
+**Status:** in progress
+**Started:** 2026-04-24
+**Notes:**
+_(none yet)_
+
+---
+
+## M6-P5
+
+**Milestone:** M6 — Weekly Improvements
+**Phase:** P5 — Safety Extras
+**Plan:** (none)
+**Status:** in progress
+**Started:** 2026-04-27
+**Notes:**
+_(none yet)_
+```
 
 ---
 

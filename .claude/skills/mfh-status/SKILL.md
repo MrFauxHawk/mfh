@@ -25,21 +25,23 @@ After listing all milestones, output:
 
 ## Active Work
 
-If progress.md has an active milestone/phase, show:
-- Active Milestone: M# — Name
-- Active Phase: P# — Name
+If progress.md has active phases, list each one:
+
+**M#-P# — [Phase Name]**
+- Milestone: M# — [Milestone Name]
 - Plan: [filename or "no plan"]
-- Status: [status from progress.md]
+- Status: [status]
 - Started: [date]
 
-If nothing is active, show: "Nothing currently in progress."
+List all active phases. If nothing is active, show: "Nothing currently in progress."
 
 ---
 
 ## What to Do Next
 
-Look at the first milestone that is not complete and suggest the next action. Example:
-"M7 (League Dashboard) is next. Run `/mfh-start` to begin M7-P12."
+Look at the first milestone that is not complete and suggest the next action. If a phase is in progress, say so. Example:
+"M4-P3 (Gantt) is in progress. Run `/mfh-execute M4-P3` to continue."
+If nothing is active: "M# (Name) is next. Run `/mfh-start` to begin M#-P#."
 
 ---
 
