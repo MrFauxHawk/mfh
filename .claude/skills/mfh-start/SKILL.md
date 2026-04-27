@@ -29,6 +29,8 @@ Then ask: "Do you want to **create a plan** before starting, or just **get to wo
 Say: "Handing off to /mfh-plan." Then invoke `/mfh-plan` with the milestone and phase context already established.
 
 **If no plan:**
+Update the phase icon in `.mfh/design/milestones.md` from ⬜ to 🔄 for this phase.
+
 Append a new section to `.mfh/state/progress.md`. If the file currently contains `_(no active phases)_`, replace that line with the new section. Otherwise append after the last `---` divider:
 
 ```

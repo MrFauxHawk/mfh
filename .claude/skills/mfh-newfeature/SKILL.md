@@ -8,22 +8,28 @@ You are adding a new feature to the MFH planning system. Ask the user these ques
 
 1. "Are we adding a **new milestone**, or a **new phase to an existing milestone**?"
 
+**Phase table format:** Icons go before the phase number — no separate Status column. Use `⬜ N` for not started, `🔄 N` for in progress, `✅ N` for complete.
+
+```
+| Phase | Description |
+|-------|-------------|
+| ⬜ 1 | [Phase description] |
+```
+
 **If new milestone:**
 - Ask: "What is the milestone name?"
 - Ask: "What is a one-sentence description of what this milestone delivers?"
 - Ask: "What phases does it include? List them (e.g. P1: Name — description)."
-- Ask: "What status should it start with? (not started / in progress / complete)"
 
 Then:
-- Append the new milestone as a new row to the table in `.mfh/design/milestones.md`
+- Append the new milestone to `.mfh/design/milestones.md` using the table format above (all phases start as ⬜)
 - If it has a broader scope implication, add a note to the Goals section of `.mfh/design/roadmap.md`
 - Confirm: "Added M# — [Name] to milestones.md with [N] phases."
 
 **If new phase to existing milestone:**
 - Ask: "Which milestone? (provide M# or name)"
 - Ask: "What is the phase name and a one-sentence description?"
-- Ask: "What status should it start with?"
 
 Then:
-- Find that milestone's row in `.mfh/design/milestones.md` and add the new phase to its Phases column
+- Add the new phase row to that milestone's table in `.mfh/design/milestones.md` using `⬜ N` format
 - Confirm: "Added P# — [Name] to M# in milestones.md."

@@ -13,22 +13,21 @@ Read `.mfh/state/progress.md`.
 - If no argument and only one active phase exists, use that one.
 - If no argument and multiple active phases exist, ask: "Which phase are you closing? (e.g. M4-P3)"
 
-**Step 2 — Ask the user:**
-1. "Give me a brief summary of what was completed in this phase."
-2. "Any final decisions made that future phases should know about?"
+**Step 2 — Gather context automatically:**
+Read `.mfh/state/progress.md`, `.mfh/design/milestones.md`, and `.mfh/state/decisions.md`. Do NOT ask the user for a summary or decisions — derive them from what is already recorded in these files.
 
 **Step 3 — Write to built.md:**
-Append a new entry to `.mfh/state/built.md` at the top (most recent first):
+Append a new entry to `.mfh/state/built.md` at the top (most recent first), using the phase description and any notes from progress.md and milestones.md:
 
 ```
 ## [today's date] — M# P# — [Phase Name]
 
-**Summary:** [what was built/changed]
-**Decisions:** [architectural or design decisions made]
+**Summary:** [what was built/changed, derived from the phase notes and milestones]
+**Decisions:** [any decisions recorded in decisions.md relevant to this phase, or "none" if none]
 ```
 
 **Step 4 — Update milestones.md:**
-Find the active phase in `.mfh/design/milestones.md` and mark it as Complete. Update the milestone's overall status to `complete` if all its phases are done, or leave as `in progress` if some remain.
+Find the active phase in `.mfh/design/milestones.md` and change its icon from 🔄 or ⬜ to ✅. Update the milestone's overall status to `complete` if all its phases are done, or leave as `in progress` if some remain.
 
 **Step 5 — Remove the phase from progress.md:**
 Find the `## M#-P#` section and remove it entirely, including its preceding `---` divider.

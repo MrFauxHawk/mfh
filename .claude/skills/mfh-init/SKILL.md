@@ -54,15 +54,17 @@ Milestones are numbered M1, M2, … in order of start. Phases within a milestone
 3. `/mfh-execute` — execute the plan
 4. `/mfh-done` — close the phase, update changelog
 
+**Status legend:** ✅ Complete · 🔄 In progress · ⬜ Not started
+
 ---
 
 ## M1 — [Milestone Name] (Not Started)
 
 **Goal:** [What does this milestone deliver?]
 
-| Phase | Description | Status |
-|-------|-------------|--------|
-| 1 | [Phase description] | Not started |
+| Phase | Description |
+|-------|-------------|
+| ⬜ 1 | [Phase description] |
 ```
 
 `.mfh/state/built.md`:
