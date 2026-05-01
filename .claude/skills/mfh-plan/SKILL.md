@@ -37,15 +37,27 @@ Present the plan and ask: "Does this plan look good, or would you like to make c
 - If rejected: ask what they want instead, then stop
 
 **Step 4 — Save the approved plan:**
-Write the plan to `.mfh/plans/m{N}-p{N}-plan.md`.
+Write the plan to the appropriate file:
+- Milestone phase: `.mfh/plans/m{N}-p{N}-plan.md`
+- Weekly Improvement phase: `.mfh/plans/wi-p{N}-plan.md`
 
-Find the corresponding `## M#-P#` section in `.mfh/state/progress.md` and update these fields:
-- **Plan:** m{N}-p{N}-plan.md
+Find the corresponding `## M#-P#` or `## WI-P#` section in `.mfh/state/progress.md` and update these fields:
+- **Plan:** [plan filename]
 - **Status:** planned
 - **Started:** [today's date] (if not already set)
+- **Tasks:** a checkbox list — one line per Implementation Task from the plan, in order:
+  ```
+  - [ ] 1. Brief task title
+  - [ ] 2. Brief task title
+  …
+  ```
+  Keep each title short (≤ 60 chars). This list is the live progress tracker; `/mfh-execute` will tick items off as they complete.
+- **Notes:**
+  _(none yet)_
 
-If the section doesn't exist yet (plan created before `/mfh-start`), append a new section:
+If the section doesn't exist yet (plan created before `/mfh-start`), append a new section.
 
+For a **Milestone phase**:
 ```
 ---
 
@@ -56,10 +68,31 @@ If the section doesn't exist yet (plan created before `/mfh-start`), append a ne
 **Plan:** m{N}-p{N}-plan.md
 **Status:** planned
 **Started:** [today's date]
+**Tasks:**
+- [ ] 1. Brief task title
+- [ ] 2. Brief task title
+**Notes:**
+_(none yet)_
+```
+
+For a **Weekly Improvement phase**:
+```
+---
+
+## WI-P#
+
+**Track:** Weekly Improvements
+**Phase:** WI-P# — [Phase Name]
+**Plan:** wi-p{N}-plan.md
+**Status:** planned
+**Started:** [today's date]
+**Tasks:**
+- [ ] 1. Brief task title
+- [ ] 2. Brief task title
 **Notes:**
 _(none yet)_
 ```
 
 If the file currently contains `_(no active phases)_`, replace that line with the new section.
 
-Then tell the user: "Plan saved. Clear this conversation and run `/mfh-execute M#-P#` to begin work."
+Then tell the user: "Plan saved. Clear this conversation and run `/mfh-execute [phase]` to begin work."

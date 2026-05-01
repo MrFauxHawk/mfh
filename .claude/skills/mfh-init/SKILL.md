@@ -42,14 +42,16 @@ Create these directories:
 
 `.mfh/design/milestones.md`:
 ```markdown
-# [Project Name] — Milestones
+# [Project Name] — Milestones & Weekly Improvements
 
-Each milestone is a named delivery cycle with a clear goal. Milestones break into phases, phases break into plans.
+This file has two tracks:
 
-Milestones are numbered M1, M2, … in order of start. Phases within a milestone are P1, P2, … Plans are saved as `.mfh/plans/m{N}-p{N}-plan.md`.
+**Milestones** — named delivery cycles with a fixed goal. Numbered `M1, M2, …`. Phases within a milestone are `P1, P2, …`. Plans saved as `.mfh/plans/m{N}-p{N}-plan.md`.
 
-**Workflow per phase:**
-1. `/mfh-start` — select milestone + phase
+**Weekly Improvements** — continuous rolling backlog with no end date. Phases use the `WI-P#` prefix. Plans saved as `.mfh/plans/wi-p{N}-plan.md`.
+
+**Workflow per phase (both tracks):**
+1. `/mfh-start` — select milestone/track + phase; creates `progress.md` entry
 2. `/mfh-plan` — write the plan
 3. `/mfh-execute` — execute the plan
 4. `/mfh-done` — close the phase, update changelog
@@ -65,6 +67,20 @@ Milestones are numbered M1, M2, … in order of start. Phases within a milestone
 | Phase | Description |
 |-------|-------------|
 | ⬜ 1 | [Phase description] |
+
+---
+
+# Weekly Improvements — Continuous Track
+
+Rolling backlog of improvements worked on as capacity allows. No fixed end date — phases are added as new items come in and closed when done.
+
+Phases use the `WI-P#` prefix. Plans saved as `.mfh/plans/wi-p{N}-plan.md`.
+
+### Current Position: no phases started
+
+| Phase | Description |
+|-------|-------------|
+| ⬜ WI-P1 | [First improvement] |
 ```
 
 `.mfh/state/built.md`:

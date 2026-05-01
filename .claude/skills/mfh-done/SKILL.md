@@ -17,8 +17,9 @@ Read `.mfh/state/progress.md`.
 Read `.mfh/state/progress.md`, `.mfh/design/milestones.md`, and `.mfh/state/decisions.md`. Do NOT ask the user for a summary or decisions — derive them from what is already recorded in these files.
 
 **Step 3 — Write to built.md:**
-Append a new entry to `.mfh/state/built.md` at the top (most recent first), using the phase description and any notes from progress.md and milestones.md:
+Append a new entry to `.mfh/state/built.md` at the top (most recent first), using the phase description and any notes from progress.md and milestones.md.
 
+For a **Milestone phase**:
 ```
 ## [today's date] — M# P# — [Phase Name]
 
@@ -26,11 +27,19 @@ Append a new entry to `.mfh/state/built.md` at the top (most recent first), usin
 **Decisions:** [any decisions recorded in decisions.md relevant to this phase, or "none" if none]
 ```
 
+For a **Weekly Improvement phase**:
+```
+## [today's date] — WI-P# — [Phase Name]
+
+**Summary:** [what was built/changed, derived from the phase notes and milestones]
+**Decisions:** [any decisions recorded in decisions.md relevant to this phase, or "none" if none]
+```
+
 **Step 4 — Update milestones.md:**
-Find the active phase in `.mfh/design/milestones.md` and change its icon from 🔄 or ⬜ to ✅. Update the milestone's overall status to `complete` if all its phases are done, or leave as `in progress` if some remain.
+Find the active phase in `.mfh/design/milestones.md` and change its icon from 🔄 or ⬜ to ✅. For Milestone phases, update the milestone's overall status to `complete` if all its phases are done, or leave as `in progress` if some remain. For WI phases, update the "Current Position" line in the Weekly Improvements section.
 
 **Step 5 — Remove the phase from progress.md:**
-Find the `## M#-P#` section and remove it entirely, including its preceding `---` divider.
+Find the `## M#-P#` or `## WI-P#` section and remove it entirely, including its preceding `---` divider.
 
 If no other phases remain after removal, replace the entire file contents with:
 
@@ -43,7 +52,7 @@ _(no active phases)_
 ```
 
 **Step 6 — Delete the plan file (if one exists):**
-If a plan file was referenced (e.g. `.mfh/plans/m4-p3-plan.md`), delete it.
+If a plan file was referenced, delete it. Milestone plans follow `m{N}-p{N}-plan.md` naming; WI plans follow `wi-p{N}-plan.md` naming.
 
 **Step 7 — Confirm:**
 Tell the user: "Phase complete. Run `/mfh-status` to see the updated project picture, or `/mfh-commit` to commit the work."

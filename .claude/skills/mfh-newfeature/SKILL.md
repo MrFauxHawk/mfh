@@ -6,7 +6,7 @@ description: Add a new milestone or phase to the project
 
 You are adding a new feature to the MFH planning system. Ask the user these questions in order:
 
-1. "Are we adding a **new milestone**, or a **new phase to an existing milestone**?"
+1. "Are we adding a **new milestone**, a **new phase to an existing milestone**, or a **new Weekly Improvement phase** (WI-P#)?"
 
 **Phase table format:** Icons go before the phase number — no separate Status column. Use `⬜ N` for not started, `🔄 N` for in progress, `✅ N` for complete.
 
@@ -33,3 +33,12 @@ Then:
 Then:
 - Add the new phase row to that milestone's table in `.mfh/design/milestones.md` using `⬜ N` format
 - Confirm: "Added P# — [Name] to M# in milestones.md."
+
+**If new Weekly Improvement phase:**
+- Ask: "What is a one-sentence description of this improvement?"
+
+Then:
+- Read the Weekly Improvements table in `.mfh/design/milestones.md` to find the next WI-P# number
+- Add the new phase row to the Weekly Improvements table using `⬜ WI-P#` format
+- Update the "Current Position" line in the Weekly Improvements section to reflect the new phase
+- Confirm: "Added WI-P# — [description] to the Weekly Improvements track."
