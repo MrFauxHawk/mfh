@@ -13,10 +13,12 @@ Read `.mfh/state/progress.md`.
 - If no argument and only one active phase exists, use that one.
 - If no argument and multiple active phases exist, ask: "Which phase are you updating? (e.g. M4-P3)"
 
-**Step 2 — Ask the user:**
-1. "What has been completed since the last update?"
-2. "What is still remaining?"
-3. "Any decisions made or issues encountered worth noting?"
+**Step 2 — Gather context automatically:**
+Read the active plan file (e.g. `.mfh/plans/m{N}-p{N}-plan.md`) if one exists, and run `git log --oneline` to see commits since the last update date recorded in progress.md. Do NOT ask the user — derive the following:
+
+- **Completed:** tasks checked off in the plan file, or commits made since the last update
+- **Remaining:** unchecked tasks in the plan file, or planned work not yet reflected in commits
+- **Decisions/Notes:** any notable patterns or blockers evident from the above (omit if nothing stands out)
 
 **Step 3 — Append to the phase's Notes section:**
 Find the `## M#-P#` section in `.mfh/state/progress.md`. Append a new timestamped entry to its Notes field — never overwrite existing notes:
