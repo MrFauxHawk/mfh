@@ -36,7 +36,14 @@ For a **Weekly Improvement phase**:
 ```
 
 **Step 4 — Update milestones.md:**
-Find the active phase in `.mfh/design/milestones.md` and change its icon from 🔄 or ⬜ to ✅. For Milestone phases, update the milestone's overall status to `complete` if all its phases are done, or leave as `in progress` if some remain. For WI phases, update the "Current Position" line in the Weekly Improvements section.
+Find the active phase in `.mfh/design/milestones.md` and change its icon from 🔄 or ⬜ to ✅.
+
+**For Milestone phases:**
+- Update the milestone's `### Current Position:` line to reflect the newly completed phase (e.g. "P1–P3 complete — P4 next" or "All phases complete").
+- If ALL phases in the milestone are now ✅, move the entire milestone block (heading, Goal, planning decisions, and phase table) to the **Completed Milestones** section at the bottom of the file, inserting it in numbered order (M1, M2, M3…). Do not move partial milestones.
+
+**For WI phases:**
+- Update the `### Current Position:` line in the Weekly Improvements section to name the newly completed phase and what's next (e.g. "WI-P13 complete — WI-P14 in progress" or "WI-P14 complete — WI-P15 next").
 
 **Step 5 — Remove the phase from progress.md:**
 Find the `## M#-P#` or `## WI-P#` section and remove it entirely, including its preceding `---` divider.

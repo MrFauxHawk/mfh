@@ -22,7 +22,8 @@ You are adding a new feature to the MFH planning system. Ask the user these ques
 - Ask: "What phases does it include? List them (e.g. P1: Name — description)."
 
 Then:
-- Append the new milestone to `.mfh/design/milestones.md` using the table format above (all phases start as ⬜)
+- Insert the new milestone block into `.mfh/design/milestones.md` **before** the Weekly Improvements section (active milestones come first; completed milestones go at the bottom). Include a `### Current Position:` line set to "P1 next — not started".
+- All phases start as ⬜ in the table.
 - If it has a broader scope implication, add a note to the Goals section of `.mfh/design/roadmap.md`
 - Confirm: "Added M# — [Name] to milestones.md with [N] phases."
 

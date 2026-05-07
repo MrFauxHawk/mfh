@@ -10,20 +10,23 @@ Read `.mfh/design/milestones.md` and `.mfh/state/progress.md`. Then output a cle
 
 ## Project Status
 
-For each **Milestone** in milestones.md, list it with its status and all phases, like this:
+**Active Milestones** — list only milestones that have at least one incomplete phase (⬜ or 🔄). For each, show the milestone heading and only the incomplete phases:
 
-**M1 — Foundation** `complete`
-- P1: Repo Setup ✅
-- P2: useSleeperPlayers ✅
-- P3: Site Shell ✅
+**M# — [Milestone Name]**
+- 🔄 P#: [Phase Name]
+- ⬜ P#: [Phase Name]
+*(Current Position line from milestones.md, verbatim)*
 
-Use ✅ for complete, 🔄 for in progress, ⬜ for not started.
+Skip completed milestones entirely — they are historical record, not active state.
 
-Then list the **Weekly Improvements** track separately:
+---
+
+**Weekly Improvements** — show only open (⬜ or 🔄) WI phases and the current position:
 
 **Weekly Improvements**
-- WI-P1: [Description] ✅
-- WI-P2: [Description] 🔄
+*(Current Position line from milestones.md, verbatim)*
+- 🔄 WI-P#: [Phase Name]
+- ⬜ WI-P#: [Phase Name]
 
 ---
 
@@ -44,8 +47,8 @@ List all active phases. If nothing is active, show: "Nothing currently in progre
 ## What to Do Next
 
 Look at the first incomplete phase (milestone or WI) and suggest the next action. If a phase is in progress, say so. Examples:
-- "M4-P3 (Gantt) is in progress. Run `/mfh-execute M4-P3` to continue."
-- "WI-P5 (Safety Extras) is next. Run `/mfh-start` to begin WI-P5."
+- "M2-P3 ([Phase Name]) is next. Run `/mfh-start M2-P3` to begin."
+- "WI-P4 ([Phase Name]) is in progress. Run `/mfh-execute WI-P4` to continue."
 If nothing is active: suggest starting the next incomplete phase.
 
 ---
