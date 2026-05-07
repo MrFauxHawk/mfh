@@ -38,13 +38,14 @@ Open any project in Claude Code and run:
 /mfh-init
 ```
 
-This scaffolds the `.mfh/` folder structure into your project and adds the required `.gitignore` entries.
+This asks for your project name and the main modules or areas of your codebase, then scaffolds the full `.mfh/` folder structure — including a `library/git.md` pre-populated with your commit scopes. It also adds the required `.gitignore` entries.
 
 ### 3. Seed your project
 
 Fill in:
 - `.mfh/design/roadmap.md` — your project vision, tech stack, and goals
 - `.mfh/design/milestones.md` — your milestone and phase breakdown
+- `.mfh/library/git.md` — review and add your branch rules (scopes are pre-filled by init)
 
 Then run `/mfh-start` to begin your first phase.
 
@@ -67,22 +68,34 @@ Then run `/mfh-start` to begin your first phase.
 
 ---
 
+## Two tracks
+
+MFH supports two parallel planning tracks:
+
+**Milestones** — named delivery cycles with a fixed goal and ship date. Numbered `M1, M2, …`. Phases within a milestone are `P1, P2, …`.
+
+**Weekly Improvements** — a continuous rolling backlog with no end date. Phases use the `WI-P#` prefix (e.g. `WI-P4`). New phases are added as items come in and closed when done.
+
+Both tracks live in `milestones.md`. Active milestones appear first, followed by the Weekly Improvements section, followed by completed milestones.
+
+---
+
 ## Commands
 
 | Command | What it does |
 |---|---|
 | `/mfh-init` | Scaffold `.mfh/` structure into a new project |
-| `/mfh-status` | Snapshot of all milestones, phases, and active work |
-| `/mfh-start` | Start a new milestone + phase |
+| `/mfh-status` | Snapshot of active milestones, open WI phases, and current work |
+| `/mfh-start` | Start a new milestone phase or WI phase |
 | `/mfh-plan` | Create an implementation plan for the active phase |
-| `/mfh-execute [M#-P#]` | Pick up active work and begin executing |
-| `/mfh-update [M#-P#]` | Log progress, decisions, and what remains |
-| `/mfh-done [M#-P#]` | Close out a completed phase, update changelog |
-| `/mfh-newfeature` | Add a new milestone or phase to the project |
+| `/mfh-execute [phase]` | Pick up active work and begin executing |
+| `/mfh-update [phase]` | Log progress, decisions, and what remains |
+| `/mfh-done [phase]` | Close out a completed phase, update changelog |
+| `/mfh-newfeature` | Add a new milestone or WI phase to the project |
 | `/mfh-commit` | Group changes into logical Conventional Commits |
 | `/mfh-push` | Push to remote and handle errors |
 
-Commands marked `[M#-P#]` accept an optional phase argument (e.g. `/mfh-done M4-P3`). If omitted and only one phase is active, it uses that automatically. If multiple phases are active, it asks.
+Commands marked `[phase]` accept an optional phase argument (e.g. `/mfh-done M4-P3` or `/mfh-done WI-P5`). If omitted and only one phase is active, it uses that automatically. If multiple phases are active, it asks.
 
 ---
 
@@ -93,22 +106,25 @@ MFH supports running multiple phases in parallel. Each active phase gets its own
 ```markdown
 ---
 
-## M4-P3
+## M3-P2
 
-**Milestone:** M4 — Technician Scheduling
-**Phase:** P3 — Gantt
-**Plan:** m4-p3-plan.md
+**Milestone:** M3 — Auth Rebuild
+**Phase:** P2 — Session Middleware
+**Plan:** m3-p2-plan.md
 **Status:** in progress
 **Started:** 2026-04-24
+**Tasks:**
+- [x] 1. Add session model
+- [ ] 2. Wire middleware
 **Notes:**
 _(none yet)_
 
 ---
 
-## M6-P5
+## WI-P5
 
-**Milestone:** M6 — Weekly Improvements
-**Phase:** P5 — Safety Extras
+**Track:** Weekly Improvements
+**Phase:** WI-P5 — Dark mode polish
 **Plan:** (none)
 **Status:** in progress
 **Started:** 2026-04-27
@@ -122,6 +138,7 @@ _(none yet)_
 
 Coding standards, conventions, and architectural rules that Claude should follow during all work. Examples:
 
+- `git.md` — commit scopes, branch rules, message format (created by `/mfh-init`)
 - Brand/theme guidelines
 - Code organization standards
 - API design patterns
