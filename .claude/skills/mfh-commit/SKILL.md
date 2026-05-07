@@ -23,14 +23,14 @@ type(scope): description
 ```
 
 Types: `feat`, `fix`, `chore`, `refactor`, `docs`, `style`, `test`
-Scope: the area of the codebase affected (e.g. `schedule`, `fleet`, `tools`, `material`, `employee`, `safety`, `portal`, `sysadmin`, `db`, `config`, `mfh`)
+Scope: the area of the codebase affected. Check `.mfh/library/git.md` first — the project may define specific scope conventions. If not documented, use the affected module, app, or feature name (e.g. `api`, `ui`, `auth`, `db`, `config`).
 
 Examples:
-- `feat(schedule): add Gantt drag-and-drop job assignment`
-- `fix(fleet): correct tire escalation logic for single-tire threshold`
-- `refactor(tools): extract manage-tools from library page`
-- `docs(mfh): update milestones and progress to MFH format`
-- `chore(config): add sage package to workspace`
+- `feat(auth): add SSO login via OIDC provider`
+- `fix(api): correct pagination offset on list endpoint`
+- `refactor(ui): extract shared table component`
+- `docs(mfh): update milestones and progress`
+- `chore(config): add shared package to workspace`
 
 **Step 4 — Present the full commit list:**
 Show the user the proposed commits in order, with the files that belong in each one. Ask: "Does this commit plan look good?"

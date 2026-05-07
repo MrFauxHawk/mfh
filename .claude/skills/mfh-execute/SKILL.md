@@ -54,3 +54,22 @@ Throughout all work:
 - **DO** update `milestones.md` phase status to `🔄` at the start of Step 3 (one-time, if not already set)
 - **DO NOT** modify `built.md` or any other state file — those are updated by `/mfh-update` and `/mfh-done`
 - **DO NOT** change the **Status**, **Notes**, or any other field in progress.md — only the task checkboxes
+
+**Step 8 — Post-completion verification:**
+
+Once every task checkbox is ticked, check whether the project uses TypeScript by looking for a `tsconfig.json` in the project root or in any directory touched during this phase. If no `tsconfig.json` exists anywhere in the project, skip this step entirely.
+
+**If TypeScript is in use:**
+Check `.mfh/library/` for a documented TypeScript check command specific to this project. If none is documented, fall back to running `npx tsc --noEmit` from the root (or from inside each touched directory for a monorepo).
+
+Identify touched areas from git:
+```bash
+git diff --name-only HEAD
+```
+
+Run the TypeScript check for each affected area. Interpret results:
+- Errors in files you didn't touch = pre-existing, ignore them
+- Errors in files you changed = must fix before reporting done
+- If no source files were touched (doc-only phase), skip this step
+
+Report the result to the user: either "TypeScript clean" or list the new errors to fix.

@@ -16,14 +16,23 @@ Check if `.mfh/` already exists at the project root. If it does, say:
 "An `.mfh/` folder already exists in this project. Run `/mfh-status` to see the current state."
 Then stop.
 
-**Step 3 — Create the folder structure:**
+**Step 3 — Gather setup info:**
+Ask both questions together in one message:
+1. "What is the project name?"
+2. "What are the main modules or areas of this codebase? These become your commit scopes. (e.g. `api, ui, auth, db, config`)"
+
+Use the project name to replace `[Project Name]` in all template files. Use the modules list to populate the Scopes section of `git.md`.
+
+If the user isn't sure what their modules are, ask: "What is the app for?" Then suggest sensible scope defaults based on the answer — for example, a web app might default to `api, ui, auth, db, config`; a mobile app to `screens, api, state, config`; a CLI tool to `cmd, core, config`. Present the suggestions and let the user confirm or adjust before continuing.
+
+**Step 4 — Create the folder structure:**
 Create these directories:
 - `{project}/.mfh/design/`
 - `{project}/.mfh/library/`
 - `{project}/.mfh/plans/`
 - `{project}/.mfh/state/`
 
-**Step 4 — Create template files:**
+**Step 5 — Create template files:**
 
 `.mfh/design/roadmap.md`:
 ```markdown
@@ -56,13 +65,17 @@ This file has two tracks:
 3. `/mfh-execute` — execute the plan
 4. `/mfh-done` — close the phase, update changelog
 
+**File structure:** Active milestones first → Weekly Improvements → Completed milestones in numbered order. When a milestone ships, move it into the Completed section in its numbered position.
+
 **Status legend:** ✅ Complete · 🔄 In progress · ⬜ Not started
 
 ---
 
-## M1 — [Milestone Name] (Not Started)
+## M1 — [Milestone Name] (Active)
 
 **Goal:** [What does this milestone deliver?]
+
+### Current Position: P1 next — not started
 
 | Phase | Description |
 |-------|-------------|
@@ -81,6 +94,14 @@ Phases use the `WI-P#` prefix. Plans saved as `.mfh/plans/wi-p{N}-plan.md`.
 | Phase | Description |
 |-------|-------------|
 | ⬜ WI-P1 | [First improvement] |
+
+---
+
+# Completed Milestones
+
+Milestones move here when all phases are done. Slotted in numbered order.
+
+---
 ```
 
 `.mfh/state/built.md`:
@@ -110,7 +131,39 @@ Tracks all currently active phases. Updated by `/mfh-start`, `/mfh-plan`, `/mfh-
 _(no active phases)_
 ```
 
-**Step 5 — Update .gitignore:**
+`.mfh/library/git.md` — populate the Scopes section using the module names the user provided in Step 3. Generate one example commit per module:
+```markdown
+# Git Conventions
+
+## Commit Format
+
+```
+type(scope): short description
+```
+
+### Types
+- `feat` — new feature
+- `fix` — bug fix
+- `chore` — config, tooling, dependencies
+- `style` — UI/styling only
+- `refactor` — restructure, no behaviour change
+- `docs` — documentation only
+- `test` — tests only
+
+### Scopes
+Use the affected module or area as the scope:
+
+[List each module from Step 3 as a bullet: `- \`module-name\``]
+
+### Examples
+[One example commit per module, e.g. `feat(api): add user list endpoint`]
+
+## Branch Rules
+- [e.g. work on `main` / feature branches off `main`]
+- [e.g. always push after each commit]
+```
+
+**Step 6 — Update .gitignore:**
 Check if `{project}/.gitignore` exists. If it does, check whether the MFH entries are already present. If not, append:
 
 ```
@@ -121,9 +174,10 @@ Check if `{project}/.gitignore` exists. If it does, check whether the MFH entrie
 
 If `.gitignore` doesn't exist, create it with those entries.
 
-**Step 6 — Confirm:**
+**Step 7 — Confirm:**
 Tell the user:
 "MFH initialized. Next steps:
 1. Fill in `.mfh/design/roadmap.md` with your project vision and stack.
-2. Define your first milestone in `.mfh/design/milestones.md`.
-3. Run `/mfh-start` to begin your first phase."
+2. Review `.mfh/library/git.md` and add your branch rules.
+3. Define your first milestone in `.mfh/design/milestones.md`.
+4. Run `/mfh-start` to begin your first phase."
