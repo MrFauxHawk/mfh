@@ -24,7 +24,10 @@ You are adding a new feature to the MFH planning system. Ask the user these ques
 Then:
 - Insert the new milestone block into `.mfh/design/milestones.md` **before** the Weekly Improvements section (active milestones come first; completed milestones go at the bottom). Include a `### Current Position:` line set to "P1 next — not started".
 - All phases start as ⬜ in the table.
-- If it has a broader scope implication, add a note to the Goals section of `.mfh/design/roadmap.md`
+- Update `.mfh/design/roadmap.md`:
+  - If no milestone is currently active (Current Track = Weekly Improvements), replace Current Track with a **Current Focus** section naming this milestone.
+  - If a milestone is already active, add this one under a **Next Up** section.
+  - If the milestone will introduce a new app/section, note it in **Upcoming / Planned** until it ships.
 - Confirm: "Added M# — [Name] to milestones.md with [N] phases."
 
 **If new phase to existing milestone:**
