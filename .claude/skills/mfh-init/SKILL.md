@@ -17,9 +17,10 @@ Check if `.mfh/` already exists at the project root. If it does, say:
 Then stop.
 
 **Step 3 — Gather setup info:**
-Ask both questions together in one message:
+Ask all questions together in one message:
 1. "What is the project name?"
-2. "What are the main modules or areas of this codebase? These become your commit scopes. (e.g. `api, ui, auth, db, config`)"
+2. "Is this a monorepo? (yes/no)"
+3. "What are the main modules or areas of this codebase? These become your commit scopes. (e.g. `api, ui, auth, db, config`)"
 
 Use the project name to replace `[Project Name]` in all template files. Use the modules list to populate the Scopes section of `git.md`.
 
@@ -47,9 +48,18 @@ Create these directories:
 ## Goals
 - [Goal 1]
 - [Goal 2]
+
+---
+
+## Current Track
+
+[MONOREPO: **App Backlogs** — Continuous per-app improvement tracks. Each app has its own backlog with a 3-letter prefix, plus a cross-app Platform track (PLT). No fixed end date.]
+[NON-MONOREPO: **Weekly Improvements** — Continuous rolling backlog of improvements worked on as capacity allows. No fixed end date.]
 ```
 
-`.mfh/design/milestones.md`:
+`.mfh/design/milestones.md` — use the correct variant based on the monorepo answer:
+
+**Non-monorepo variant:**
 ```markdown
 # [Project Name] — Milestones & Weekly Improvements
 
@@ -94,6 +104,64 @@ Phases use the `WI-P#` prefix. Plans saved as `.mfh/plans/wi-p{N}-plan.md`.
 | Phase | Description |
 |-------|-------------|
 | ⬜ WI-P1 | [First improvement] |
+
+---
+
+# Completed Milestones
+
+Milestones move here when all phases are done. Slotted in numbered order.
+
+---
+```
+
+**Monorepo variant:**
+```markdown
+# [Project Name] — Milestones & App Backlogs
+
+This file has two tracks:
+
+**Milestones** — named delivery cycles with a fixed goal. Numbered `M1, M2, …`. Phases within a milestone are `P1, P2, …`. Plans saved as `.mfh/plans/m{N}-p{N}-plan.md`.
+
+**App Backlogs** — continuous per-app improvement tracks with no end date. Each app uses a 3-letter prefix. Phases use the `{PREFIX}-P#` format (e.g. `PRT-P1`). Plans saved as `.mfh/plans/{prefix}-p{N}-plan.md`. These sections never move — phases are appended and closed in place. New app sections are added here automatically when a milestone that ships a new app completes.
+
+**Workflow per phase (both tracks):**
+1. `/mfh-start` — select milestone/track + phase; creates `progress.md` entry
+2. `/mfh-plan` — write the plan
+3. `/mfh-execute` — execute the plan
+4. `/mfh-done` — close the phase, update changelog
+
+**File structure:** Active milestones first → App Backlogs → Completed milestones in numbered order. When a milestone ships, move it into the Completed section in its numbered position.
+
+**Status legend:** ✅ Complete · 🔄 In progress · ⬜ Not started
+
+---
+
+## M1 — [Milestone Name] (Active)
+
+**Goal:** [What does this milestone deliver?]
+
+### Current Position: P1 next — not started
+
+| Phase | Description |
+|-------|-------------|
+| ⬜ 1 | [Phase description] |
+
+---
+
+# App Backlogs — Continuous
+
+---
+
+## PLT — Platform
+
+Cross-app work: shared packages, auth, infra.
+
+| Phase | Description |
+|-------|-------------|
+
+---
+
+_(App backlog sections are added here automatically by `/mfh-done` each time a milestone ships a new app.)_
 
 ---
 

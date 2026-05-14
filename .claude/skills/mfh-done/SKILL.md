@@ -35,6 +35,14 @@ For a **Weekly Improvement phase**:
 **Decisions:** [any decisions recorded in decisions.md relevant to this phase, or "none" if none]
 ```
 
+For an **App Backlog phase** (PREFIX-P# format, e.g. `EMP-P3`):
+```
+## [today's date] — [PREFIX]-P# — [Phase Name]
+
+**Summary:** [what was built/changed, derived from the phase notes and milestones]
+**Decisions:** [any decisions recorded in decisions.md relevant to this phase, or "none" if none]
+```
+
 **Step 4 — Update milestones.md:**
 Find the active phase in `.mfh/design/milestones.md` and change its icon from 🔄 or ⬜ to ✅.
 
@@ -45,10 +53,22 @@ Find the active phase in `.mfh/design/milestones.md` and change its icon from �
   - If the milestone introduced a new app/section, add it to the **Live Sections** table.
   - Update **Current Track** or **Current Focus** to reflect what's active next.
   - Move the milestone out of **Next Up** / **Upcoming** if it was listed there.
-  - If no next milestone is planned, set Current Track to "Weekly Improvements — Continuous rolling backlog."
+  - If no next milestone is planned, set Current Track to "Weekly Improvements — Continuous rolling backlog" (non-monorepo) or "App Backlogs — Continuous per-app improvement tracks" (monorepo).
+- If ALL phases are now ✅ AND `milestones.md` contains an `# App Backlogs` section (monorepo project), ask: "Did this milestone ship a new app? If yes, what's the app name and its 3-letter prefix?" If the user provides one, insert a new app backlog section into `milestones.md` immediately before the PLT section:
+  ```
+  ## [PREFIX] — [App Name]
+
+  | Phase | Description |
+  |-------|-------------|
+
+  ---
+  ```
 
 **For WI phases:**
 - Update the `### Current Position:` line in the Weekly Improvements section to name the newly completed phase and what's next (e.g. "WI-P13 complete — WI-P14 in progress" or "WI-P14 complete — WI-P15 next").
+
+**For App Backlog phases:**
+- Mark the phase ✅ in its app section. No `Current Position` line to update — the emoji status is self-documenting.
 
 **Step 5 — Remove the phase from progress.md:**
 Find the `## M#-P#` or `## WI-P#` section and remove it entirely, including its preceding `---` divider.
@@ -64,7 +84,7 @@ _(no active phases)_
 ```
 
 **Step 6 — Delete the plan file (if one exists):**
-If a plan file was referenced, delete it. Milestone plans follow `m{N}-p{N}-plan.md` naming; WI plans follow `wi-p{N}-plan.md` naming.
+If a plan file was referenced, delete it. Milestone plans follow `m{N}-p{N}-plan.md` naming; WI plans follow `wi-p{N}-plan.md` naming; App Backlog plans follow `{prefix}-p{N}-plan.md` naming (e.g. `emp-p3-plan.md`).
 
 **Step 7 — Confirm:**
 Tell the user: "Phase complete. Run `/mfh-status` to see the updated project picture, or `/mfh-commit` to commit the work."
