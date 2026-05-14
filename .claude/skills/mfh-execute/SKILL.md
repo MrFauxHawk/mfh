@@ -48,6 +48,11 @@ Throughout all work:
   1. Briefly note it to the user
   2. In `.mfh/state/progress.md`, find the matching `- [ ] N.` line under **Tasks:** and change it to `- [x] N.`
 
+**Every 3 completed tasks, pause and ask:**
+> "That's [N] tasks done. Keep going, or run `/mfh-update` to save progress and resume later?"
+
+Wait for the user's response before continuing. If they choose to stop, do not proceed to the next task — let them run `/mfh-update` themselves.
+
 **Write rules during execution:**
 - **DO** tick off task checkboxes as each task completes (change `[ ]` → `[x]`)
 - **DO** append to `.mfh/state/decisions.md` immediately when a non-obvious decision is made
