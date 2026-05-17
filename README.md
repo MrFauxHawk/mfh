@@ -64,19 +64,27 @@ Then run `/mfh-start` to begin your first phase.
     progress.md       ← all active phases (gitignored)
     built.md          ← permanent changelog (git-tracked)
     decisions.md      ← non-obvious decisions and rationale (git-tracked)
+
+stakeholder/          ← optional; for projects with external stakeholder updates
+  STAKEHOLDER.md      ← latest update (source of truth)
+  STAKEHOLDER.html    ← rendered HTML version sent to stakeholders
+  history/            ← dated archive of past HTML updates
+  guides/             ← user-facing guides and login docs
 ```
 
 ---
 
-## Two tracks
+## Three tracks
 
-MFH supports two parallel planning tracks:
+MFH supports three parallel planning tracks:
 
-**Milestones** — named delivery cycles with a fixed goal and ship date. Numbered `M1, M2, …`. Phases within a milestone are `P1, P2, …`.
+**Milestones** — named delivery cycles with a fixed goal and ship date. Numbered `M1, M2, …`. Phases within a milestone are `P1, P2, …`. Example: `M4-P2`.
 
 **Weekly Improvements** — a continuous rolling backlog with no end date. Phases use the `WI-P#` prefix (e.g. `WI-P4`). New phases are added as items come in and closed when done.
 
-Both tracks live in `milestones.md`. Active milestones appear first, followed by the Weekly Improvements section, followed by completed milestones.
+**App Backlogs** — per-app improvement tracks for monorepos with multiple discrete apps. Each app gets a 3-letter prefix (e.g. `EMP`, `FIN`, `SCH`). Phases use the `PREFIX-P#` format (e.g. `FIN-P1`, `EMP-P3`). No ship date — phases are appended as improvements accumulate. Plan files are named `{prefix}-p{N}-plan.md`.
+
+All three tracks live in `milestones.md`. Active milestones appear first, followed by the App Backlogs section (one subsection per app), followed by the Weekly Improvements section, followed by completed milestones.
 
 ---
 
@@ -85,17 +93,18 @@ Both tracks live in `milestones.md`. Active milestones appear first, followed by
 | Command | What it does |
 |---|---|
 | `/mfh-init` | Scaffold `.mfh/` structure into a new project |
-| `/mfh-status` | Snapshot of active milestones, open WI phases, and current work |
-| `/mfh-start` | Start a new milestone phase or WI phase |
+| `/mfh-status` | Snapshot of active milestones, open WI phases, app backlog phases, and current work |
+| `/mfh-start` | Start a new milestone phase, WI phase, or app backlog phase |
 | `/mfh-plan` | Create an implementation plan for the active phase |
 | `/mfh-execute [phase]` | Pick up active work and begin executing |
 | `/mfh-update [phase]` | Log progress, decisions, and what remains |
 | `/mfh-done [phase]` | Close out a completed phase, update changelog |
-| `/mfh-newfeature` | Add a new milestone or WI phase to the project |
+| `/mfh-newfeature` | Add a new milestone, WI phase, or app backlog phase to the project |
 | `/mfh-commit` | Group changes into logical Conventional Commits |
 | `/mfh-push` | Push to remote and handle errors |
+| `/stakeholder-update` | Generate a new stakeholder update from built.md and roadmap.md |
 
-Commands marked `[phase]` accept an optional phase argument (e.g. `/mfh-done M4-P3` or `/mfh-done WI-P5`). If omitted and only one phase is active, it uses that automatically. If multiple phases are active, it asks.
+Commands marked `[phase]` accept an optional phase argument (e.g. `/mfh-done M4-P3`, `/mfh-done WI-P5`, or `/mfh-done FIN-P1`). If omitted and only one phase is active, it uses that automatically. If multiple phases are active, it asks.
 
 ---
 
@@ -130,6 +139,21 @@ _(none yet)_
 **Started:** 2026-04-27
 **Notes:**
 _(none yet)_
+
+---
+
+## FIN-P1
+
+**Track:** App Backlog — Finance
+**Phase:** FIN-P1 — Employee & User Flags
+**Plan:** fin-p1-plan.md
+**Status:** in progress
+**Started:** 2026-05-17
+**Tasks:**
+- [x] 1. Add is_finance to Employee schema
+- [ ] 2. Wire into session payload
+**Notes:**
+_(none yet)_
 ```
 
 ---
@@ -159,3 +183,7 @@ These are loaded by `/mfh-execute` and `/mfh-plan` so Claude always works within
 | `.mfh/state/decisions.md` | ✅ yes |
 | `.mfh/state/progress.md` | ❌ no (local session state) |
 | `.mfh/plans/` | ❌ no (ephemeral) |
+| `stakeholder/STAKEHOLDER.md` | ✅ yes |
+| `stakeholder/STAKEHOLDER.html` | ✅ yes |
+| `stakeholder/history/` | ✅ yes |
+| `stakeholder/guides/` | ✅ yes |
