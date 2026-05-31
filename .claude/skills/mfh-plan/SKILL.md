@@ -13,7 +13,14 @@ Read the following files:
 - All files in `.mfh/library/` — coding standards and architectural rules
 - `.mfh/state/decisions.md` — review past decisions; don't contradict them without discussion
 
-**Step 2 — Draft a plan and present it to the user:**
+**Step 2 — Ask the user what they expect:**
+Before drafting anything, identify the active phase from `milestones.md` and ask the user one focused question:
+
+> "I'm about to plan **[Phase name]**. What are your expectations or priorities for this phase — anything specific you want included, excluded, or approached differently?"
+
+Wait for their response. Use it to shape the plan. Do not skip this step or assume you already know the answer from the milestone description alone.
+
+**Step 3 — Draft a plan and present it to the user:**
 
 The plan must include these sections:
 
@@ -29,14 +36,14 @@ A numbered, step-by-step task list. Each step concrete enough to act on without 
 ### Verification Checklist
 "How do I know this is done correctly?" — UI tested in browser, API response verified, correct fallback behavior shown, code follows library conventions, no dead code, etc.
 
-**Step 3 — Wait for approval:**
+**Step 4 — Wait for approval:**
 Present the plan and ask: "Does this plan look good, or would you like to make changes?"
 
 - If approved: proceed to Step 4
 - If changes requested: revise and re-present
 - If rejected: ask what they want instead, then stop
 
-**Step 4 — Save the approved plan:**
+**Step 5 — Save the approved plan:**
 Write the plan to the appropriate file:
 - Milestone phase: `.mfh/plans/m{N}-p{N}-plan.md`
 - Weekly Improvement phase: `.mfh/plans/wi-p{N}-plan.md`
