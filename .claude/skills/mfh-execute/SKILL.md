@@ -26,6 +26,9 @@ Read `.mfh/design/milestones.md`. Find the table row for the active phase. If it
 **Step 4 — Read plan (if one exists):**
 If a plan file is referenced, read it from `.mfh/plans/`.
 
+**Step 4b — Read git log:**
+Run `git log --oneline -20` to see recent commits. Cross-reference against the plan tasks and any Notes entries in progress.md. Committed work is authoritative — if a commit covers a plan task or describes work beyond the plan, treat it as done regardless of whether a checkbox is ticked or an `/mfh-update` entry exists. Note any work done in commits that deviates from or extends the plan, so the summary in Step 6 reflects reality rather than the plan alone.
+
 **Step 5 — Read library and decisions:**
 Read all files in `.mfh/library/`. These contain the coding standards, conventions, and architectural rules you must follow throughout all work in this session.
 
@@ -35,8 +38,8 @@ Also read `.mfh/state/decisions.md`. Do not contradict or work around these deci
 Tell the user:
 - What milestone and phase is being worked on
 - What the goal is (from the plan or milestones.md)
-- What has already been completed (from Notes)
-- What remains to be done
+- What has already been completed — prioritise git commits and Notes entries over unchecked plan tasks; if commits show work was done, it's done
+- What remains to be done — only tasks not covered by commits or Notes
 
 **Step 7 — Begin working:**
 Execute the remaining tasks from the plan (or if no plan, based on the phase description from milestones.md and the Notes in progress.md).
