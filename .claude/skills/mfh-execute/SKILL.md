@@ -20,11 +20,26 @@ From the identified `## M#-P#` or `## WI-P#` section, note:
 - Status
 - Notes (what has been done, what remains)
 
+**Step 2b — Choose session mode (only if a plan already exists):**
+If the phase's `Plan:` field is `(none)` or no plan file exists on disk, skip this step entirely — proceed to Step 3 and execute directly against the phase description (no question needed).
+
+If a plan file does exist, ask:
+> "This phase has an active plan. What's this session's work?
+> 1. Continue the existing plan (Recommended) — pick up the next unchecked task
+> 2. Small ad-hoc work, no plan — I'll do it and log it to `progress.md` when done, without touching the plan's tasks
+> 3. New substantial scope — hand off to `/mfh-plan` to add a new Round first"
+
+- **Option 1 (continue plan):** proceed normally through the rest of this skill, working the plan's unchecked tasks.
+- **Option 2 (ad-hoc, no plan):** proceed through Step 3 and Step 5 (still mark 🔄, still read library/decisions for context), but skip Step 4's task-checkbox tracking — do the user's described work directly in Step 7 without ticking plan tasks, and when done tell the user to run `/mfh-update` to log it. Do not modify the plan file.
+- **Option 3 (new plan):** read the existing plan file first for context (prior rounds, decisions), then invoke `/mfh-plan` for this phase directly — do not ask the user to run it separately; the phase context carries over since it's the same conversation.
+
+This question fires every time `/mfh-execute` is called on a phase with an active plan — including the first call right after that plan was created — and persists until `/mfh-done` closes the phase and deletes the plan file.
+
 **Step 3 — Mark phase in progress in milestones.md:**
 Read `.mfh/design/milestones.md`. Find the table row for the active phase. If it is not already marked `🔄`, update the status symbol to `🔄` now — before doing any other work.
 
-**Step 4 — Read plan (if one exists):**
-If a plan file is referenced, read it from `.mfh/plans/`.
+**Step 4 — Read plan (if one exists and session mode is "continue plan" or "ad-hoc"):**
+If a plan file is referenced, read it from `.mfh/plans/`. In "ad-hoc" mode this is for context only — do not treat its tasks as this session's work.
 
 **Step 4b — Read git log:**
 Run `git log --oneline -20` to see recent commits. Cross-reference against the plan tasks and any Notes entries in progress.md. Committed work is authoritative — if a commit covers a plan task or describes work beyond the plan, treat it as done regardless of whether a checkbox is ticked or an `/mfh-update` entry exists. Note any work done in commits that deviates from or extends the plan, so the summary in Step 6 reflects reality rather than the plan alone.
@@ -42,7 +57,8 @@ Tell the user:
 - What remains to be done — only tasks not covered by commits or Notes
 
 **Step 7 — Begin working:**
-Execute the remaining tasks from the plan (or if no plan, based on the phase description from milestones.md and the Notes in progress.md).
+
+**If session mode is "continue plan" (or no plan exists at all):** execute the remaining tasks from the plan (or, if no plan, based on the phase description from milestones.md and the Notes in progress.md).
 
 Throughout all work:
 - Follow all conventions in `.mfh/library/`
@@ -56,12 +72,14 @@ Throughout all work:
 
 Wait for the user's response before continuing. If they choose to stop, do not proceed to the next task — let them run `/mfh-update` themselves.
 
+**If session mode is "ad-hoc, no plan":** execute the work the user actually asked for this session directly — it is not on the plan's task list, so there is nothing to tick off. Do not touch the plan file or its checkboxes. Pause for a check-in at a natural break point rather than every 3 tasks (there's no task list to count against). When the work is done, tell the user to run `/mfh-update` to log it — mirroring how small ad-hoc UI tweaks get logged after the fact rather than planned up front.
+
 **Write rules during execution:**
-- **DO** tick off task checkboxes as each task completes (change `[ ]` → `[x]`)
+- **DO** tick off task checkboxes as each task completes (change `[ ]` → `[x]`) — **only** in "continue plan" mode
 - **DO** append to `.mfh/state/decisions.md` immediately when a non-obvious decision is made
 - **DO** update `milestones.md` phase status to `🔄` at the start of Step 3 (one-time, if not already set)
 - **DO NOT** modify `built.md` or any other state file — those are updated by `/mfh-update` and `/mfh-done`
-- **DO NOT** change the **Status**, **Notes**, or any other field in progress.md — only the task checkboxes
+- **DO NOT** change the **Status**, **Notes**, or any other field in progress.md — only the task checkboxes, and only in "continue plan" mode
 
 **Step 8 — Post-completion verification:**
 
