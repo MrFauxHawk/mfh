@@ -68,11 +68,19 @@ Throughout all work:
   2. In `.mfh/state/progress.md`, find the matching `- [ ] N.` line under **Tasks:** and change it to `- [x] N.`
 
 **Every 3 completed tasks, pause and ask:**
-> "That's [N] tasks done. Keep going, or run `/mfh-update` to save progress and resume later?"
+> "That's [N] tasks done. Keep going, run the TypeScript/ESLint check now, or run `/mfh-update` to save progress and resume later?"
 
-Wait for the user's response before continuing. If they choose to stop, do not proceed to the next task — let them run `/mfh-update` themselves.
+Wait for the user's response before continuing. If they choose to stop, do not proceed to the next task — let them run `/mfh-update` themselves. If they ask for the check, run **Step 8 — Verification** now, scoped to whatever's touched so far, then return to this same question (keep going / check / update) rather than assuming they want to stop.
 
-**If session mode is "ad-hoc, no plan":** execute the work the user actually asked for this session directly — it is not on the plan's task list, so there is nothing to tick off. Do not touch the plan file or its checkboxes. Pause for a check-in at a natural break point rather than every 3 tasks (there's no task list to count against). When the work is done, tell the user to run `/mfh-update` to log it — mirroring how small ad-hoc UI tweaks get logged after the fact rather than planned up front.
+**When the last plan task is ticked** (whether or not it landed on a 3-task pause), ask once more:
+> "All plan tasks are done. Want me to run the TypeScript/ESLint check now, or hold off in case you're adding more to this phase? Either way, run `/mfh-update` when you're ready to log this."
+
+Do not run Step 8 unless they say yes here.
+
+**If session mode is "ad-hoc, no plan":** execute the work the user actually asked for this session directly — it is not on the plan's task list, so there is nothing to tick off. Do not touch the plan file or its checkboxes. Pause for a check-in at a natural break point rather than every 3 tasks (there's no task list to count against):
+> "That's done. Want me to run the TypeScript/ESLint check now, or hold off? Either way, run `/mfh-update` when you're ready to log this."
+
+If they ask for the check, run **Step 8 — Verification**. Do not run it unprompted.
 
 **Write rules during execution:**
 - **DO** tick off task checkboxes as each task completes (change `[ ]` → `[x]`) — **only** in "continue plan" mode
@@ -81,21 +89,26 @@ Wait for the user's response before continuing. If they choose to stop, do not p
 - **DO NOT** modify `built.md` or any other state file — those are updated by `/mfh-update` and `/mfh-done`
 - **DO NOT** change the **Status**, **Notes**, or any other field in progress.md — only the task checkboxes, and only in "continue plan" mode
 
-**Step 8 — Post-completion verification:**
+**Step 8 — Verification (on request only — never run automatically):**
 
-Once every task checkbox is ticked, check whether the project uses TypeScript by looking for a `tsconfig.json` in the project root or in any directory touched during this phase. If no `tsconfig.json` exists anywhere in the project, skip this step entirely.
+This step never runs on its own, including when every task checkbox ends up ticked. It only runs when the user explicitly asks for it — either directly ("run the check", "run typescript/lint") or by answering yes to the check offered at a 3-task pause point, an ad-hoc break point, or the final "all tasks done" check-in. The reason: verifying too eagerly means re-running it again after every small follow-up fix the user adds to the same phase — expensive and repetitive when the user already knows more work is coming. Let the user pick the moment.
 
-**If TypeScript is in use:**
+When run, check whether the project uses TypeScript by looking for a `tsconfig.json` in the project root or in any directory touched during this phase. If none exists anywhere in the project, skip the TypeScript half entirely (but still run ESLint if applicable).
+
+**TypeScript:**
 Check `.mfh/library/` for a documented TypeScript check command specific to this project. If none is documented, fall back to running `npx tsc --noEmit` from the root (or from inside each touched directory for a monorepo).
+
+**ESLint:**
+Check `.mfh/library/` for a documented lint command specific to this project — do not assume it's broken or skip it without checking; confirm current status against the doc rather than a stale prior belief. If none is documented, fall back to running `next lint` per touched app (or the repo's own root-level lint script, e.g. via Turborepo, if one exists).
 
 Identify touched areas from git:
 ```bash
 git diff --name-only HEAD
 ```
 
-Run the TypeScript check for each affected area. Interpret results:
+Run both checks for each affected area. Interpret results:
 - Errors in files you didn't touch = pre-existing, ignore them
-- Errors in files you changed = must fix before reporting done
+- Errors in files you changed = must fix before reporting done — this includes lint-only errors (e.g. unused-var rules) that TypeScript's own compiler never flags but a production build may still enforce as a hard failure
 - If no source files were touched (doc-only phase), skip this step
 
-Report the result to the user: either "TypeScript clean" or list the new errors to fix.
+Report the result to the user: either "TypeScript and ESLint clean" or list the new errors to fix, broken out by which check caught them.
