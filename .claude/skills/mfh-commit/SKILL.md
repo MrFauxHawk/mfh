@@ -15,6 +15,8 @@ Analyze the changes and group them into logical commits based on what changed an
 - Frontend vs. backend vs. config changes
 - Related files that belong in the same commit
 
+**Never split a single file's changes across multiple commits** (no `git add -p` / hand-crafted partial-hunk patches) — always stage and commit whole files. If one file's uncommitted diff genuinely spans two unrelated concerns, fold it into whichever commit it fits best rather than slicing it apart; note in the commit plan that the file's other changes are riding along. Hunk-splitting is fragile to get right by hand and the payoff isn't worth it for this repo — only do it if the user explicitly asks for that file to be split.
+
 **Step 3 — Draft commit messages:**
 For each proposed commit, write a message using Conventional Commits format:
 
