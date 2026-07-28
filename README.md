@@ -64,11 +64,10 @@ Then run `/mfh-start` to begin your first phase.
     progress.md       ← all active phases (gitignored)
     built.md          ← permanent changelog (git-tracked)
     decisions.md      ← non-obvious decisions and rationale (git-tracked)
-
-updates/              ← optional; created by /mfh-update on first run
-  latest.md           ← latest update (source of truth)
-  latest.html         ← rendered, friendly-viewable HTML version
-  history/            ← dated archive of past updates (both formats)
+  updates/            ← optional; created by /mfh-update on first run
+    latest.md         ← latest update (source of truth)
+    latest.html       ← rendered, friendly-viewable HTML version
+    history/          ← dated archive of past updates (both formats)
 ```
 
 ---
@@ -196,6 +195,6 @@ Prose stays underneath for anything non-obvious — *why* a field exists, a gotc
 | `.mfh/state/decisions.md` | ✅ yes |
 | `.mfh/state/progress.md` | ❌ no (local session state) |
 | `.mfh/plans/` | ❌ no (ephemeral) |
-| `updates/latest.md` | ✅ yes |
-| `updates/latest.html` | ✅ yes |
-| `updates/history/` | ✅ yes |
+| `.mfh/updates/latest.md` | ✅ yes |
+| `.mfh/updates/latest.html` | ✅ yes |
+| `.mfh/updates/history/` | ✅ yes |

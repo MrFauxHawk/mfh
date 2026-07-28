@@ -22,7 +22,7 @@ Write the answers into `.mfh/design/roadmap.md` as a new section, inserted after
 ```
 
 **Step 2 — Determine what's new:**
-Check `updates/latest.md` for its most recent entry's date. If it doesn't exist yet (first run — check `updates/history/` too, in case `latest.md` was already rotated out), treat this as a first update covering the whole project so far.
+Check `.mfh/updates/latest.md` for its most recent entry's date. If it doesn't exist yet (first run — check `.mfh/updates/history/` too, in case `latest.md` was already rotated out), treat this as a first update covering the whole project so far.
 
 Read `.mfh/state/built.md` entries newer than that date (or all of it, on a first run). Also read `.mfh/design/milestones.md` (Current Position lines, next unstarted phases) and `.mfh/design/roadmap.md` (Goals) for the forward-looking half. Skim `.mfh/state/progress.md` for anything actively in flight worth a one-line mention.
 
@@ -44,13 +44,13 @@ Show the user the drafted Markdown and ask: "Does this look right, or want chang
 
 **Step 5 — Save and render:**
 Once approved:
-- If `updates/latest.md` already exists, move it (and its `.html` counterpart) into `updates/history/` first, named with its own entry date (e.g. `updates/history/2026-07-28.md` / `.html`) — never overwrite history.
-- Write the approved draft to `updates/latest.md`.
-- Render a clean, self-contained HTML version to `updates/latest.html` — inline CSS, readable typography, no external dependencies or build step. If the `artifact-design` skill is available in this environment, load it first for visual guidance on the HTML pass.
+- If `.mfh/updates/latest.md` already exists, move it (and its `.html` counterpart) into `.mfh/updates/history/` first, named with its own entry date (e.g. `.mfh/updates/history/2026-07-28.md` / `.html`) — never overwrite history.
+- Write the approved draft to `.mfh/updates/latest.md`.
+- Render a clean, self-contained HTML version to `.mfh/updates/latest.html` — inline CSS, readable typography, no external dependencies or build step. If the `artifact-design` skill is available in this environment, load it first for visual guidance on the HTML pass.
 
 **Step 6 — Deliver, per the project's stated preference:**
-- **"Just the file" / no strong preference given:** tell the user where it is (`updates/latest.md` and `updates/latest.html`) and stop.
-- **Artifact link:** publish `updates/latest.html`'s content via the Artifact tool and give the user the link.
+- **"Just the file" / no strong preference given:** tell the user where it is (`.mfh/updates/latest.md` and `.mfh/updates/latest.html`) and stop.
+- **Artifact link:** publish `.mfh/updates/latest.html`'s content via the Artifact tool and give the user the link.
 - **Anything else project-specific** (e.g. SFTP, a custom conversion pipeline): follow it if you know how; if it needs tooling this general skill doesn't have, tell the user the file is ready and that delivery from here is on them (or a project-specific extension of this skill).
 
 **Step 7 — Confirm:**
