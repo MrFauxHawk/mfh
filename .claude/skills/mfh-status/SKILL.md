@@ -22,7 +22,9 @@ Skip completed milestones entirely — they are historical record, not active st
 
 ---
 
-**Weekly Improvements** — show only open (⬜, 🔄, or 🟡) WI phases and the current position:
+Only one of the next two sections applies — check which second track `milestones.md` actually has (a `# Weekly Improvements` heading, or a `# App Backlogs` heading) and use only that one.
+
+**Weekly Improvements** (non-monorepo projects) — show only open (⬜, 🔄, or 🟡) WI phases and the current position:
 
 **Weekly Improvements**
 *(Current Position line from milestones.md, verbatim)*
@@ -30,14 +32,23 @@ Skip completed milestones entirely — they are historical record, not active st
 - 🔄 WI-P#: [Phase Name]
 - ⬜ WI-P#: [Phase Name]
 
+**App Backlogs** (monorepo projects) — for each app section that has at least one incomplete phase (⬜, 🔄, or 🟡), show the section heading and only the incomplete phases:
+
+**{PREFIX} — [App Name]**
+- 🟡 {PREFIX}-P#: [Phase Name] — ready to close
+- 🔄 {PREFIX}-P#: [Phase Name]
+- ⬜ {PREFIX}-P#: [Phase Name]
+
+Skip app sections with no incomplete phases — a fully-closed backlog is not active state, same reasoning as skipping completed milestones. There can be many app sections; list all of them that qualify, not just a sample.
+
 ---
 
 ## Active Work
 
 If progress.md has active phases, list each one:
 
-**M#-P# — [Phase Name]** *(or WI-P# for Weekly Improvement phases)*
-- Track: M# — [Milestone Name] *(or "Weekly Improvements")*
+**M#-P# — [Phase Name]** *(or WI-P# for Weekly Improvement phases, or {PREFIX}-P# for App Backlog phases)*
+- Track: M# — [Milestone Name] *(or "Weekly Improvements", or "App Backlog — [App Name]")*
 - Plan: [filename or "no plan"]
 - Status: [status]
 - Started: [date]
@@ -58,9 +69,10 @@ If there are none, say: "Nothing waiting to close." This section exists so a pha
 
 ## What to Do Next
 
-Look at the first incomplete phase (milestone or WI) and suggest the next action. If a phase is in progress, say so. Examples:
+Look at the first incomplete phase (milestone, WI, or App Backlog) and suggest the next action. If a phase is in progress, say so. Examples:
 - "M2-P3 ([Phase Name]) is next. Run `/mfh-start M2-P3` to begin."
 - "WI-P4 ([Phase Name]) is in progress. Run `/mfh-execute WI-P4` to continue."
+- "EMP-P3 ([Phase Name]) is next. Run `/mfh-start EMP-P3` to begin."
 If nothing is active: suggest starting the next incomplete phase.
 
 ---

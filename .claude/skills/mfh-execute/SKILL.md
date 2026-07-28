@@ -4,18 +4,18 @@ description: Pick up active work and begin executing the plan
 
 # /mfh-execute
 
-You are picking up active work and executing it. This command accepts an optional argument (e.g. `/mfh-execute M4-P3` or `/mfh-execute WI-P5`). This project has two tracks: **Milestones** (`M#-P#`) and **Weekly Improvements** (`WI-P#`).
+You are picking up active work and executing it. This command accepts an optional argument (e.g. `/mfh-execute M4-P3`, `/mfh-execute WI-P5`, or `/mfh-execute EMP-P3`). This project has two tracks: **Milestones** (`M#-P#`) and, depending on which variant this project uses, either **Weekly Improvements** (`WI-P#`) or **App Backlogs** (`{PREFIX}-P#`, e.g. `EMP-P3`).
 
 **Step 1 — Identify the phase:**
 Read `.mfh/state/progress.md`.
 
-- If a phase was provided as an argument (e.g. `M4-P3` or `WI-P5`), use that phase.
+- If a phase was provided as an argument (e.g. `M4-P3`, `WI-P5`, or `EMP-P3`), use that phase.
 - If no argument and only one active phase exists, use that one.
-- If no argument and multiple active phases exist, ask: "Which phase do you want to work on? (e.g. M4-P3, WI-P5)"
+- If no argument and multiple active phases exist, ask: "Which phase do you want to work on? (e.g. M4-P3, WI-P5, EMP-P3)"
 
 **Step 2 — Read the phase state:**
-From the identified `## M#-P#` or `## WI-P#` section, note:
-- Track (Milestone or Weekly Improvements) and Phase name
+From the identified `## M#-P#`, `## WI-P#`, or `## {PREFIX}-P#` section, note:
+- Track (Milestone, Weekly Improvements, or App Backlog) and Phase name
 - Plan filename (if any)
 - Status
 - Notes (what has been done, what remains)
@@ -36,7 +36,7 @@ If a plan file does exist, ask:
 This question fires every time `/mfh-execute` is called on a phase with an active plan — including the first call right after that plan was created — and persists until `/mfh-done` closes the phase and deletes the plan file.
 
 **Step 3 — Mark phase in progress in milestones.md:**
-Read `.mfh/design/milestones.md`. Find the table row for the active phase. If it is not already marked `🔄`, update the status symbol to `🔄` now — before doing any other work.
+Read `.mfh/design/milestones.md`. Find the table row for the active phase — Milestone phase rows use a bare number (`| 🔄 3 |`), Weekly Improvement and App Backlog rows use the full phase identifier (`| 🔄 WI-P5 |`, `| 🔄 EMP-P3 |`). If it is not already marked `🔄`, update the status symbol to `🔄` now — before doing any other work. (This also correctly reverts a `🟡` phase back to `🔄` if work resumes on something previously marked ready-to-close.)
 
 **Step 4 — Read plan (if one exists and session mode is "continue plan" or "ad-hoc"):**
 If a plan file is referenced, read it from `.mfh/plans/`. In "ad-hoc" mode this is for context only — do not treat its tasks as this session's work.

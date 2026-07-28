@@ -13,7 +13,7 @@ Read the following files:
 - All files in `.mfh/library/` — coding standards and architectural rules
 - `.mfh/state/decisions.md` — review past decisions; don't contradict them without discussion
 
-**Check for an existing plan file** (`.mfh/plans/m{N}-p{N}-plan.md` or `wi-p{N}-plan.md`) for this phase. If one exists, read it in full before drafting anything new — it may already contain a prior "Round" of work (goals, design decisions, tasks) that this new planning pass needs to build on rather than duplicate or contradict. This phase is being re-planned (reopened for a new round of substantial work), not planned from scratch.
+**Check for an existing plan file** (`.mfh/plans/m{N}-p{N}-plan.md`, `wi-p{N}-plan.md`, or `{prefix}-p{N}-plan.md` for an App Backlog phase, e.g. `emp-p3-plan.md`) for this phase. If one exists, read it in full before drafting anything new — it may already contain a prior "Round" of work (goals, design decisions, tasks) that this new planning pass needs to build on rather than duplicate or contradict. This phase is being re-planned (reopened for a new round of substantial work), not planned from scratch.
 
 **Step 2 — Ask the user what they expect:**
 Before drafting anything, identify the active phase from `milestones.md` and ask the user one focused question:
@@ -50,8 +50,9 @@ Present the plan and ask: "Does this plan look good, or would you like to make c
 **If no plan file existed yet for this phase** (first planning pass), write a new file:
 - Milestone phase: `.mfh/plans/m{N}-p{N}-plan.md`
 - Weekly Improvement phase: `.mfh/plans/wi-p{N}-plan.md`
+- App Backlog phase: `.mfh/plans/{prefix}-p{N}-plan.md` (e.g. `emp-p3-plan.md`)
 
-Find the corresponding `## M#-P#` or `## WI-P#` section in `.mfh/state/progress.md` and update these fields:
+Find the corresponding `## M#-P#`, `## WI-P#`, or `## {PREFIX}-P#` section in `.mfh/state/progress.md` and update these fields:
 - **Plan:** [plan filename]
 - **Status:** planned
 - **Started:** [today's date] (if not already set)
@@ -68,7 +69,7 @@ Find the corresponding `## M#-P#` or `## WI-P#` section in `.mfh/state/progress.
 If the section doesn't exist yet (plan created before `/mfh-start`), append a new section.
 
 **If a plan file already existed for this phase** (re-planned mid-phase — this is Round 2 or later): do not overwrite the file or touch the original **Plan:**, **Status:**, **Started:**, or top-level **Tasks:** fields in `progress.md` — those still reflect the first round. Instead:
-- Append a new section to the *existing* plan file, titled `# M#-P# Plan — Round N: [Round Title]` (N = next round number; the original untitled plan counts as Round 1), containing the same Goal / Relevant Library Context / Implementation Tasks / Verification Checklist structure.
+- Append a new section to the *existing* plan file, titled `# [phase-id] Plan — Round N: [Round Title]` (e.g. `# M#-P# Plan`, `# WI-P# Plan`, or `# {PREFIX}-P# Plan`; N = next round number; the original untitled plan counts as Round 1), containing the same Goal / Relevant Library Context / Implementation Tasks / Verification Checklist structure.
 - Append a new block to that phase's **Notes** field in `progress.md`:
   ```
   ### Round N — [Round Title] (planned [today's date])
@@ -107,6 +108,24 @@ For a **Weekly Improvement phase**:
 **Track:** Weekly Improvements
 **Phase:** WI-P# — [Phase Name]
 **Plan:** wi-p{N}-plan.md
+**Status:** planned
+**Started:** [today's date]
+**Tasks:**
+- [ ] 1. Brief task title
+- [ ] 2. Brief task title
+**Notes:**
+_(none yet)_
+```
+
+For an **App Backlog phase**:
+```
+---
+
+## {PREFIX}-P#
+
+**Track:** App Backlog — [App Name] (`{PREFIX}`)
+**Phase:** {PREFIX}-P# — [Phase Name]
+**Plan:** {prefix}-p{N}-plan.md
 **Status:** planned
 **Started:** [today's date]
 **Tasks:**
