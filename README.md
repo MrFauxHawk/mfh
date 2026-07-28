@@ -102,6 +102,7 @@ All three tracks live in `milestones.md`. Active milestones appear first, follow
 | `/mfh-newfeature` | Add a new milestone, WI phase, or app backlog phase to the project |
 | `/mfh-commit` | Group changes into logical Conventional Commits |
 | `/mfh-push` | Push to remote and handle errors |
+| `/mfh-audit` | Retroactive sweep for stale library docs, orphaned plan files, stuck phases, and broken decision references |
 | `/stakeholder-update` | Generate a new stakeholder update from built.md and roadmap.md |
 
 Commands marked `[phase]` accept an optional phase argument (e.g. `/mfh-done M4-P3`, `/mfh-done WI-P5`, or `/mfh-done FIN-P1`). If omitted and only one phase is active, it uses that automatically. If multiple phases are active, it asks.
@@ -163,6 +164,7 @@ _(none yet)_
 Coding standards, conventions, and architectural rules that Claude should follow during all work. Examples:
 
 - `git.md` — commit scopes, branch rules, message format (created by `/mfh-init`)
+- `helpers.md` — a compact index of shared utility/helper function signatures (see below) — worth adding as soon as a project has more than a couple of shared `lib/` functions, so their existence and purpose is discoverable without grepping
 - Brand/theme guidelines
 - Code organization standards
 - API design patterns
@@ -170,6 +172,18 @@ Coding standards, conventions, and architectural rules that Claude should follow
 - Data flow rules
 
 These are loaded by `/mfh-execute` and `/mfh-plan` so Claude always works within your project's standards.
+
+### Compact-header convention
+
+For docs that describe structural facts derivable from the code itself — schema fields, component props, function signatures, route shapes — lead each entry with a one-line compact reference before any prose, so it's scannable/grep-able without reading a paragraph:
+
+```
+**EstimatingQuote** id(PK) | scope_id -> EstimatingScope, revisions -> EstimatingQuoteRevision[]
+(c) OpportunityPanel oppId, canEdit, estimators, onClose, onRowUpdated
+fn computeEffectiveFinancials(scope, quotes) -> { amount, margin, due_date }
+```
+
+Prose stays underneath for anything non-obvious — *why* a field exists, a gotcha, a rule that isn't visible from the signature alone. The one-line header is for "does this exist and what's its shape," not a replacement for explaining rationale. Keep this convention out of docs that are pure judgment calls with no structural facts to summarize (e.g. `business-logic.md`, `auth.md`) — there's nothing to compact there.
 
 ---
 
