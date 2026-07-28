@@ -103,7 +103,6 @@ All three tracks live in `milestones.md`. Active milestones appear first, follow
 | `/mfh-commit` | Group changes into logical Conventional Commits |
 | `/mfh-push` | Push to remote and handle errors |
 | `/mfh-audit` | Retroactive sweep for stale library docs, orphaned plan files, stuck phases, and broken decision references |
-| `/stakeholder-update` | Generate a new stakeholder update from built.md and roadmap.md |
 
 Commands marked `[phase]` accept an optional phase argument (e.g. `/mfh-done M4-P3`, `/mfh-done WI-P5`, or `/mfh-done FIN-P1`). If omitted and only one phase is active, it uses that automatically. If multiple phases are active, it asks.
 

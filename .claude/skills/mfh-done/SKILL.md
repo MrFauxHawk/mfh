@@ -6,6 +6,18 @@ description: Close out a completed phase and update the changelog
 
 You are closing out a completed phase. This command accepts an optional argument (e.g. `/mfh-done M4-P3`).
 
+**Before Step 1 — Check whether this is a completion or a cancellation:**
+`/mfh-done` closes a phase as **completed** by default. If the user's request indicates the phase is being cancelled/abandoned/scrapped instead (cut before finishing, decided against, no longer needed) — either stated directly or clear from context — follow the **Cancellation path** below instead of Steps 1–7. If it's ambiguous, ask: "Is this phase actually complete, or are we cancelling it?"
+
+**Cancellation path (instead of Steps 1–7):**
+1. Identify the phase (same lookup as Step 1 below).
+2. If not already given, ask: "What's the reason for cancelling this phase?" — keep it brief.
+3. Append a short entry to `.mfh/state/decisions.md` noting the phase was cancelled and why. This is a decision record, not a shipped-feature record — do **not** write anything to `built.md`, since nothing was built.
+4. In `.mfh/design/milestones.md`, change the phase's icon to `❌` (not `✅`). For Milestone phases, don't touch the `### Current Position:` line the way a completion would (a cancelled phase isn't "next" or "complete" — leave the line as-is unless the user wants it reworded). Don't trigger the "all phases ✅" milestone-completion logic from Step 4 below — a milestone with a `❌` phase isn't fully shipped, but also isn't blocked from ever being considered done; use judgment, or ask the user if unsure.
+5. Remove the phase from `.mfh/state/progress.md` (same as Step 5 below).
+6. Delete the plan file if one exists (same as Step 6 below).
+7. Confirm: "Phase cancelled and logged in decisions.md. Run `/mfh-status` to see the updated picture."
+
 **Step 1 — Identify the phase:**
 Read `.mfh/state/progress.md`.
 
@@ -51,13 +63,13 @@ Find the active phase in `.mfh/design/milestones.md` and change its icon from �
 
 **For Milestone phases:**
 - Update the milestone's `### Current Position:` line to reflect the newly completed phase (e.g. "P1–P3 complete — P4 next" or "All phases complete").
-- If ALL phases in the milestone are now ✅, move the entire milestone block (heading, Goal, planning decisions, and phase table) to the **Completed Milestones** section at the bottom of the file, inserting it in numbered order (M1, M2, M3…). Do not move partial milestones.
-- If ALL phases are now ✅, also update `.mfh/design/roadmap.md`:
+- If every phase in the milestone is now ✅ or ❌ (nothing left ⬜, 🔄, or 🟡), move the entire milestone block (heading, Goal, planning decisions, and phase table) to the **Completed Milestones** section at the bottom of the file, inserting it in numbered order (M1, M2, M3…). Do not move partial milestones.
+- Under the same condition, also update `.mfh/design/roadmap.md`:
   - If the milestone introduced a new app/section, add it to the **Live Sections** table.
   - Update **Current Track** or **Current Focus** to reflect what's active next.
   - Move the milestone out of **Next Up** / **Upcoming** if it was listed there.
   - If no next milestone is planned, set Current Track to "Weekly Improvements — Continuous rolling backlog" (non-monorepo) or "App Backlogs — Continuous per-app improvement tracks" (monorepo).
-- If ALL phases are now ✅ AND `milestones.md` contains an `# App Backlogs` section (monorepo project), ask: "Did this milestone ship a new app? If yes, what's the app name and its 3-letter prefix?" If the user provides one, insert a new app backlog section into `milestones.md` immediately before the PLT section:
+- Under the same condition, if `milestones.md` contains an `# App Backlogs` section (monorepo project), ask: "Did this milestone ship a new app? If yes, what's the app name and its 3-letter prefix?" If the user provides one, insert a new app backlog section into `milestones.md` immediately before the PLT section:
   ```
   ## [PREFIX] — [App Name]
 
@@ -74,7 +86,7 @@ Find the active phase in `.mfh/design/milestones.md` and change its icon from �
 - Mark the phase ✅ in its app section. No `Current Position` line to update — the emoji status is self-documenting.
 
 **Step 5 — Remove the phase from progress.md:**
-Find the `## M#-P#` or `## WI-P#` section and remove it entirely, including its preceding `---` divider.
+Find the `## M#-P#`, `## WI-P#`, or `## {PREFIX}-P#` section and remove it entirely, including its preceding `---` divider.
 
 If no other phases remain after removal, replace the entire file contents with:
 

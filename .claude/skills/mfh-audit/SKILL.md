@@ -14,7 +14,7 @@ Ask: "How far back should I look? (e.g. 'since last week', 'last 30 commits', 's
 If the user isn't sure, suggest a default based on `.mfh/state/built.md`'s most recent entry date, or the oldest **Started:** date among currently active phases in `.mfh/state/progress.md` — whichever is more recent, since that bounds "things that could plausibly have drifted since the last known-good checkpoint."
 
 **Step 2 — Gather context:**
-Read `.mfh/design/milestones.md`, `.mfh/state/progress.md`, `.mfh/state/decisions.md`, `.mfh/state/built.md`, every file in `.mfh/library/`, and list `.mfh/plans/`. Run `git log` over the scoped range (`--stat` or `--name-only` so file paths are visible) to see what actually changed.
+Read `.mfh/design/roadmap.md`, `.mfh/design/milestones.md`, `.mfh/state/progress.md`, `.mfh/state/decisions.md`, `.mfh/state/built.md`, every file in `.mfh/library/`, and list `.mfh/plans/`. Run `git log` over the scoped range (`--stat` or `--name-only` so file paths are visible) to see what actually changed.
 
 **Step 3 — Check for stale library docs:**
 For each file in `.mfh/library/`, note what area or concern it documents. Cross-reference against the files touched in the scoped git history. Flag a likely gap when a commit clearly touches an area a doc describes (schema, routes, shared components, conventions) but that doc's own last-touched commit is well before it — a new API route with nothing added to a routes/architecture doc, a schema field with the database doc untouched, a new shared component absent from a components doc. Use judgment, not exhaustiveness — this is the same check `/mfh-commit` runs on a single diff, just over a wider window, so the same "plausible gap, not everything adjacent" bar applies.
@@ -30,17 +30,21 @@ Scan each active phase's Notes in `progress.md` for repeated language indicating
 **Step 6 — Check decisions.md references:**
 Grep `progress.md` and `built.md` for references to `decisions.md` (typically "See `decisions.md` → \"...\""). For each, confirm a matching heading/entry actually exists in `decisions.md`. Flag any reference that doesn't resolve — it means either the entry was never written or was written under a different title than what's referenced.
 
-**Step 7 — Present findings:**
-Group findings under clear headers (Stale Library Docs / Orphaned Plan Files / Stuck Phases / Unresolved Verification / Broken Decision References). For each finding, state what you found and why it's flagged — not just a bare file list. If a category has nothing to report, say so briefly rather than omitting it silently (an empty audit result should read as "checked and clean," not "not checked").
+**Step 7 — Check roadmap.md for drift:**
+Compare `roadmap.md`'s **Current Track**/**Current Focus** against what `milestones.md` actually shows as active — flag it if roadmap.md still names a milestone that's already fully shipped and moved to Completed Milestones, or doesn't mention a milestone that's clearly the active one. Check the **Goals** list for anything that reads as already achieved (cross-reference against `built.md`) but is still phrased as aspirational. Check whether **Live Sections** (if present) is missing an app that a completed milestone shipped. This is the same category of drift as library docs, just at the project-vision level instead of the code level.
+
+**Step 8 — Present findings:**
+Group findings under clear headers (Stale Library Docs / Orphaned Plan Files / Stuck Phases / Unresolved Verification / Broken Decision References / Roadmap Drift). For each finding, state what you found and why it's flagged — not just a bare file list. If a category has nothing to report, say so briefly rather than omitting it silently (an empty audit result should read as "checked and clean," not "not checked").
 
 Ask: "Want me to fix any of these now?" — let the user pick individual findings or whole categories, rather than assuming all-or-nothing.
 
-**Step 8 — Apply approved fixes:**
+**Step 9 — Apply approved fixes:**
 For each approved finding:
 - Stale library doc → make the edit, following the compact-header convention where applicable
 - Orphaned plan file → confirm before deleting (it may represent real unfinished work, not just cleanup)
 - Stuck phase → don't force-close it yourself; tell the user to run `/mfh-done [phase]` once they confirm it's actually ready
 - Unresolved verification → don't check items off on the user's behalf; surface it so they can walk it live or explicitly waive it
 - Broken decision reference → either write the missing `decisions.md` entry (if the rationale is recoverable from context) or correct the reference
+- Roadmap drift → make the edit directly (this is the same kind of update `/mfh-done` already makes automatically when a milestone completes — you're just catching up on one it missed)
 
 Report what was fixed and what was left for the user to handle themselves.
