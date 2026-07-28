@@ -65,11 +65,10 @@ Then run `/mfh-start` to begin your first phase.
     built.md          ← permanent changelog (git-tracked)
     decisions.md      ← non-obvious decisions and rationale (git-tracked)
 
-stakeholder/          ← optional; for projects with external stakeholder updates
-  STAKEHOLDER.md      ← latest update (source of truth)
-  STAKEHOLDER.html    ← rendered HTML version sent to stakeholders
-  history/            ← dated archive of past HTML updates
-  guides/             ← user-facing guides and login docs
+updates/              ← optional; created by /mfh-update on first run
+  latest.md           ← latest update (source of truth)
+  latest.html         ← rendered, friendly-viewable HTML version
+  history/            ← dated archive of past updates (both formats)
 ```
 
 ---
@@ -103,6 +102,7 @@ All three tracks live in `milestones.md`. Active milestones appear first, follow
 | `/mfh-commit` | Group changes into logical Conventional Commits |
 | `/mfh-push` | Push to remote and handle errors |
 | `/mfh-audit` | Retroactive sweep for stale library docs, orphaned plan files, stuck phases, and broken decision references |
+| `/mfh-update` | Generate a friendly, shareable project update — recent progress and what's next, written for your project's chosen audience |
 
 Commands marked `[phase]` accept an optional phase argument (e.g. `/mfh-done M4-P3`, `/mfh-done WI-P5`, or `/mfh-done FIN-P1`). If omitted and only one phase is active, it uses that automatically. If multiple phases are active, it asks.
 
@@ -196,7 +196,6 @@ Prose stays underneath for anything non-obvious — *why* a field exists, a gotc
 | `.mfh/state/decisions.md` | ✅ yes |
 | `.mfh/state/progress.md` | ❌ no (local session state) |
 | `.mfh/plans/` | ❌ no (ephemeral) |
-| `stakeholder/STAKEHOLDER.md` | ✅ yes |
-| `stakeholder/STAKEHOLDER.html` | ✅ yes |
-| `stakeholder/history/` | ✅ yes |
-| `stakeholder/guides/` | ✅ yes |
+| `updates/latest.md` | ✅ yes |
+| `updates/latest.html` | ✅ yes |
+| `updates/history/` | ✅ yes |
