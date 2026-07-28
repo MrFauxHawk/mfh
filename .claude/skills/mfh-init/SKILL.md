@@ -6,6 +6,8 @@ description: Initialize a new project with MFH planning structure
 
 You are initializing a new project with the MFH planning and state management structure.
 
+Before starting, mention to the user: the full command reference, the three tracks, and how everything fits together are documented in `~/mfh/README.md` — worth a skim if they haven't already read it, but setup below works either way.
+
 **Step 1 — Confirm the project root:**
 Ask: "What is the path to your project root? Press enter to use the current working directory."
 
