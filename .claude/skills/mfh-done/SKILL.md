@@ -6,32 +6,32 @@ description: Close out a completed phase and update the changelog
 
 You are closing out a completed phase. This command accepts an optional argument (e.g. `/mfh-done M4-P3`).
 
-**Before Step 1 — Check whether this is a completion or a cancellation:**
-`/mfh-done` closes a phase as **completed** by default. If the user's request indicates the phase is being cancelled/abandoned/scrapped instead (cut before finishing, decided against, no longer needed) — either stated directly or clear from context — follow the **Cancellation path** below instead of Steps 1–7. If it's ambiguous, ask: "Is this phase actually complete, or are we cancelling it?"
+**Step 1 — Check whether this is a completion or a cancellation:**
+`/mfh-done` closes a phase as **completed** by default. If the user's request indicates the phase is being cancelled/abandoned/scrapped instead (cut before finishing, decided against, no longer needed) — either stated directly or clear from context — follow the **Cancellation path** below instead of Steps 2–9. If it's ambiguous, ask via `AskUserQuestion`: "Is this phase actually complete, or are we cancelling it?" — **Complete** / **Cancel it**.
 
-**Cancellation path (instead of Steps 1–7):**
-1. Identify the phase (same lookup as Step 1 below).
+**Cancellation path (instead of Steps 2–9):**
+1. Identify the phase (same lookup as Step 2 below).
 2. If not already given, ask: "What's the reason for cancelling this phase?" — keep it brief.
 3. Append a short entry to `.mfh/state/decisions.md` noting the phase was cancelled and why. This is a decision record, not a shipped-feature record — do **not** write anything to `built.md`, since nothing was built.
-4. In `.mfh/design/milestones.md`, change the phase's icon to `❌` (not `✅`). For Milestone phases, don't touch the `### Current Position:` line the way a completion would (a cancelled phase isn't "next" or "complete" — leave the line as-is unless the user wants it reworded). Don't trigger the "all phases ✅" milestone-completion logic from Step 4 below — a milestone with a `❌` phase isn't fully shipped, but also isn't blocked from ever being considered done; use judgment, or ask the user if unsure.
-5. Remove the phase from `.mfh/state/progress.md` (same as Step 5 below).
-6. Delete the plan file if one exists (same as Step 6 below).
+4. In `.mfh/design/milestones.md`, change the phase's icon to `❌` (not `✅`). For Milestone phases, don't touch the `### Current Position:` line the way a completion would (a cancelled phase isn't "next" or "complete" — leave the line as-is unless the user wants it reworded). Don't trigger the "all phases ✅" milestone-completion logic from Step 6 below — a milestone with a `❌` phase isn't fully shipped, but also isn't blocked from ever being considered done; use judgment, or ask the user if unsure.
+5. Remove the phase from `.mfh/state/progress.md` (same as Step 7 below).
+6. Delete the plan file if one exists (same as Step 8 below).
 7. Confirm: "Phase cancelled and logged in decisions.md. Run `/mfh-status` to see the updated picture."
 
-**Step 1 — Identify the phase:**
+**Step 2 — Identify the phase:**
 Read `.mfh/state/progress.md`.
 
 - If a phase was provided as an argument (e.g. `M4-P3`), use that phase.
 - If no argument and only one active phase exists, use that one.
-- If no argument and multiple active phases exist, ask: "Which phase are you closing? (e.g. M4-P3)"
+- If no argument and multiple active phases exist, ask via `AskUserQuestion`: "Which phase are you closing?" — one option per active phase found in `progress.md`.
 
-**Step 2 — Gather context automatically:**
+**Step 3 — Gather context automatically:**
 Read `.mfh/state/progress.md`, `.mfh/design/milestones.md`, and `.mfh/state/decisions.md`. Do NOT ask the user for a summary or decisions — derive them from what is already recorded in these files.
 
-**Step 2b — Check for unresolved verification:**
-If a plan file is referenced for this phase, read it and check for a Verification Checklist section. If it contains any unchecked `- [ ]` items, tell the user which ones and ask: "This phase's Verification Checklist has unchecked items — [list them]. Close anyway, or walk through them first?" Proceed to Step 3 only once they've answered — don't silently close over an unverified checklist, and don't check items off on their behalf.
+**Step 4 — Check for unresolved verification:**
+If a plan file is referenced for this phase, read it and check for a Verification Checklist section. If it contains any unchecked `- [ ]` items, tell the user which ones and ask via `AskUserQuestion`: "This phase's Verification Checklist has unchecked items. Close anyway, or walk through them first?" — **Close anyway** / **Walk through them first**. Proceed to Step 5 only once they've answered — don't silently close over an unverified checklist, and don't check items off on their behalf.
 
-**Step 3 — Write to built.md:**
+**Step 5 — Write to built.md:**
 Append a new entry to `.mfh/state/built.md` at the top (most recent first), using the phase description and any notes from progress.md and milestones.md.
 
 For a **Milestone phase**:
@@ -58,7 +58,7 @@ For an **App Backlog phase** (PREFIX-P# format, e.g. `EMP-P3`):
 **Decisions:** [any decisions recorded in decisions.md relevant to this phase, or "none" if none]
 ```
 
-**Step 4 — Update milestones.md:**
+**Step 6 — Update milestones.md:**
 Find the active phase in `.mfh/design/milestones.md` and change its icon from 🔄, 🟡, or ⬜ to ✅.
 
 **For Milestone phases:**
@@ -69,7 +69,7 @@ Find the active phase in `.mfh/design/milestones.md` and change its icon from �
   - Update **Current Track** or **Current Focus** to reflect what's active next.
   - Move the milestone out of **Next Up** / **Upcoming** if it was listed there.
   - If no next milestone is planned, set Current Track to "Weekly Improvements — Continuous rolling backlog" (non-monorepo) or "App Backlogs — Continuous per-app improvement tracks" (monorepo).
-- Under the same condition, if `milestones.md` contains an `# App Backlogs` section (monorepo project), ask: "Did this milestone ship a new app? If yes, what's the app name and its 3-letter prefix?" If the user provides one, insert a new app backlog section into `milestones.md` immediately before the PLT section:
+- Under the same condition, if `milestones.md` contains an `# App Backlogs` section (monorepo project), ask via `AskUserQuestion`: "Did this milestone ship a new app?" — **Yes** / **No**. If yes, ask for the app name and its 3-letter prefix, then insert a new app backlog section into `milestones.md` immediately before the PLT section:
   ```
   ## [PREFIX] — [App Name]
 
@@ -85,7 +85,7 @@ Find the active phase in `.mfh/design/milestones.md` and change its icon from �
 **For App Backlog phases:**
 - Mark the phase ✅ in its app section. No `Current Position` line to update — the emoji status is self-documenting.
 
-**Step 5 — Remove the phase from progress.md:**
+**Step 7 — Remove the phase from progress.md:**
 Find the `## M#-P#`, `## WI-P#`, or `## {PREFIX}-P#` section and remove it entirely, including its preceding `---` divider.
 
 If no other phases remain after removal, replace the entire file contents with:
@@ -98,8 +98,8 @@ Tracks all currently active phases. Updated by `/mfh-start`, `/mfh-plan`, `/mfh-
 _(no active phases)_
 ```
 
-**Step 6 — Delete the plan file (if one exists):**
+**Step 8 — Delete the plan file (if one exists):**
 If a plan file was referenced, delete it. Milestone plans follow `m{N}-p{N}-plan.md` naming; WI plans follow `wi-p{N}-plan.md` naming; App Backlog plans follow `{prefix}-p{N}-plan.md` naming (e.g. `emp-p3-plan.md`).
 
-**Step 7 — Confirm:**
+**Step 9 — Confirm:**
 Tell the user: "Phase complete. Run `/mfh-status` to see the updated project picture, or `/mfh-commit` to commit the work."
