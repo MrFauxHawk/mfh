@@ -93,7 +93,7 @@ If no other phases remain after removal, replace the entire file contents with:
 ```markdown
 # Active Work
 
-Tracks all currently active phases. Updated by `/mfh-start`, `/mfh-plan`, `/mfh-update`, and `/mfh-execute`. Entries removed by `/mfh-done` when a phase completes.
+Tracks all currently active phases. Updated by `/mfh-start`, `/mfh-plan`, `/mfh-progress`, and `/mfh-execute`. Entries removed by `/mfh-done` when a phase completes.
 
 _(no active phases)_
 ```

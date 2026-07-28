@@ -30,7 +30,7 @@ If a plan file does exist, ask:
 > 3. New substantial scope — hand off to `/mfh-plan` to add a new Round first"
 
 - **Option 1 (continue plan):** proceed normally through the rest of this skill, working the plan's unchecked tasks.
-- **Option 2 (ad-hoc, no plan):** proceed through Step 3 and Step 5 (still mark 🔄, still read library/decisions for context), but skip Step 4's task-checkbox tracking — do the user's described work directly in Step 7 without ticking plan tasks, and when done tell the user to run `/mfh-update` to log it. Do not modify the plan file.
+- **Option 2 (ad-hoc, no plan):** proceed through Step 3 and Step 5 (still mark 🔄, still read library/decisions for context), but skip Step 4's task-checkbox tracking — do the user's described work directly in Step 7 without ticking plan tasks, and when done tell the user to run `/mfh-progress` to log it. Do not modify the plan file.
 - **Option 3 (new plan):** read the existing plan file first for context (prior rounds, decisions), then invoke `/mfh-plan` for this phase directly — do not ask the user to run it separately; the phase context carries over since it's the same conversation.
 
 This question fires every time `/mfh-execute` is called on a phase with an active plan — including the first call right after that plan was created — and persists until `/mfh-done` closes the phase and deletes the plan file.
@@ -42,7 +42,7 @@ Read `.mfh/design/milestones.md`. Find the table row for the active phase — Mi
 If a plan file is referenced, read it from `.mfh/plans/`. In "ad-hoc" mode this is for context only — do not treat its tasks as this session's work.
 
 **Step 4b — Read git log:**
-Run `git log --oneline -20` to see recent commits. Cross-reference against the plan tasks and any Notes entries in progress.md. Committed work is authoritative — if a commit covers a plan task or describes work beyond the plan, treat it as done regardless of whether a checkbox is ticked or an `/mfh-update` entry exists. Note any work done in commits that deviates from or extends the plan, so the summary in Step 6 reflects reality rather than the plan alone.
+Run `git log --oneline -20` to see recent commits. Cross-reference against the plan tasks and any Notes entries in progress.md. Committed work is authoritative — if a commit covers a plan task or describes work beyond the plan, treat it as done regardless of whether a checkbox is ticked or an `/mfh-progress` entry exists. Note any work done in commits that deviates from or extends the plan, so the summary in Step 6 reflects reality rather than the plan alone.
 
 **Step 5 — Read library and decisions:**
 Read all files in `.mfh/library/`. These contain the coding standards, conventions, and architectural rules you must follow throughout all work in this session.
@@ -68,17 +68,17 @@ Throughout all work:
   2. Re-read `.mfh/state/progress.md` fresh from disk (don't rely on a copy read earlier in this conversation — a concurrent session may have modified it since), then find the matching `- [ ] N.` line under **Tasks:** and change it to `- [x] N.`
 
 **Every 3 completed tasks, pause and ask:**
-> "That's [N] tasks done. Keep going, run the TypeScript/ESLint check now, or run `/mfh-update` to save progress and resume later?"
+> "That's [N] tasks done. Keep going, run the TypeScript/ESLint check now, or run `/mfh-progress` to save progress and resume later?"
 
-Wait for the user's response before continuing. If they choose to stop, do not proceed to the next task — let them run `/mfh-update` themselves. If they ask for the check, run **Step 8 — Verification** now, scoped to whatever's touched so far, then return to this same question (keep going / check / update) rather than assuming they want to stop.
+Wait for the user's response before continuing. If they choose to stop, do not proceed to the next task — let them run `/mfh-progress` themselves. If they ask for the check, run **Step 8 — Verification** now, scoped to whatever's touched so far, then return to this same question (keep going / check / log progress) rather than assuming they want to stop.
 
 **When the last plan task is ticked** (whether or not it landed on a 3-task pause), ask once more:
-> "All plan tasks are done. Want me to run the TypeScript/ESLint check now, or hold off in case you're adding more to this phase? Either way, run `/mfh-update` when you're ready to log this."
+> "All plan tasks are done. Want me to run the TypeScript/ESLint check now, or hold off in case you're adding more to this phase? Either way, run `/mfh-progress` when you're ready to log this."
 
 Do not run Step 8 unless they say yes here.
 
 **If session mode is "ad-hoc, no plan":** execute the work the user actually asked for this session directly — it is not on the plan's task list, so there is nothing to tick off. Do not touch the plan file or its checkboxes. Pause for a check-in at a natural break point rather than every 3 tasks (there's no task list to count against):
-> "That's done. Want me to run the TypeScript/ESLint check now, or hold off? Either way, run `/mfh-update` when you're ready to log this."
+> "That's done. Want me to run the TypeScript/ESLint check now, or hold off? Either way, run `/mfh-progress` when you're ready to log this."
 
 If they ask for the check, run **Step 8 — Verification**. Do not run it unprompted.
 
@@ -87,7 +87,7 @@ If they ask for the check, run **Step 8 — Verification**. Do not run it unprom
 - **DO** re-read `progress.md` fresh immediately before every write to it — a concurrent session may have changed it since your last read
 - **DO** append to `.mfh/state/decisions.md` immediately when a non-obvious decision is made
 - **DO** update `milestones.md` phase status to `🔄` at the start of Step 3 (one-time, if not already set)
-- **DO NOT** modify `built.md` or any other state file — those are updated by `/mfh-update` and `/mfh-done`
+- **DO NOT** modify `built.md` or any other state file — those are updated by `/mfh-progress` and `/mfh-done`
 - **DO NOT** change the **Status**, **Notes**, or any other field in progress.md — only the task checkboxes, and only in "continue plan" mode
 
 **Step 8 — Verification (on request only — never run automatically):**

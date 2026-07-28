@@ -97,7 +97,7 @@ All three tracks live in `milestones.md`. Active milestones appear first, follow
 | `/mfh-start` | Start a new milestone phase, WI phase, or app backlog phase |
 | `/mfh-plan` | Create an implementation plan for the active phase |
 | `/mfh-execute [phase]` | Pick up active work and begin executing |
-| `/mfh-update [phase]` | Log progress, decisions, and what remains |
+| `/mfh-progress [phase]` | Log progress, decisions, and what remains |
 | `/mfh-done [phase]` | Close out a completed phase, update changelog |
 | `/mfh-newfeature` | Add a new milestone, WI phase, or app backlog phase to the project |
 | `/mfh-commit` | Group changes into logical Conventional Commits |

@@ -14,7 +14,7 @@ Read `.mfh/design/milestones.md`. Find the requested phase in the appropriate tr
 
 **Step 3 — Check progress.md:**
 Read `.mfh/state/progress.md`. If a section for this phase (e.g. `## M3-P2`, `## WI-P5`, or `## EMP-P3`) already exists, say:
-"[phase] is already in progress. Run `/mfh-execute [phase]` to continue working, or `/mfh-update [phase]` to log what's been done."
+"[phase] is already in progress. Run `/mfh-execute [phase]` to continue working, or `/mfh-progress [phase]` to log what's been done."
 Then stop.
 
 **Step 4 — If not in progress, present the phase:**

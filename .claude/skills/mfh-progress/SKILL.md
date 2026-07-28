@@ -2,9 +2,9 @@
 description: Log progress, decisions, and what remains for the active phase
 ---
 
-# /mfh-update
+# /mfh-progress
 
-You are logging a progress update for an active phase. This command accepts an optional argument (e.g. `/mfh-update M4-P3`).
+You are logging a progress update for an active phase. This command accepts an optional argument (e.g. `/mfh-progress M4-P3`).
 
 **Step 1 — Identify the phase:**
 Read `.mfh/state/progress.md`.
