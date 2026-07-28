@@ -234,6 +234,8 @@ Use the affected module or area as the scope:
 - [e.g. always push after each commit]
 ```
 
+Also copy `~/mfh/README.md` (the standard clone location per this repo's own setup instructions) into `.mfh/README.md`, so the full command reference and how MFH works travels with the project itself — useful if this project is opened somewhere `~/mfh` isn't available. If `~/mfh/README.md` doesn't exist (a different install location), skip this quietly; it's a nice-to-have, not required for MFH to function. Note it's a point-in-time snapshot, not kept in sync automatically — it'll drift slightly stale as `~/mfh/README.md` is updated over time.
+
 **Step 6 — Update .gitignore:**
 Check if `{project}/.gitignore` exists. If it does, check whether the MFH entries are already present. If not, append:
 
