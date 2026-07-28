@@ -17,14 +17,15 @@ Check if `.mfh/` already exists at the project root. If it does, say:
 Then stop.
 
 **Step 3 — Gather setup info:**
-Ask all questions together in one message:
+Ask via `AskUserQuestion`: "Is this a monorepo?" — **Yes** (multiple apps/packages in one repo; uses the App Backlogs track) / **No** (single app or codebase; uses the Weekly Improvements track). This is a structural fork the rest of setup depends on, so offer it as a pick rather than free text.
+
+Then ask together in one message:
 1. "What is the project name?"
-2. "Is this a monorepo? (yes/no)"
-3. "What are the main modules or areas of this codebase? These become your commit scopes. (e.g. `api, ui, auth, db, config`)"
+2. "What are the main modules or areas of this codebase? These become your commit scopes. (e.g. `api, ui, auth, db, config`)"
 
 Use the project name to replace `[Project Name]` in all template files. Use the modules list to populate the Scopes section of `git.md`.
 
-If the user isn't sure what their modules are, ask: "What is the app for?" Then suggest sensible scope defaults based on the answer — for example, a web app might default to `api, ui, auth, db, config`; a mobile app to `screens, api, state, config`; a CLI tool to `cmd, core, config`. Present the suggestions and let the user confirm or adjust before continuing.
+If the user isn't sure what their modules are, ask: "What is the app for?" Then suggest sensible scope defaults based on the answer — for example, a web app might default to `api, ui, auth, db, config`; a mobile app to `screens, api, state, config`; a CLI tool to `cmd, core, config`. Offer the suggested list via `AskUserQuestion` as a selectable option (its free-text fallback covers "something else entirely") rather than asking them to type it back.
 
 **Step 4 — Create the folder structure:**
 Create these directories:

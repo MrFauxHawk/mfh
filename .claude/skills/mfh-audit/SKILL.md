@@ -6,10 +6,10 @@ description: Retroactive sweep for stale library docs, orphaned plan files, and 
 
 You are running a retroactive consistency sweep across the whole project — catching drift that's already accumulated, not just what changed in the current session. `/mfh-commit`'s own stale-doc check only looks at the diff about to be committed; this command looks backward across however much history the user wants covered.
 
-This command is read-mostly and diagnostic-first: gather findings, present them grouped by category, and only act on what the user approves. Don't fix anything before Step 6.
+This command is read-mostly and diagnostic-first: gather findings, present them grouped by category, and only act on what the user approves. Don't fix anything before Step 9.
 
 **Step 1 — Establish scope:**
-Ask: "How far back should I look? (e.g. 'since last week', 'last 30 commits', 'since the oldest open phase started', or 'entire project history')"
+Ask via `AskUserQuestion`: "How far back should I look?" — **Since last week** / **Last 30 commits** / **Since the oldest open phase started** / **Entire project history** (its Other fallback covers a custom range).
 
 If the user isn't sure, suggest a default based on `.mfh/state/built.md`'s most recent entry date, or the oldest **Started:** date among currently active phases in `.mfh/state/progress.md` — whichever is more recent, since that bounds "things that could plausibly have drifted since the last known-good checkpoint."
 
@@ -36,7 +36,7 @@ Compare `roadmap.md`'s **Current Track**/**Current Focus** against what `milesto
 **Step 8 — Present findings:**
 Group findings under clear headers (Stale Library Docs / Orphaned Plan Files / Stuck Phases / Unresolved Verification / Broken Decision References / Roadmap Drift). For each finding, state what you found and why it's flagged — not just a bare file list. If a category has nothing to report, say so briefly rather than omitting it silently (an empty audit result should read as "checked and clean," not "not checked").
 
-Ask: "Want me to fix any of these now?" — let the user pick individual findings or whole categories, rather than assuming all-or-nothing.
+Ask via `AskUserQuestion` (multi-select): "Want me to fix any of these now?" — one option per category that actually has findings, plus a **Fix everything** option and a **Fix nothing, just wanted the report** option — let the user pick individual categories rather than assuming all-or-nothing.
 
 **Step 9 — Apply approved fixes:**
 For each approved finding:

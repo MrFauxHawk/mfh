@@ -39,9 +39,9 @@ A numbered, step-by-step task list. Each step concrete enough to act on without 
 "How do I know this is done correctly?" — UI tested in browser, API response verified, correct fallback behavior shown, code follows library conventions, no dead code, etc.
 
 **Step 4 — Wait for approval:**
-Present the plan and ask: "Does this plan look good, or would you like to make changes?"
+Present the plan and ask via `AskUserQuestion`: "Does this plan look good?" — **Approved** / **Request changes** / **Reject — I want something different**.
 
-- If approved: proceed to Step 4
+- If approved: proceed to Step 5
 - If changes requested: revise and re-present
 - If rejected: ask what they want instead, then stop
 

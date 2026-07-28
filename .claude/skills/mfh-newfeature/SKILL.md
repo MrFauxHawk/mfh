@@ -4,11 +4,11 @@ description: Add a new milestone or phase to the project
 
 # /mfh-newfeature
 
-You are adding a new feature to the MFH planning system. First check `.mfh/design/milestones.md` for which second track this project uses — **Weekly Improvements** (`WI-P#`, non-monorepo) or **App Backlogs** (`{PREFIX}-P#`, monorepo, one section per app). Then ask the user these questions in order, using whichever option set matches:
+You are adding a new feature to the MFH planning system. First check `.mfh/design/milestones.md` for which second track this project uses — **Weekly Improvements** (`WI-P#`, non-monorepo) or **App Backlogs** (`{PREFIX}-P#`, monorepo, one section per app). Then ask via `AskUserQuestion`, using whichever option set matches:
 
-**Non-monorepo:** "Are we adding a **new milestone**, a **new phase to an existing milestone**, or a **new Weekly Improvement phase** (`WI-P#`)?"
+**Non-monorepo:** "What are we adding?" — **New milestone** / **New phase to an existing milestone** / **New Weekly Improvement phase** (`WI-P#`).
 
-**Monorepo:** "Are we adding a **new milestone**, a **new phase to an existing milestone**, a **new phase to an existing App Backlog** (`{PREFIX}-P#`), or a **new App Backlog section** for a brand-new app?"
+**Monorepo:** "What are we adding?" — **New milestone** / **New phase to an existing milestone** / **New phase to an existing App Backlog** (`{PREFIX}-P#`) / **New App Backlog section** (a brand-new app).
 
 **Phase table format:** Icons go before the phase number — no separate Status column. Use `⬜ N` for not started, `🔄 N` for in progress, `🟡 N` for implementation done and awaiting `/mfh-done`, `✅ N` for complete, `❌ N` for cancelled. Milestone phase rows use a bare number in the cell; Weekly Improvement and App Backlog rows use the full phase identifier instead (see their examples below).
 
@@ -33,7 +33,7 @@ Then:
 - Confirm: "Added M# — [Name] to milestones.md with [N] phases."
 
 **If new phase to existing milestone:**
-- Ask: "Which milestone? (provide M# or name)"
+- Read `milestones.md`'s active milestones and ask via `AskUserQuestion`: "Which milestone?" — one option per active milestone (its Other fallback covers anything not listed).
 - Ask: "What is the phase name and a one-sentence description?"
 
 Then:
@@ -50,7 +50,7 @@ Then:
 - Confirm: "Added WI-P# — [description] to the Weekly Improvements track."
 
 **If new phase to existing App Backlog:**
-- Ask: "Which app backlog? (provide the 3-letter prefix, e.g. EMP)"
+- Read `milestones.md`'s existing App Backlog sections and ask via `AskUserQuestion`: "Which app backlog?" — one option per existing prefix (its Other fallback covers a prefix not listed).
 - Ask: "What is the phase name and a one-sentence description?"
 
 Then:
@@ -71,5 +71,5 @@ Then:
 
   ---
   ```
-- Ask: "Should `git.md`'s Scopes list also include `{prefix}` (lowercase)?" If yes, append it there.
+- Ask via `AskUserQuestion`: "Should `git.md`'s Scopes list also include `{prefix}` (lowercase)?" — **Yes** / **No**. If yes, append it there.
 - Confirm: "Added new App Backlog section: {PREFIX} — [App Name]."

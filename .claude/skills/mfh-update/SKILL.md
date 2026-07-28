@@ -9,9 +9,9 @@ You are generating a project update: a readable summary of what's happened recen
 **Step 1 — Check for audience/delivery preference:**
 Read `.mfh/design/roadmap.md` for an `## Updates` section. If it exists, use its **Audience** and **Delivery** fields for everything below.
 
-If it doesn't exist yet, ask both questions once:
-> "Who are these updates for? (e.g. your own devlog, a Discord/friends channel, a client or stakeholder report, a public blog)"
-> "How should each update end up somewhere? (e.g. just leave the file for you to handle, publish it as a shareable Claude Artifact link, or something project-specific I should follow)"
+If it doesn't exist yet, ask both via `AskUserQuestion` (one call, two questions):
+- "Who are these updates for?" — **My own devlog** / **A Discord/friends channel** / **A client or stakeholder report** / **A public blog** (Other covers anything else).
+- "How should each update end up somewhere?" — **Just leave the file for me to handle** / **Publish as a shareable Claude Artifact link** / **Something project-specific** (Other covers a custom pipeline to describe).
 
 Write the answers into `.mfh/design/roadmap.md` as a new section, inserted after **Current Track** (or at the end of the file if that section isn't present), so this is never asked again:
 ```
@@ -26,7 +26,7 @@ Check `.mfh/updates/latest.md` for its most recent entry's date. If it doesn't e
 
 Read `.mfh/state/built.md` entries newer than that date (or all of it, on a first run). Also read `.mfh/design/milestones.md` (Current Position lines, next unstarted phases) and `.mfh/design/roadmap.md` (Goals) for the forward-looking half. Skim `.mfh/state/progress.md` for anything actively in flight worth a one-line mention.
 
-If nothing has shipped since the last update, say so directly and ask whether the user still wants an update generated (e.g. just the "what's next" half) rather than producing a report that just restates emptiness.
+If nothing has shipped since the last update, say so directly and ask via `AskUserQuestion`: "Nothing's shipped since the last update. Still want one generated (just the 'what's next' half), or skip it this time?" — **Generate it anyway** / **Skip it this time** — rather than producing a report that just restates emptiness.
 
 **Step 3 — Draft the update:**
 Write two sections:
@@ -40,7 +40,7 @@ Pull from the next unstarted phase(s) in `milestones.md` and the relevant goals 
 Keep length proportional to how much actually happened. A quiet stretch gets a short update, not padded filler to look substantial.
 
 **Step 4 — Present the draft:**
-Show the user the drafted Markdown and ask: "Does this look right, or want changes?" Wait for approval before finalizing — tone and framing are subjective here, and this may be read by someone other than the user.
+Show the user the drafted Markdown and ask via `AskUserQuestion`: "Does this look right?" — **Yes, finalize it** / **I want changes**. Wait for approval before finalizing — tone and framing are subjective here, and this may be read by someone other than the user.
 
 **Step 5 — Save and render:**
 Once approved:

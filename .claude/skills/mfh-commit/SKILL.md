@@ -22,9 +22,9 @@ Library docs (`.mfh/library/*.md`) drift out of date silently — the usual fail
 
 For each file in `.mfh/library/`, skim what area or concern it documents (schema, routes, auth, shared components, conventions, etc.). Then check the diffs gathered in Step 1 for changes that plausibly affect that area. If a change looks like it should be reflected in a library doc that wasn't touched in this same batch of changes, flag it:
 
-> "This change touches [area], which `[doc].md` documents, but that file wasn't updated — want me to update it before committing, or is this intentional?"
+Ask via `AskUserQuestion`: "This change touches [area], which `[doc].md` documents, but that file wasn't updated. Update it before committing, or is this intentional?" — **Update it now** / **Intentional, leave it**.
 
-Wait for the user's answer. If they want it updated, make the edit now and fold it into whichever commit group it belongs with (or its own `docs` commit, per Step 2's grouping judgment). Use good judgment about what counts as a plausible gap — a new API route with no matching entry in a routes/architecture doc, a schema field added but the database doc not touched, a new shared component absent from a components doc. Don't flag every file that's merely adjacent to a library-doc topic, and don't ask about this more than once per commit session.
+If they want it updated, make the edit now and fold it into whichever commit group it belongs with (or its own `docs` commit, per Step 2's grouping judgment). Use good judgment about what counts as a plausible gap — a new API route with no matching entry in a routes/architecture doc, a schema field added but the database doc not touched, a new shared component absent from a components doc. Don't flag every file that's merely adjacent to a library-doc topic, and don't ask about this more than once per commit session.
 
 **Step 4 — Draft commit messages:**
 For each proposed commit, write a message using Conventional Commits format:
@@ -44,7 +44,7 @@ Examples:
 - `chore(config): add shared package to workspace`
 
 **Step 5 — Present the full commit list:**
-Show the user the proposed commits in order, with the files that belong in each one. Ask: "Does this commit plan look good?"
+Show the user the proposed commits in order, with the files that belong in each one. Ask via `AskUserQuestion`: "Does this commit plan look good?" — **Yes, proceed** / **I want changes**.
 
 Wait for approval before proceeding.
 

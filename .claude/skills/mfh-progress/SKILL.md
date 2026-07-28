@@ -11,7 +11,7 @@ Read `.mfh/state/progress.md`.
 
 - If a phase was provided as an argument (e.g. `M4-P3`), use that phase.
 - If no argument and only one active phase exists, use that one.
-- If no argument and multiple active phases exist, ask: "Which phase are you updating? (e.g. M4-P3)"
+- If no argument and multiple active phases exist, ask via `AskUserQuestion`: "Which phase are you updating?" — one option per active phase found in `progress.md`.
 
 **Step 2 — Gather context automatically:**
 Read the active plan file (e.g. `.mfh/plans/m{N}-p{N}-plan.md`) if one exists, and run `git log --oneline` to see commits since the last update date recorded in progress.md. Do NOT ask the user — derive the following:

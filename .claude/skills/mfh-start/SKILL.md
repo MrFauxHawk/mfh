@@ -23,7 +23,7 @@ Show the user:
 - What it involves (from `.mfh/design/milestones.md`)
 - Any relevant context you can infer
 
-Then ask: "Do you want to **create a plan** before starting, or just **get to work**?"
+Then ask via `AskUserQuestion`: "Create a plan before starting, or just get to work?" — **Create a plan** / **Just get to work**.
 
 **If plan:**
 Say: "Handing off to /mfh-plan." Then invoke `/mfh-plan` with the phase context already established.
