@@ -67,9 +67,10 @@ Then run `/mfh-start` to begin your first phase.
     built.md          ← permanent changelog (git-tracked)
     decisions.md      ← non-obvious decisions and rationale (git-tracked)
   updates/            ← optional; created by /mfh-update on first run
-    latest.md         ← latest update (source of truth)
-    latest.html       ← rendered, friendly-viewable HTML version
-    history/          ← dated archive of past updates (both formats)
+    {profile}/        ← one folder per audience profile (e.g. mine/, users/, stakeholders/)
+      latest.md       ← that profile's latest update (source of truth)
+      latest.html     ← rendered, friendly-viewable HTML version
+      history/        ← dated archive of that profile's past updates (both formats)
 ```
 
 ---
@@ -103,7 +104,7 @@ All three tracks live in `milestones.md`. Active milestones appear first, follow
 | `/mfh-commit` | Group changes into logical Conventional Commits |
 | `/mfh-push` | Push to remote and handle errors |
 | `/mfh-audit` | Retroactive sweep for stale library docs, orphaned plan files, stuck phases, and broken decision references |
-| `/mfh-update` | Generate a friendly, shareable project update — recent progress and what's next, written for your project's chosen audience |
+| `/mfh-update` | Generate friendly, shareable project updates — recent progress and what's next, one or more audience profiles at a time |
 
 Commands marked `[phase]` accept an optional phase argument (e.g. `/mfh-done M4-P3`, `/mfh-done WI-P5`, or `/mfh-done FIN-P1`). If omitted and only one phase is active, it uses that automatically. If multiple phases are active, it asks.
 
@@ -197,6 +198,6 @@ Prose stays underneath for anything non-obvious — *why* a field exists, a gotc
 | `.mfh/state/decisions.md` | ✅ yes |
 | `.mfh/state/progress.md` | ❌ no (local session state) |
 | `.mfh/plans/` | ❌ no (ephemeral) |
-| `.mfh/updates/latest.md` | ✅ yes |
-| `.mfh/updates/latest.html` | ✅ yes |
-| `.mfh/updates/history/` | ✅ yes |
+| `.mfh/updates/{profile}/latest.md` | ✅ yes |
+| `.mfh/updates/{profile}/latest.html` | ✅ yes |
+| `.mfh/updates/{profile}/history/` | ✅ yes |
