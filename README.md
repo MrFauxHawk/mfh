@@ -11,6 +11,8 @@ MFH has two parts:
 - **Skills** — Claude Code slash commands installed once at the user level (`~/.claude/skills/`). Available in every project automatically.
 - **Project structure** — The `.mfh/` folder inside each project, scaffolded by `/mfh-init`.
 
+Wherever a skill hits a decision point with a small fixed set of outcomes (approve a plan, pick a phase, choose a session mode), it asks via a selectable prompt rather than expecting you to type the answer back — free text is reserved for genuinely open-ended questions (names, descriptions, priorities) where there's nothing sensible to select from.
+
 ---
 
 ## Setup
@@ -91,12 +93,12 @@ All three tracks live in `milestones.md`. Active milestones appear first, follow
 | Command | What it does |
 |---|---|
 | `/mfh-init` | Scaffold `.mfh/` structure into a new project |
-| `/mfh-status` | Snapshot of active milestones, open WI phases, app backlog phases, and current work |
+| `/mfh-status` | Snapshot of active milestones, open WI/app backlog phases, current work, and anything ready to close |
 | `/mfh-start` | Start a new milestone phase, WI phase, or app backlog phase |
 | `/mfh-plan` | Create an implementation plan for the active phase |
 | `/mfh-execute [phase]` | Pick up active work and begin executing |
 | `/mfh-progress [phase]` | Log progress, decisions, and what remains |
-| `/mfh-done [phase]` | Close out a completed phase, update changelog |
+| `/mfh-done [phase]` | Close out a completed phase (or cancel one), update changelog |
 | `/mfh-newfeature` | Add a new milestone, WI phase, or app backlog phase to the project |
 | `/mfh-commit` | Group changes into logical Conventional Commits |
 | `/mfh-push` | Push to remote and handle errors |
