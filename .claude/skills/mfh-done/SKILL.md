@@ -16,6 +16,9 @@ Read `.mfh/state/progress.md`.
 **Step 2 — Gather context automatically:**
 Read `.mfh/state/progress.md`, `.mfh/design/milestones.md`, and `.mfh/state/decisions.md`. Do NOT ask the user for a summary or decisions — derive them from what is already recorded in these files.
 
+**Step 2b — Check for unresolved verification:**
+If a plan file is referenced for this phase, read it and check for a Verification Checklist section. If it contains any unchecked `- [ ]` items, tell the user which ones and ask: "This phase's Verification Checklist has unchecked items — [list them]. Close anyway, or walk through them first?" Proceed to Step 3 only once they've answered — don't silently close over an unverified checklist, and don't check items off on their behalf.
+
 **Step 3 — Write to built.md:**
 Append a new entry to `.mfh/state/built.md` at the top (most recent first), using the phase description and any notes from progress.md and milestones.md.
 
@@ -44,7 +47,7 @@ For an **App Backlog phase** (PREFIX-P# format, e.g. `EMP-P3`):
 ```
 
 **Step 4 — Update milestones.md:**
-Find the active phase in `.mfh/design/milestones.md` and change its icon from 🔄 or ⬜ to ✅.
+Find the active phase in `.mfh/design/milestones.md` and change its icon from 🔄, 🟡, or ⬜ to ✅.
 
 **For Milestone phases:**
 - Update the milestone's `### Current Position:` line to reflect the newly completed phase (e.g. "P1–P3 complete — P4 next" or "All phases complete").

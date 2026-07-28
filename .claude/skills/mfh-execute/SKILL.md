@@ -65,7 +65,7 @@ Throughout all work:
 - Follow the task order from the plan
 - After completing each task:
   1. Briefly note it to the user
-  2. In `.mfh/state/progress.md`, find the matching `- [ ] N.` line under **Tasks:** and change it to `- [x] N.`
+  2. Re-read `.mfh/state/progress.md` fresh from disk (don't rely on a copy read earlier in this conversation — a concurrent session may have modified it since), then find the matching `- [ ] N.` line under **Tasks:** and change it to `- [x] N.`
 
 **Every 3 completed tasks, pause and ask:**
 > "That's [N] tasks done. Keep going, run the TypeScript/ESLint check now, or run `/mfh-update` to save progress and resume later?"
@@ -84,6 +84,7 @@ If they ask for the check, run **Step 8 — Verification**. Do not run it unprom
 
 **Write rules during execution:**
 - **DO** tick off task checkboxes as each task completes (change `[ ]` → `[x]`) — **only** in "continue plan" mode
+- **DO** re-read `progress.md` fresh immediately before every write to it — a concurrent session may have changed it since your last read
 - **DO** append to `.mfh/state/decisions.md` immediately when a non-obvious decision is made
 - **DO** update `milestones.md` phase status to `🔄` at the start of Step 3 (one-time, if not already set)
 - **DO NOT** modify `built.md` or any other state file — those are updated by `/mfh-update` and `/mfh-done`

@@ -10,9 +10,10 @@ Read `.mfh/design/milestones.md` and `.mfh/state/progress.md`. Then output a cle
 
 ## Project Status
 
-**Active Milestones** — list only milestones that have at least one incomplete phase (⬜ or 🔄). For each, show the milestone heading and only the incomplete phases:
+**Active Milestones** — list only milestones that have at least one incomplete phase (⬜, 🔄, or 🟡). For each, show the milestone heading and only the incomplete phases:
 
 **M# — [Milestone Name]**
+- 🟡 P#: [Phase Name] — ready to close
 - 🔄 P#: [Phase Name]
 - ⬜ P#: [Phase Name]
 *(Current Position line from milestones.md, verbatim)*
@@ -21,10 +22,11 @@ Skip completed milestones entirely — they are historical record, not active st
 
 ---
 
-**Weekly Improvements** — show only open (⬜ or 🔄) WI phases and the current position:
+**Weekly Improvements** — show only open (⬜, 🔄, or 🟡) WI phases and the current position:
 
 **Weekly Improvements**
 *(Current Position line from milestones.md, verbatim)*
+- 🟡 WI-P#: [Phase Name] — ready to close
 - 🔄 WI-P#: [Phase Name]
 - ⬜ WI-P#: [Phase Name]
 
@@ -41,6 +43,16 @@ If progress.md has active phases, list each one:
 - Started: [date]
 
 List all active phases. If nothing is active, show: "Nothing currently in progress."
+
+---
+
+## Ready to Close
+
+List every phase marked 🟡 across milestones, Weekly Improvements, and App Backlog sections, e.g.:
+- M10-P9 — Opportunities Page Refactor: run `/mfh-done M10-P9`
+- WI-P14 — [Phase Name]: run `/mfh-done WI-P14`
+
+If there are none, say: "Nothing waiting to close." This section exists so a phase that's been implementation-complete for a while doesn't just sit there silently — surface it every time, not just the first time it goes 🟡.
 
 ---
 

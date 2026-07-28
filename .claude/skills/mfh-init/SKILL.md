@@ -77,7 +77,7 @@ This file has two tracks:
 
 **File structure:** Active milestones first → Weekly Improvements → Completed milestones in numbered order. When a milestone ships, move it into the Completed section in its numbered position.
 
-**Status legend:** ✅ Complete · 🔄 In progress · ⬜ Not started
+**Status legend:** ✅ Complete · 🟡 Implementation done, awaiting `/mfh-done` · 🔄 In progress · ⬜ Not started
 
 ---
 
@@ -132,7 +132,7 @@ This file has two tracks:
 
 **File structure:** Active milestones first → App Backlogs → Completed milestones in numbered order. When a milestone ships, move it into the Completed section in its numbered position.
 
-**Status legend:** ✅ Complete · 🔄 In progress · ⬜ Not started
+**Status legend:** ✅ Complete · 🟡 Implementation done, awaiting `/mfh-done` · 🔄 In progress · ⬜ Not started
 
 ---
 

@@ -8,7 +8,7 @@ You are adding a new feature to the MFH planning system. Ask the user these ques
 
 1. "Are we adding a **new milestone**, a **new phase to an existing milestone**, or a **new Weekly Improvement phase** (WI-P#)?"
 
-**Phase table format:** Icons go before the phase number — no separate Status column. Use `⬜ N` for not started, `🔄 N` for in progress, `✅ N` for complete.
+**Phase table format:** Icons go before the phase number — no separate Status column. Use `⬜ N` for not started, `🔄 N` for in progress, `🟡 N` for implementation done and awaiting `/mfh-done`, `✅ N` for complete.
 
 ```
 | Phase | Description |
