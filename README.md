@@ -40,7 +40,7 @@ Open any project in Claude Code and run:
 /mfh-init
 ```
 
-This asks for your project name and the main modules or areas of your codebase, then scaffolds the full `.mfh/` folder structure — including a `library/git.md` pre-populated with your commit scopes. It also adds the required `.gitignore` entries.
+This asks for your project name, the main modules or areas of your codebase, and whether the project has a database/auth/roles, then scaffolds the full `.mfh/` folder structure — including `library/git.md` pre-populated with your commit scopes, plus empty starter docs for the rest of `.mfh/library/` (see [What goes in `.mfh/library/`](#what-goes-in-mfhlibrary) below). It also adds the required `.gitignore` entries.
 
 ### 3. Seed your project
 
@@ -48,6 +48,8 @@ Fill in:
 - `.mfh/design/roadmap.md` — your project vision, tech stack, and goals
 - `.mfh/design/milestones.md` — your milestone and phase breakdown
 - `.mfh/library/git.md` — review and add your branch rules (scopes are pre-filled by init)
+
+The rest of `.mfh/library/`'s starter docs (`style.md`, `architecture.md`, etc.) can stay empty for now — fill them in as the project actually takes shape, there's no rush.
 
 Then run `/mfh-start` to begin your first phase.
 
@@ -163,17 +165,24 @@ _(none yet)_
 
 ## What goes in `.mfh/library/`
 
-Coding standards, conventions, and architectural rules that Claude should follow during all work. Examples:
+Coding standards, conventions, and architectural rules that Claude should follow during all work. These are loaded by `/mfh-execute` and `/mfh-plan` so Claude always works within your project's standards.
 
-- `git.md` — commit scopes, branch rules, message format (created by `/mfh-init`)
-- `helpers.md` — a compact index of shared utility/helper function signatures (see below) — worth adding as soon as a project has more than a couple of shared `lib/` functions, so their existence and purpose is discoverable without grepping
-- Brand/theme guidelines
-- Code organization standards
-- API design patterns
-- Component conventions
-- Data flow rules
+`/mfh-init` scaffolds six of these as empty starter files for every project, regardless of type or size — the value is that they exist from day one so Claude reads them as a matter of course, not that the placeholder content is useful on its own:
 
-These are loaded by `/mfh-execute` and `/mfh-plan` so Claude always works within your project's standards.
+- `git.md` — commit scopes, branch rules, message format
+- `style.md` — brand colors, typography, visual conventions (`/mfh-update` reads this to color-match generated updates to the real brand)
+- `helpers.md` — a compact index of shared utility/helper function signatures, so their existence and purpose is discoverable without grepping
+- `architecture.md` — pages, routes, app structure, cross-app conventions
+- `deploy.md` — server config, commands, deploy workflow, secrets
+- `components.md` — shared UI component index — worth documenting even in a small project, before an extraction into a dedicated shared package would otherwise force the issue
+
+Three more get scaffolded conditionally, based on an `/mfh-init` question about what the project actually has (no point in an empty `auth.md` for a project with no authentication):
+
+- `database.md` — schema models, migration notes (only if the project has a database)
+- `auth.md` — auth cookie, session, and middleware mechanics (only if it has user accounts/authentication)
+- `roles.md` — roles, middleware access, route guards (only if it has role-based permissions)
+
+Anything beyond these — API design patterns, data flow rules, business logic, or any other category — still gets added organically as a project needs it, same as always.
 
 ### Compact-header convention
 

@@ -21,6 +21,8 @@ Then stop.
 **Step 3 — Gather setup info:**
 Ask via `AskUserQuestion`: "Is this a monorepo?" — **Yes** (multiple apps/packages in one repo; uses the App Backlogs track) / **No** (single app or codebase; uses the Weekly Improvements track). This is a structural fork the rest of setup depends on, so offer it as a pick rather than free text.
 
+Also ask via `AskUserQuestion` (multi-select): "Does this project have any of these?" — **A database** / **User accounts or authentication** / **Role-based permissions**. Leave all unselected if none apply. This decides which conditional library docs get scaffolded in Step 5 — unlike `style.md`, `helpers.md`, `architecture.md`, `deploy.md`, and `components.md` (scaffolded for every project regardless, since they apply universally), `database.md`/`auth.md`/`roles.md` only make sense when the project actually has that concern.
+
 Then ask together in one message:
 1. "What is the project name?"
 2. "What are the main modules or areas of this codebase? These become your commit scopes. (e.g. `api, ui, auth, db, config`)"
@@ -234,6 +236,66 @@ Use the affected module or area as the scope:
 - [e.g. always push after each commit]
 ```
 
+**Every project gets these five, regardless of type or size** — the value here isn't the placeholder content (there isn't any), it's that the file exists from day one so Claude reads it as a matter of course during `/mfh-execute`/`/mfh-plan` and other skills, and so `/mfh-update`'s brand-color detection and the `helpers.md` convention have something to check against immediately rather than only after a project happens to create one organically:
+
+`.mfh/library/style.md`:
+```markdown
+# [Project Name] — Style Guide
+
+Brand colors, typography, and visual conventions. Fill in once the project has an actual visual identity — `/mfh-update` reads this to color-match generated updates to the real brand instead of falling back to its own default look.
+```
+
+`.mfh/library/helpers.md`:
+```markdown
+# [Project Name] — Shared Helpers
+
+Compact index of shared utility/helper function signatures. Check here before writing a new helper, in case one already exists.
+```
+
+`.mfh/library/architecture.md`:
+```markdown
+# [Project Name] — Architecture
+
+Pages, routes, app structure, and cross-app conventions. Read before adding pages, routes, or cross-app features.
+```
+
+`.mfh/library/deploy.md`:
+```markdown
+# [Project Name] — Deploy
+
+Server config, commands, deploy workflow, and secrets. Read before touching deploy scripts or infra config.
+```
+
+`.mfh/library/components.md`:
+```markdown
+# [Project Name] — Components
+
+Shared UI component index. Read before reaching for or adding a shared component — worth documenting even in a small project, before an extraction into a dedicated shared package would otherwise force the issue.
+```
+
+**Conditional on Step 3's answers** — only create the ones that apply:
+
+If the project has a database, `.mfh/library/database.md`:
+```markdown
+# [Project Name] — Database
+
+Schema models and migration notes. Read before writing queries, changing schema, or running migrations.
+```
+
+If the project has user accounts/authentication, `.mfh/library/auth.md`:
+```markdown
+# [Project Name] — Auth
+
+Auth cookie, session, and middleware mechanics. Read before touching auth flows.
+```
+
+If the project has role-based permissions, `.mfh/library/roles.md`:
+```markdown
+# [Project Name] — Roles
+
+Roles, middleware access, and route guards. Read before touching role logic or adding a new guarded route.
+```
+
 Also copy `~/mfh/README.md` (the standard clone location per this repo's own setup instructions) into `.mfh/README.md`, so the full command reference and how MFH works travels with the project itself — useful if this project is opened somewhere `~/mfh` isn't available. If `~/mfh/README.md` doesn't exist (a different install location), skip this quietly; it's a nice-to-have, not required for MFH to function. Note it's a point-in-time snapshot, not kept in sync automatically — it'll drift slightly stale as `~/mfh/README.md` is updated over time.
 
 **Step 6 — Update .gitignore:**
@@ -249,7 +311,7 @@ If `.gitignore` doesn't exist, create it with those entries.
 
 **Step 7 — Confirm:**
 Tell the user:
-"MFH initialized. Next steps:
+"MFH initialized. `.mfh/library/` was seeded with starter docs (style.md, helpers.md, architecture.md, deploy.md, components.md[, database.md][, auth.md][, roles.md] — list whichever were actually created) — empty for now, fill them in as the project takes shape. Next steps:
 1. Fill in `.mfh/design/roadmap.md` with your project vision and stack.
 2. Review `.mfh/library/git.md` and add your branch rules.
 3. Define your first milestone in `.mfh/design/milestones.md`.
