@@ -67,6 +67,7 @@ Then run `/mfh-start` to begin your first phase.
     built.md          ← permanent changelog (git-tracked)
     decisions.md      ← non-obvious decisions and rationale (git-tracked)
   updates/            ← optional; created by /mfh-update on first run
+    last-run.md       ← last-used profile selection + color source/mode, offered as a quick-repeat default next run
     {profile}/        ← one folder per audience profile (e.g. mine/, users/, stakeholders/)
       latest.md       ← that profile's latest update (source of truth)
       latest.html     ← rendered, friendly-viewable HTML version
@@ -198,6 +199,7 @@ Prose stays underneath for anything non-obvious — *why* a field exists, a gotc
 | `.mfh/state/decisions.md` | ✅ yes |
 | `.mfh/state/progress.md` | ❌ no (local session state) |
 | `.mfh/plans/` | ❌ no (ephemeral) |
+| `.mfh/updates/last-run.md` | ✅ yes |
 | `.mfh/updates/{profile}/latest.md` | ✅ yes |
 | `.mfh/updates/{profile}/latest.html` | ✅ yes |
 | `.mfh/updates/{profile}/history/` | ✅ yes |
