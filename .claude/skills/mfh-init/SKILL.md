@@ -86,18 +86,6 @@ This file has two tracks:
 
 ---
 
-## M1 — [Milestone Name] (Active)
-
-**Goal:** [What does this milestone deliver?]
-
-### Current Position: P1 next — not started
-
-| Phase | Description | Priority |
-|-------|-------------|----------|
-| ⬜ 1 | [Phase description] | [Critical / High / Medium / Low] |
-
----
-
 # Weekly Improvements — Continuous Track
 
 Rolling backlog of improvements worked on as capacity allows. No fixed end date — phases are added as new items come in and closed when done.
@@ -108,7 +96,6 @@ Phases use the `WI-P#` prefix. Plans saved as `.mfh/plans/wi-p{N}-plan.md`.
 
 | Phase | Description | Priority |
 |-------|-------------|----------|
-| ⬜ WI-P1 | [First improvement] | [Critical / High / Medium / Low] |
 
 ---
 
@@ -118,6 +105,8 @@ Milestones move here when all phases are done. Slotted in numbered order.
 
 ---
 ```
+
+No placeholder milestone or WI phase — `/mfh-newfeature` inserts the real first one in exactly this spot (before Weekly Improvements), asking name/goal/phases/priority properly instead of leaving hand-edited bracket text. Tell the user in Step 7 to run it now.
 
 **Monorepo variant:**
 ```markdown
@@ -138,18 +127,6 @@ This file has two tracks:
 **File structure:** Active milestones first → App Backlogs → Completed milestones in numbered order. When a milestone ships, move it into the Completed section in its numbered position.
 
 **Status legend:** ✅ Complete · 🟡 Implementation done, awaiting `/mfh-done` · 🔄 In progress · ⬜ Not started · ❌ Cancelled
-
----
-
-## M1 — [Milestone Name] (Active)
-
-**Goal:** [What does this milestone deliver?]
-
-### Current Position: P1 next — not started
-
-| Phase | Description | Priority |
-|-------|-------------|----------|
-| ⬜ 1 | [Phase description] | [Critical / High / Medium / Low] |
 
 ---
 
@@ -176,6 +153,8 @@ Milestones move here when all phases are done. Slotted in numbered order.
 
 ---
 ```
+
+Same as the non-monorepo variant — no placeholder milestone; `/mfh-newfeature` inserts the real first one before App Backlogs.
 
 `.mfh/state/built.md`:
 ```markdown
@@ -314,5 +293,5 @@ Tell the user:
 "MFH initialized. `.mfh/library/` was seeded with starter docs (style.md, helpers.md, architecture.md, deploy.md, components.md[, database.md][, auth.md][, roles.md] — list whichever were actually created) — empty for now, fill them in as the project takes shape. Next steps:
 1. Fill in `.mfh/design/roadmap.md` with your project vision and stack.
 2. Review `.mfh/library/git.md` and add your branch rules.
-3. Define your first milestone in `.mfh/design/milestones.md`.
+3. Run `/mfh-newfeature` to define your first milestone — it'll ask for the name, goal, phases, and a priority for each, rather than hand-editing `milestones.md`.
 4. Run `/mfh-start` to begin your first phase."

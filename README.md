@@ -46,12 +46,11 @@ This asks for your project name, the main modules or areas of your codebase, and
 
 Fill in:
 - `.mfh/design/roadmap.md` — your project vision, tech stack, and goals
-- `.mfh/design/milestones.md` — your milestone and phase breakdown
 - `.mfh/library/git.md` — review and add your branch rules (scopes are pre-filled by init)
 
 The rest of `.mfh/library/`'s starter docs (`style.md`, `architecture.md`, etc.) can stay empty for now — fill them in as the project actually takes shape, there's no rush.
 
-Then run `/mfh-start` to begin your first phase.
+Then run `/mfh-newfeature` to define your first milestone — it asks for the name, goal, phases, and a priority for each, rather than hand-editing `milestones.md` (which `/mfh-init` deliberately leaves with no placeholder milestone to edit around) — and `/mfh-start` to begin your first phase.
 
 ---
 
@@ -89,6 +88,16 @@ MFH supports three parallel planning tracks:
 **App Backlogs** — per-app improvement tracks for monorepos with multiple discrete apps. Each app gets a 3-letter prefix (e.g. `EMP`, `FIN`, `SCH`). Phases use the `PREFIX-P#` format (e.g. `FIN-P1`, `EMP-P3`). No ship date — phases are appended as improvements accumulate. Plan files are named `{prefix}-p{N}-plan.md`.
 
 All three tracks live in `milestones.md`. Active milestones appear first, followed by the App Backlogs section (one subsection per app), followed by the Weekly Improvements section, followed by completed milestones.
+
+---
+
+## Priority
+
+Every phase gets a priority — **Critical / High / Medium / Low** — captured once, at creation time, as a third column on its table row in `milestones.md`. `/mfh-newfeature` asks for it when a phase is created, including per-phase when listing out a whole new milestone at once — this covers a project's very first milestone too, which is why `/mfh-init` deliberately leaves no placeholder milestone to hand-edit around.
+
+This is what lets `/mfh-update` sort the `client` profile's Planned Work table by actual urgency instead of file order, and surface a short "Top priority right now" note in `personal` profiles when something's tagged Critical or High.
+
+Only applies going forward — phases created before this existed have no value and won't get one automatically. Backfilling an existing project's `milestones.md` isn't something any skill does on its own; it's a manual pass if you want one.
 
 ---
 
