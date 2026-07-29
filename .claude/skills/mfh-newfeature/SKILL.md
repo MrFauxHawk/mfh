@@ -13,19 +13,22 @@ You are adding a new feature to the MFH planning system. First check `.mfh/desig
 **Phase table format:** Icons go before the phase number — no separate Status column. Use `⬜ N` for not started, `🔄 N` for in progress, `🟡 N` for implementation done and awaiting `/mfh-done`, `✅ N` for complete, `❌ N` for cancelled. Milestone phase rows use a bare number in the cell; Weekly Improvement and App Backlog rows use the full phase identifier instead (see their examples below).
 
 ```
-| Phase | Description |
-|-------|-------------|
-| ⬜ 1 | [Phase description] |
+| Phase | Description | Priority |
+|-------|-------------|----------|
+| ⬜ 1 | [Phase description] | [Critical / High / Medium / Low] |
 ```
+
+**Priority:** every new phase gets a priority captured at creation time — this is what lets `/mfh-update` sort and highlight work by importance later instead of guessing. Ask via `AskUserQuestion`: "How urgent is this?" — **Critical** / **High** / **Medium** / **Low**. This applies to every phase created below, including each individual phase when listing out a new milestone's phases. Phases already in `milestones.md` from before this convention existed are left blank — this only applies going forward, no retroactive backfill as part of this skill.
 
 **If new milestone:**
 - Ask: "What is the milestone name?"
 - Ask: "What is a one-sentence description of what this milestone delivers?"
 - Ask: "What phases does it include? List them (e.g. P1: Name — description)."
+- For each phase just listed, ask its priority per the **Priority** convention above (batch these into as few `AskUserQuestion` calls as fit — up to 4 questions per call).
 
 Then:
 - Insert the new milestone block into `.mfh/design/milestones.md` **before** the Weekly Improvements or App Backlogs section, whichever this project has (active milestones come first; completed milestones go at the bottom). Include a `### Current Position:` line set to "P1 next — not started".
-- All phases start as ⬜ in the table.
+- All phases start as ⬜ in the table, each with its captured priority in the third column.
 - Update `.mfh/design/roadmap.md`:
   - If no milestone is currently active (Current Track = Weekly Improvements or App Backlogs), replace Current Track with a **Current Focus** section naming this milestone.
   - If a milestone is already active, add this one under a **Next Up** section.
@@ -35,27 +38,30 @@ Then:
 **If new phase to existing milestone:**
 - Read `milestones.md`'s active milestones and ask via `AskUserQuestion`: "Which milestone?" — one option per active milestone (its Other fallback covers anything not listed).
 - Ask: "What is the phase name and a one-sentence description?"
+- Ask its priority per the **Priority** convention above.
 
 Then:
-- Add the new phase row to that milestone's table in `.mfh/design/milestones.md` using `⬜ N` format
+- Add the new phase row to that milestone's table in `.mfh/design/milestones.md` using `⬜ N` format, with its priority in the third column
 - Confirm: "Added P# — [Name] to M# in milestones.md."
 
 **If new Weekly Improvement phase:**
 - Ask: "What is a one-sentence description of this improvement?"
+- Ask its priority per the **Priority** convention above.
 
 Then:
 - Read the Weekly Improvements table in `.mfh/design/milestones.md` to find the next WI-P# number
-- Add the new phase row to the Weekly Improvements table using `⬜ WI-P#` format
+- Add the new phase row to the Weekly Improvements table using `⬜ WI-P#` format, with its priority in the third column
 - Update the "Current Position" line in the Weekly Improvements section to reflect the new phase
 - Confirm: "Added WI-P# — [description] to the Weekly Improvements track."
 
 **If new phase to existing App Backlog:**
 - Read `milestones.md`'s existing App Backlog sections and ask via `AskUserQuestion`: "Which app backlog?" — one option per existing prefix (its Other fallback covers a prefix not listed).
 - Ask: "What is the phase name and a one-sentence description?"
+- Ask its priority per the **Priority** convention above.
 
 Then:
 - Read that app's table in `.mfh/design/milestones.md` to find the next `{PREFIX}-P#` number
-- Add the new phase row to that app's table using `⬜ {PREFIX}-P#` format (the full identifier goes in the cell, same as Weekly Improvement rows)
+- Add the new phase row to that app's table using `⬜ {PREFIX}-P#` format (the full identifier goes in the cell, same as Weekly Improvement rows), with its priority in the third column
 - Confirm: "Added {PREFIX}-P# — [Name] to the {PREFIX} backlog."
 
 **If new App Backlog section:**
@@ -66,8 +72,8 @@ Then:
   ```
   ## {PREFIX} — [App Name]
 
-  | Phase | Description |
-  |-------|-------------|
+  | Phase | Description | Priority |
+  |-------|-------------|----------|
 
   ---
   ```

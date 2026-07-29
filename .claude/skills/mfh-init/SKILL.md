@@ -90,9 +90,9 @@ This file has two tracks:
 
 ### Current Position: P1 next — not started
 
-| Phase | Description |
-|-------|-------------|
-| ⬜ 1 | [Phase description] |
+| Phase | Description | Priority |
+|-------|-------------|----------|
+| ⬜ 1 | [Phase description] | [Critical / High / Medium / Low] |
 
 ---
 
@@ -104,9 +104,9 @@ Phases use the `WI-P#` prefix. Plans saved as `.mfh/plans/wi-p{N}-plan.md`.
 
 ### Current Position: no phases started
 
-| Phase | Description |
-|-------|-------------|
-| ⬜ WI-P1 | [First improvement] |
+| Phase | Description | Priority |
+|-------|-------------|----------|
+| ⬜ WI-P1 | [First improvement] | [Critical / High / Medium / Low] |
 
 ---
 
@@ -145,9 +145,9 @@ This file has two tracks:
 
 ### Current Position: P1 next — not started
 
-| Phase | Description |
-|-------|-------------|
-| ⬜ 1 | [Phase description] |
+| Phase | Description | Priority |
+|-------|-------------|----------|
+| ⬜ 1 | [Phase description] | [Critical / High / Medium / Low] |
 
 ---
 
@@ -159,8 +159,8 @@ This file has two tracks:
 
 Cross-app work: shared packages, auth, infra.
 
-| Phase | Description |
-|-------|-------------|
+| Phase | Description | Priority |
+|-------|-------------|----------|
 
 ---
 
