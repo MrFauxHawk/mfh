@@ -32,14 +32,28 @@ Only one of the next two sections applies — check which second track `mileston
 - 🔄 WI-P#: [Phase Name]
 - ⬜ WI-P#: [Phase Name]
 
-**App Backlogs** (monorepo projects) — for each app section that has at least one incomplete phase (⬜, 🔄, or 🟡), show the section heading and only the incomplete phases:
+**App Backlogs** (monorepo projects) — collect every incomplete phase (⬜, 🔄, or 🟡) across all app sections.
+
+If the app tables have a **Priority** column, group by priority tier first, then by app within each tier — Critical, then High, then Medium, then Low, then a final "No Priority Set" tier for any incomplete phase whose table has no Priority column or an empty value. Skip a tier entirely if no incomplete phase carries that priority — do not print an empty tier header. Within a tier, order apps alphabetically by prefix and phases in file order:
+
+**Critical**
+- 🟡 {PREFIX}-P#: [Phase Name] ({App Name}) — ready to close
+- 🔄 {PREFIX}-P#: [Phase Name] ({App Name})
+- ⬜ {PREFIX}-P#: [Phase Name] ({App Name})
+
+**High**
+- ⬜ {PREFIX}-P#: [Phase Name] ({App Name})
+
+*(continue for Medium, Low, No Priority Set — only the tiers that actually have phases in them)*
+
+If the project's app tables have **no** Priority column at all, fall back to the original per-app grouping instead — show the section heading and only the incomplete phases:
 
 **{PREFIX} — [App Name]**
 - 🟡 {PREFIX}-P#: [Phase Name] — ready to close
 - 🔄 {PREFIX}-P#: [Phase Name]
 - ⬜ {PREFIX}-P#: [Phase Name]
 
-Skip app sections with no incomplete phases — a fully-closed backlog is not active state, same reasoning as skipping completed milestones. There can be many app sections; list all of them that qualify, not just a sample.
+Either way, list every qualifying phase — there can be many app sections; don't sample.
 
 ---
 
@@ -69,7 +83,7 @@ If there are none, say: "Nothing waiting to close." This section exists so a pha
 
 ## What to Do Next
 
-Look at the first incomplete phase (milestone, WI, or App Backlog) and suggest the next action. If a phase is in progress, say so. Examples:
+If the App Backlogs track is in play and has a Priority column, look at the highest-priority incomplete phase across all apps (Critical > High > Medium > Low > No Priority Set, file order as tiebreak within a tier) and suggest the next action. Otherwise (milestones, Weekly Improvements, or an App Backlog with no Priority column), look at the first incomplete phase in file order. If a phase is in progress, say so. Examples:
 - "M2-P3 ([Phase Name]) is next. Run `/mfh-start M2-P3` to begin."
 - "WI-P4 ([Phase Name]) is in progress. Run `/mfh-execute WI-P4` to continue."
 - "EMP-P3 ([Phase Name]) is next. Run `/mfh-start EMP-P3` to begin."
