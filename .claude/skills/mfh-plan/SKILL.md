@@ -26,6 +26,19 @@ Wait for their response. Use it to shape the plan. Do not skip this step or assu
 
 The plan must include these sections:
 
+### Plain-Language Summary
+Write this section first, and write it for a reader who may have zero technical background and no familiarity with this codebase — a stakeholder, a new team member, anyone. 2–4 sentences, no jargon: no file paths, schema/model/variable names, function names, library names, or dev-process terms (migration, endpoint, refactor, etc.). Cover three things in plain terms:
+1. What's true today — the problem, risk, or gap, described by its real-world effect (what goes wrong, what's confusing, what's fragile), not its code-level cause.
+2. What's different once this phase ships.
+3. Why it's worth doing.
+
+If the phase has no user-visible change (pure internal cleanup, consolidation, technical debt), say that plainly rather than implying something will look or behave differently — then explain the risk it removes or the future mistake it prevents. Never let "refactor for cleanliness" or "improve code quality" stand alone as the reason; name the actual consequence being avoided (e.g., "two places list the same options, and when someone updates one but not the other, the dropdown quietly shows the wrong choices").
+
+Bad (too technical, assumes the reader knows the codebase): "Consolidate duplicated `SCOPE_BADGE`/`CITIES` constants into a shared `lib/constants.ts` and retire orphaned `estimating_dropdown_options` categories."
+Good (plain-language): "Right now, several dropdown menus in the Estimating app each keep their own separate copy of the same list of choices (cities, scope types, statuses). When one copy gets updated and the others don't, people see inconsistent options in different places without anyone noticing — and a few of those lists in the database aren't even used anymore, just sitting there as clutter. This phase makes every dropdown pull from one shared source, so they can never drift out of sync again, and removes the unused leftovers."
+
+Follow the paragraph with a **"What's changing:"** bullet list — 3–6 items, same plain-language rules as the paragraph above (no file paths, model/variable names, or dev-process terms). Group by outcome/theme, not one bullet per Implementation Task — this list should never become a second copy of that task list. Each bullet names a real-world outcome (what will be different, what gets removed, what gets fixed), e.g. "Every dropdown that shows scope types, cities, or statuses will pull from one shared list instead of each page keeping its own separate copy," not "Refactor `constants.ts` to export `CITIES`/`SCOPE_TYPES`."
+
 ### Goal
 One sentence: what does this phase deliver when done?
 
@@ -69,7 +82,7 @@ Find the corresponding `## M#-P#`, `## WI-P#`, or `## {PREFIX}-P#` section in `.
 If the section doesn't exist yet (plan created before `/mfh-start`), append a new section.
 
 **If a plan file already existed for this phase** (re-planned mid-phase — this is Round 2 or later): do not overwrite the file or touch the original **Plan:**, **Status:**, **Started:**, or top-level **Tasks:** fields in `progress.md` — those still reflect the first round. Instead:
-- Append a new section to the *existing* plan file, titled `# [phase-id] Plan — Round N: [Round Title]` (e.g. `# M#-P# Plan`, `# WI-P# Plan`, or `# {PREFIX}-P# Plan`; N = next round number; the original untitled plan counts as Round 1), containing the same Goal / Relevant Library Context / Implementation Tasks / Verification Checklist structure.
+- Append a new section to the *existing* plan file, titled `# [phase-id] Plan — Round N: [Round Title]` (e.g. `# M#-P# Plan`, `# WI-P# Plan`, or `# {PREFIX}-P# Plan`; N = next round number; the original untitled plan counts as Round 1), containing the same Plain-Language Summary / Goal / Relevant Library Context / Implementation Tasks / Verification Checklist structure — the summary should stand on its own for this round, not assume the reader already read Round 1.
 - Append a new block to that phase's **Notes** field in `progress.md`:
   ```
   ### Round N — [Round Title] (planned [today's date])
