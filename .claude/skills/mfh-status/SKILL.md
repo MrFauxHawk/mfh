@@ -24,7 +24,7 @@ Skip completed milestones entirely — they are historical record, not active st
 
 Only one of the next two sections applies — check which second track `milestones.md` actually has (a `# Weekly Improvements` heading, or a `# App Backlogs` heading) and use only that one.
 
-**Weekly Improvements** (non-monorepo projects) — show only open (⬜, 🔄, or 🟡) WI phases and the current position:
+**Weekly Improvements** (non-monorepo projects) — show only open (⬜, 🔄, or 🟡) WI phases and the current position, in ascending WI-P# order regardless of the table's own row order (the table itself lists newest-first):
 
 **Weekly Improvements**
 *(Current Position line from milestones.md, verbatim)*
@@ -34,7 +34,7 @@ Only one of the next two sections applies — check which second track `mileston
 
 **App Backlogs** (monorepo projects) — collect every incomplete phase (⬜, 🔄, or 🟡) across all app sections.
 
-If the app tables have a **Priority** column, group by priority tier first, then by app within each tier — Critical, then High, then Medium, then Low, then a final "No Priority Set" tier for any incomplete phase whose table has no Priority column or an empty value. Skip a tier entirely if no incomplete phase carries that priority — do not print an empty tier header. Within a tier, order apps alphabetically by prefix and phases in file order:
+If the app tables have a **Priority** column, group by priority tier first, then by app within each tier — Critical, then High, then Medium, then Low, then a final "No Priority Set" tier for any incomplete phase whose table has no Priority column or an empty value. Skip a tier entirely if no incomplete phase carries that priority — do not print an empty tier header. Within a tier, order apps alphabetically by prefix and phases in ascending phase-number order (not file order — the table itself lists newest-first):
 
 **Critical**
 - 🟡 {PREFIX}-P#: [Phase Name] ({App Name}) — ready to close
@@ -46,7 +46,7 @@ If the app tables have a **Priority** column, group by priority tier first, then
 
 *(continue for Medium, Low, No Priority Set — only the tiers that actually have phases in them)*
 
-If the project's app tables have **no** Priority column at all, fall back to the original per-app grouping instead — show the section heading and only the incomplete phases:
+If the project's app tables have **no** Priority column at all, fall back to the original per-app grouping instead — show the section heading and only the incomplete phases, in ascending phase-number order regardless of the table's own row order (the table itself lists newest-first):
 
 **{PREFIX} — [App Name]**
 - 🟡 {PREFIX}-P#: [Phase Name] — ready to close
@@ -83,7 +83,7 @@ If there are none, say: "Nothing waiting to close." This section exists so a pha
 
 ## What to Do Next
 
-If the App Backlogs track is in play and has a Priority column, look at the highest-priority incomplete phase across all apps (Critical > High > Medium > Low > No Priority Set, file order as tiebreak within a tier) and suggest the next action. Otherwise (milestones, Weekly Improvements, or an App Backlog with no Priority column), look at the first incomplete phase in file order. If a phase is in progress, say so. Examples:
+If the App Backlogs track is in play and has a Priority column, look at the highest-priority incomplete phase across all apps (Critical > High > Medium > Low > No Priority Set, ascending phase-number as tiebreak within a tier — not file order, since the table itself lists newest-first) and suggest the next action. Otherwise (milestones, Weekly Improvements, or an App Backlog with no Priority column), look at the lowest-numbered incomplete phase (milestone tables list oldest-first so this is also "first in file order" there; Weekly Improvements and App Backlog tables list newest-first, so it is not — go by the number, not the row position). If a phase is in progress, say so. Examples:
 - "M2-P3 ([Phase Name]) is next. Run `/mfh-start M2-P3` to begin."
 - "WI-P4 ([Phase Name]) is in progress. Run `/mfh-execute WI-P4` to continue."
 - "EMP-P3 ([Phase Name]) is next. Run `/mfh-start EMP-P3` to begin."

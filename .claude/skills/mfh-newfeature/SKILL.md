@@ -49,8 +49,8 @@ Then:
 - Ask its priority per the **Priority** convention above.
 
 Then:
-- Read the Weekly Improvements table in `.mfh/design/milestones.md` to find the next WI-P# number
-- Add the new phase row to the Weekly Improvements table using `⬜ WI-P#` format, with its priority in the third column
+- Read the Weekly Improvements table in `.mfh/design/milestones.md` to find the next WI-P# number (highest existing number + 1 — the table is newest-first, so this is the number, not the position)
+- Insert the new phase row at the **top** of the Weekly Improvements table (immediately below the header row) using `⬜ WI-P#` format, with its priority in the third column
 - Update the "Current Position" line in the Weekly Improvements section to reflect the new phase
 - Confirm: "Added WI-P# — [description] to the Weekly Improvements track."
 
@@ -60,8 +60,8 @@ Then:
 - Ask its priority per the **Priority** convention above.
 
 Then:
-- Read that app's table in `.mfh/design/milestones.md` to find the next `{PREFIX}-P#` number
-- Add the new phase row to that app's table using `⬜ {PREFIX}-P#` format (the full identifier goes in the cell, same as Weekly Improvement rows), with its priority in the third column
+- Read that app's table in `.mfh/design/milestones.md` to find the next `{PREFIX}-P#` number (highest existing number + 1 — the table is newest-first, so this is the number, not the position)
+- Insert the new phase row at the **top** of that app's table (immediately below the header row) using `⬜ {PREFIX}-P#` format (the full identifier goes in the cell, same as Weekly Improvement rows), with its priority in the third column
 - Confirm: "Added {PREFIX}-P# — [Name] to the {PREFIX} backlog."
 
 **If new App Backlog section:**
