@@ -31,6 +31,8 @@ Say: "Handing off to /mfh-plan." Then invoke `/mfh-plan` with the phase context 
 **If no plan:**
 Update the phase icon in `.mfh/design/milestones.md` from ⬜ to 🔄 for this phase. Milestone phase rows use a bare number in the table cell (`| ⬜ 3 |`); Weekly Improvement and App Backlog rows use the full phase identifier (`| ⬜ WI-P5 |`, `| ⬜ EMP-P3 |`) — make sure you're editing the right cell.
 
+If this is an App Backlog phase, also flip the icon on its matching line in the **At a Glance** section at the top of the App Backlogs area (same file, directly under `# App Backlogs — Continuous`) from ⬜ to 🔄 to match.
+
 Append a new section to `.mfh/state/progress.md`. If the file currently contains `_(no active phases)_`, replace that line with the new section. Otherwise append after the last `---` divider.
 
 For a **Milestone phase** (`M#-P#`):

@@ -13,7 +13,7 @@ You are closing out a completed phase. This command accepts an optional argument
 1. Identify the phase (same lookup as Step 2 below).
 2. If not already given, ask: "What's the reason for cancelling this phase?" — keep it brief.
 3. Append a short entry to `.mfh/state/decisions.md` noting the phase was cancelled and why. This is a decision record, not a shipped-feature record — do **not** write anything to `built.md`, since nothing was built.
-4. In `.mfh/design/milestones.md`, change the phase's icon to `❌` (not `✅`). For Milestone phases, don't touch the `### Current Position:` line the way a completion would (a cancelled phase isn't "next" or "complete" — leave the line as-is unless the user wants it reworded). Don't trigger the "all phases ✅" milestone-completion logic from Step 6 below — a milestone with a `❌` phase isn't fully shipped, but also isn't blocked from ever being considered done; use judgment, or ask the user if unsure.
+4. In `.mfh/design/milestones.md`, change the phase's icon to `❌` (not `✅`). For Milestone phases, don't touch the `### Current Position:` line the way a completion would (a cancelled phase isn't "next" or "complete" — leave the line as-is unless the user wants it reworded). Don't trigger the "all phases ✅" milestone-completion logic from Step 6 below — a milestone with a `❌` phase isn't fully shipped, but also isn't blocked from ever being considered done; use judgment, or ask the user if unsure. If this is an App Backlog phase, also remove its line from the **At a Glance** section at the top of the App Backlogs area — it only lists non-complete phases, and a cancelled phase isn't open work. If that was the last open line under this app's group, remove the now-empty `**{PREFIX}**` heading too.
 5. Remove the phase from `.mfh/state/progress.md` (same as Step 7 below).
 6. Delete the plan file if one exists (same as Step 8 below).
 7. Confirm: "Phase cancelled and logged in decisions.md. Run `/mfh-status` to see the updated picture."
@@ -84,6 +84,7 @@ Find the active phase in `.mfh/design/milestones.md` and change its icon from �
 
 **For App Backlog phases:**
 - Mark the phase ✅ in its app section. No `Current Position` line to update — the emoji status is self-documenting.
+- Also remove this phase's line from the **At a Glance** section at the top of the App Backlogs area (it only lists non-complete phases). If that was the last open line under this app's group, remove the now-empty `**{PREFIX}**` heading too.
 
 **Step 7 — Remove the phase from progress.md:**
 Find the `## M#-P#`, `## WI-P#`, or `## {PREFIX}-P#` section and remove it entirely, including its preceding `---` divider.

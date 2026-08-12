@@ -89,6 +89,24 @@ MFH supports three parallel planning tracks:
 
 All three tracks live in `milestones.md`. Active milestones appear first, followed by the App Backlogs section (one subsection per app), followed by the Weekly Improvements section, followed by completed milestones.
 
+### At a Glance summary
+
+App Backlog projects also carry an **At a Glance** summary, sitting directly under the `# App Backlogs — Continuous` header: one line per non-complete (⬜/🔄/🟡) phase across every app section, grouped under a `**{PREFIX}**` heading per app. Apps with nothing open are omitted entirely — no empty headings. It exists so open work across the whole backlog is visible at a glance, without scrolling tables that only ever grow.
+
+```markdown
+## At a Glance — Open Work
+
+**EMP**
+- 🔄 EMP-P3 Employee Manual Content (Medium)
+
+**SCH**
+- ⬜ SCH-P34 Job Notes Card on Active Jobs (High)
+```
+
+Each line is `- {icon} {PREFIX}-P# {Short Title} ({Priority})`, where **Short Title** is the phase name portion of the Description cell — everything before the em dash (e.g. `Employee Manual Content — Benefits on profile...` → `Employee Manual Content`). Omit the parenthetical priority for phases created before the priority convention existed (blank third column).
+
+`/mfh-start`, `/mfh-execute`, `/mfh-progress`, `/mfh-done`, and `/mfh-newfeature` keep this in sync automatically any time they touch an App Backlog phase's icon or add a new phase — never hand-edit it.
+
 ---
 
 ## Priority

@@ -33,5 +33,7 @@ Re-read `.mfh/state/progress.md` fresh right before writing — don't rely on th
 **Step 4 — Flag the phase as ready to close, if it is:**
 If **Remaining** came out empty/none — every plan task is checked off (or there's no plan and the user's described work is simply done) — update this phase's status icon in `.mfh/design/milestones.md` from 🔄 to 🟡 (skip if it's already 🟡 or ✅). This is what makes "done but not yet closed" a real, visible status instead of something only mentioned in prose. If anything is still outstanding, leave the icon at 🔄.
 
+If the icon was flipped and this is an App Backlog phase, also flip the icon on its matching line in the **At a Glance** section at the top of the App Backlogs area from 🔄 to 🟡 to match.
+
 **Step 5 — Confirm:**
 Tell the user: "Progress updated. Run `/mfh-execute M#-P#` to jump back in next session." If the icon was flipped to 🟡, add: "This phase looks ready to close — run `/mfh-done M#-P#` whenever you're ready."

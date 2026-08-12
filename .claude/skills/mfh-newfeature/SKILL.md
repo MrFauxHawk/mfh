@@ -62,6 +62,7 @@ Then:
 Then:
 - Read that app's table in `.mfh/design/milestones.md` to find the next `{PREFIX}-P#` number (highest existing number + 1 — the table is newest-first, so this is the number, not the position)
 - Insert the new phase row at the **top** of that app's table (immediately below the header row) using `⬜ {PREFIX}-P#` format (the full identifier goes in the cell, same as Weekly Improvement rows), with its priority in the third column
+- Add a matching line to the **At a Glance** section at the top of the App Backlogs area: `- ⬜ {PREFIX}-P# [Short Title] ([Priority])`, under a `**{PREFIX}**` heading (Short Title = the phase name, not the full description). If that app has no group there yet (nothing was open before this), create one — positioned in the same relative order the app sections appear in the file below.
 - Confirm: "Added {PREFIX}-P# — [Name] to the {PREFIX} backlog."
 
 **If new App Backlog section:**
@@ -77,5 +78,6 @@ Then:
 
   ---
   ```
+  Its table starts empty, so it gets no **At a Glance** group yet — one appears automatically the first time a phase is added to it.
 - Ask via `AskUserQuestion`: "Should `git.md`'s Scopes list also include `{prefix}` (lowercase)?" — **Yes** / **No**. If yes, append it there.
 - Confirm: "Added new App Backlog section: {PREFIX} — [App Name]."

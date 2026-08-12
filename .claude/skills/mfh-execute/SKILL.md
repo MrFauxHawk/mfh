@@ -43,6 +43,8 @@ This question fires on **every** `/mfh-execute` call for a phase, with no except
 **Step 4 — Mark phase in progress in milestones.md:**
 Read `.mfh/design/milestones.md`. Find the table row for the active phase — Milestone phase rows use a bare number (`| 🔄 3 |`), Weekly Improvement and App Backlog rows use the full phase identifier (`| 🔄 WI-P5 |`, `| 🔄 EMP-P3 |`). If it is not already marked `🔄`, update the status symbol to `🔄` now — before doing any other work. (This also correctly reverts a `🟡` phase back to `🔄` if work resumes on something previously marked ready-to-close.)
 
+If this is an App Backlog phase, also update the icon on its matching line in the **At a Glance** section at the top of the App Backlogs area to match (same change, same line).
+
 **Step 5 — Read plan (if one exists and session mode is "continue plan" or "ad-hoc"):**
 If a plan file is referenced, read it from `.mfh/plans/`. In "ad-hoc" mode this is for context only — do not treat its tasks as this session's work.
 
