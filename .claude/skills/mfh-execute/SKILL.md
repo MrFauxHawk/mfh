@@ -20,19 +20,25 @@ From the identified `## M#-P#`, `## WI-P#`, or `## {PREFIX}-P#` section, note:
 - Status
 - Notes (what has been done, what remains)
 
-**Step 3 — Choose session mode (only if a plan already exists):**
-If the phase's `Plan:` field is `(none)` or no plan file exists on disk, skip this step entirely — proceed to Step 4 and execute directly against the phase description (no question needed).
+**Step 3 — Choose session mode (always ask):**
+Always ask via `AskUserQuestion` before beginning work — regardless of whether a plan currently exists. Check the phase's `Plan:` field / whether a plan file exists on disk first, since that determines which options to offer:
 
-If a plan file does exist, ask via `AskUserQuestion`: "This phase has an active plan. What's this session's work?"
+**If a plan file exists**, ask "This phase has an active plan. What's this session's work?" with three options:
 - **Continue the existing plan** (Recommended) — pick up the next unchecked task
 - **Small ad-hoc work, no plan** — I'll do it and log it to `progress.md` when done, without touching the plan's tasks
 - **New substantial scope** — hand off to `/mfh-plan` to add a new Round first
 
-- **Continue the existing plan:** proceed normally through the rest of this skill, working the plan's unchecked tasks.
-- **Small ad-hoc work, no plan:** proceed through Step 4 and Step 7 (still mark 🔄, still read library/decisions for context), but skip Step 9's task-checkbox tracking — do the user's described work directly in Step 9 without ticking plan tasks, and when done tell the user to run `/mfh-progress` to log it. Do not modify the plan file.
-- **New substantial scope:** read the existing plan file first for context (prior rounds, decisions), then invoke `/mfh-plan` for this phase directly — do not ask the user to run it separately; the phase context carries over since it's the same conversation.
+**If no plan file exists** (`Plan:` is `(none)` or nothing on disk), ask "This phase has no plan yet. What's this session's work?" with two options (the "continue an existing plan" option is omitted entirely — there's nothing to continue):
+- **Ad hoc, no plan needed** (Recommended) — I'll do the described work directly and log it to `progress.md` when done
+- **This needs a plan** — hand off to `/mfh-plan` to create one first
 
-This question fires every time `/mfh-execute` is called on a phase with an active plan — including the first call right after that plan was created — and persists until `/mfh-done` closes the phase and deletes the plan file.
+Handling for each outcome:
+- **Continue the existing plan:** proceed normally through the rest of this skill, working the plan's unchecked tasks.
+- **Small ad-hoc work, no plan** / **Ad hoc, no plan needed:** proceed through Step 4 and Step 7 (still mark 🔄, still read library/decisions for context), but skip Step 9's task-checkbox tracking — do the user's described work directly in Step 9 without ticking plan tasks, and when done tell the user to run `/mfh-progress` to log it. Do not create or modify a plan file.
+- **New substantial scope** (plan exists): read the existing plan file first for context (prior rounds, decisions), then invoke `/mfh-plan` for this phase directly — do not ask the user to run it separately; the phase context carries over since it's the same conversation.
+- **This needs a plan** (no plan exists yet): invoke `/mfh-plan` for this phase directly to create the initial plan — do not ask the user to run it separately; the phase context carries over since it's the same conversation.
+
+This question fires on **every** `/mfh-execute` call for a phase, with no exceptions — including the very first call on a brand-new phase and every repeat call on a phase with no plan — and persists until `/mfh-done` closes the phase.
 
 **Step 4 — Mark phase in progress in milestones.md:**
 Read `.mfh/design/milestones.md`. Find the table row for the active phase — Milestone phase rows use a bare number (`| 🔄 3 |`), Weekly Improvement and App Backlog rows use the full phase identifier (`| 🔄 WI-P5 |`, `| 🔄 EMP-P3 |`). If it is not already marked `🔄`, update the status symbol to `🔄` now — before doing any other work. (This also correctly reverts a `🟡` phase back to `🔄` if work resumes on something previously marked ready-to-close.)
@@ -57,7 +63,7 @@ Tell the user:
 
 **Step 9 — Begin working:**
 
-**If session mode is "continue plan" (or no plan exists at all):** execute the remaining tasks from the plan (or, if no plan, based on the phase description from milestones.md and the Notes in progress.md).
+**If session mode is "continue plan":** execute the remaining tasks from the plan.
 
 Throughout all work:
 - Follow all conventions in `.mfh/library/`
@@ -74,7 +80,7 @@ Wait for the user's response before continuing. If they choose to stop, do not p
 
 Do not run Step 10 unless they choose to run the check here.
 
-**If session mode is "ad-hoc, no plan":** execute the work the user actually asked for this session directly — it is not on the plan's task list, so there is nothing to tick off. Do not touch the plan file or its checkboxes. Pause for a check-in at a natural break point rather than every 3 tasks (there's no task list to count against) — ask via `AskUserQuestion`: "That's done. Run the TypeScript/ESLint check now, or hold off?" — **Run the check** / **Hold off**. Either way, tell them to run `/mfh-progress` when they're ready to log this.
+**If session mode is "Small ad-hoc work, no plan" or "Ad hoc, no plan needed":** execute the work the user actually asked for this session directly — either there's no plan at all, or there is one but this work isn't on it, so there is nothing to tick off. Do not create, touch, or check off anything in a plan file. Pause for a check-in at a natural break point rather than every 3 tasks (there's no task list to count against) — ask via `AskUserQuestion`: "That's done. Run the TypeScript/ESLint check now, or hold off?" — **Run the check** / **Hold off**. Either way, tell them to run `/mfh-progress` when they're ready to log this.
 
 If they choose to run the check, run **Step 10 — Verification**. Do not run it unprompted.
 
