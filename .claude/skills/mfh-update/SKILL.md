@@ -59,7 +59,7 @@ If any selected profile is category `client`, also ask via `AskUserQuestion`: "C
 
 **Step 3 — Determine what's new, per profile:**
 For each selected profile:
-- Check `.mfh/updates/{slug}/latest.md` for its most recent entry's date (`{slug}` = the profile name, lowercased and hyphenated). If it doesn't exist yet (first run for this profile — check `.mfh/updates/{slug}/history/` too, in case it was already rotated out), treat this as a first update for that profile.
+- Check `.mfh/updates/{slug}/` (`{slug}` = the profile name, lowercased and hyphenated) for existing dated update files (`YYYY-MM-DD.md`) — the highest date present is this profile's most recent entry. If the directory doesn't exist yet or has no dated files, treat this as a first update for that profile.
 - Read `.mfh/state/built.md` entries newer than that date (or all of it, on a first run for this profile).
 - **Exception — `newcomers` category ignores the cutoff for its main content.** A newcomer has no baseline to compare against, so read `.mfh/design/roadmap.md`'s **Live Sections** table in full and skim `.mfh/design/milestones.md`'s **Completed Milestones** section every time, regardless of what's "new." The delta still gets tracked internally (so the small "being refined right now" note stays accurate) but it never drives the main content.
 - Read `.mfh/design/milestones.md` — every currently 🔄/🟡 phase across active tracks (feeds the `client` profile's Active Work table and the `personal` profile's Still Open note), and every currently-⬜ phase including its **Priority** column where present (feeds the `client` profile's Planned Work table and the `personal` profile's top-priority highlight) — and `.mfh/design/roadmap.md` (Goals) for the forward-looking half.
@@ -127,9 +127,8 @@ Show every drafted profile's Markdown together and ask via `AskUserQuestion`: "D
 
 **Step 6 — Save and render, per profile:**
 For each finalized profile:
-- If `.mfh/updates/{slug}/latest.md` already exists, move it (and its `.html` counterpart) into `.mfh/updates/{slug}/history/` first, named with its own entry date — never overwrite history.
-- Write the approved draft to `.mfh/updates/{slug}/latest.md`.
-- Render a clean, self-contained HTML version to `.mfh/updates/{slug}/latest.html` — inline CSS, readable typography, no external dependencies or build step, and a print stylesheet (`@media print` + `@page`) so it holds up if exported to PDF or printed (page-break control on cards/tables, tighter margins, exact color printing for badges/pills).
+- Write the approved draft to `.mfh/updates/{slug}/{today's date, YYYY-MM-DD}.md` — a new file, never overwriting an existing dated file. There is no "latest" file: every run's output is permanent and dated from the moment it's created, so anything that already links to a past run's file (a Discord post, a bookmark) keeps pointing at exactly that content forever, even after later runs add newer dated files alongside it.
+- Render a clean, self-contained HTML version to `.mfh/updates/{slug}/{same date}.html` — inline CSS, readable typography, no external dependencies or build step, and a print stylesheet (`@media print` + `@page`) so it holds up if exported to PDF or printed (page-break control on cards/tables, tighter margins, exact color printing for badges/pills).
   - Don't cap body prose (`.doc-body p`/`li`) with its own independent `max-width: Nch` separate from the card's width. Stat-tiles, tables, and snapshot grids already stretch to fill the card — a narrower ch-capped paragraph column next to them reads as a layout bug (a "why is there blank space" complaint), even though it was meant as a readability nicety. If a narrower reading measure is ever wanted, size the card/`.shell` container itself narrower rather than fighting it at the paragraph level — don't apply both a wide container and a narrow-capped prose width in the same document.
 - Apply the color source and light/dark mode decided in Step 1's "Visual settings":
   - **MFH:** use MFH's own locked-in default palette — no per-project derivation needed. Primary/secondary role assignment (below) is fixed regardless of source; teal happens to be primary and gold secondary here because that's what the reference palette's own real UI does (a CTA-button color vs. a supporting nav-button color), not because of any rule either color's source project applies to itself.
@@ -159,8 +158,8 @@ For each finalized profile:
 
 **Step 7 — Deliver, per profile's stated preference:**
 - **"Just the file" / no strong preference given:** tell the user where it is and move on to the next profile.
-- **Artifact link:** publish that profile's `latest.html` content via the Artifact tool and give the user the link.
-- **Anything else project-specific** (e.g. SFTP, a custom conversion pipeline): follow it if you know how; if it needs tooling this general skill doesn't have, tell the user the file is ready and that delivery from here is on them (or a project-specific extension of this skill).
+- **Artifact link:** publish that profile's newly-written dated `.html` file via the Artifact tool and give the user the link.
+- **Anything else project-specific** (e.g. SFTP, a custom conversion pipeline, or copying today's dated file to a stable-named mirror so an app's own UI can link to "whichever is current" without a code change every run): follow it if you know how; if it needs tooling this general skill doesn't have, tell the user the file is ready and that delivery from here is on them (or a project-specific extension of this skill).
 
 **Step 8 — Confirm:**
 Summarize, per profile: ready, where it lives, the color source and mode used (MFH default, or `[Project Name]`'s own colors picked up from `[filename]`) — noting this is now saved as the default for next run — and, if applicable, the delivery result or link.
