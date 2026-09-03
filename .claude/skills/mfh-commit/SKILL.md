@@ -43,6 +43,13 @@ Examples:
 - `docs(mfh): update milestones and progress`
 - `chore(config): add shared package to workspace`
 
+**A phase-closing `docs(mfh): close ...` commit must name what shipped, not just the phase id.** This commit is conventionally the last one in a batch, and most CI systems (e.g. GitHub Actions with no `run-name:` set) title a build after the last-pushed commit's message — so a bare `docs(mfh): close M4-P3` becomes the only thing visible in the build history for that push, hiding the actual feature/fix work that rode along with it. Fold a short description of the shipped work into the subject line:
+
+- `docs(mfh): close M4-P3 — SSO login via OIDC` (not `docs(mfh): close M4-P3`)
+- `docs(mfh): close WI-P12 — inline draft target editing`
+
+For a multi-phase or ad-hoc closeout covering several unrelated things, keep it to the highlights rather than an exhaustive list — a build title is a pointer, not a changelog entry.
+
 **Step 5 — Present the full commit list:**
 Show the user the proposed commits in order, with the files that belong in each one. Ask via `AskUserQuestion`: "Does this commit plan look good?" — **Yes, proceed** / **I want changes**.
 
