@@ -57,8 +57,15 @@ Ask (plain text, since the useful answers here are inherently open-ended): "Anyt
 
 If any selected profile is category `client`, also ask via `AskUserQuestion`: "Current status?" — **On track** / **At risk** / **Blocked** / **Complete**. Skip this question entirely if no `client` profile is in this run — it doesn't fit the other categories.
 
+**Steps 3–4 — Determine what's new and draft, per profile:**
+If more than one profile was selected this run, do Steps 3 and 4 as parallel subagents — one per profile — instead of working through profiles one at a time. Each profile's research and draft is fully independent of every other profile's (different cutoff date, different `.mfh/updates/{slug}/` history, different category-specific structure), so there's no reason to serialize them, and drafting is where most of a multi-profile run's time goes. Use the `Agent` tool with `subagent_type: general-purpose`, send one invocation per profile in a single message so they draft concurrently, and set `run_in_background: false` since Step 5 needs every draft back before it can proceed.
+
+Each subagent prompt must be self-contained (a subagent has no memory of this conversation): give it the profile's name, category, standing guidance, and delivery preference; this run's per-run inputs from Step 2 (including the `client` status answer, if this profile is `client`); the Step 3 procedure below in full (it's identical for every category); and, from Step 4 below, only the drafting rules for its own category — not the other three, which it has no use for. Ask it to return the finished Markdown draft.
+
+If only one profile is selected this run, there's nothing to parallelize — just work through Steps 3 and 4 yourself, directly.
+
 **Step 3 — Determine what's new, per profile:**
-For each selected profile:
+For each selected profile (or, inside a per-profile subagent, for the one profile you were assigned):
 - Check `.mfh/updates/{slug}/` (`{slug}` = the profile name, lowercased and hyphenated) for existing dated update files (`YYYY-MM-DD.md`) — the highest date present is this profile's most recent entry. If the directory doesn't exist yet or has no dated files, treat this as a first update for that profile.
 - Read `.mfh/state/built.md` entries newer than that date (or all of it, on a first run for this profile).
 - **Exception — `newcomers` category ignores the cutoff for its main content.** A newcomer has no baseline to compare against, so read `.mfh/design/roadmap.md`'s **Live Sections** table in full and skim `.mfh/design/milestones.md`'s **Completed Milestones** section every time, regardless of what's "new." The delta still gets tracked internally (so the small "being refined right now" note stays accurate) but it never drives the main content.
@@ -123,7 +130,7 @@ When a tile *does* carry meaning (bugs fixed, outstanding items, phases complete
 **The tag-chip device** (`users` only): small inline pills tagging each bullet and summarizing the update's mix up top — New/Improved/Fixed, using the exact same red/orange/green/blue family as the StatTile device above (blue/orange/green respectively), not a separately-tuned shade. The summary StatTile row and the per-bullet chips should look like one literal system, down to the hex value.
 
 **Step 5 — Present the drafts:**
-Show every drafted profile's Markdown together and ask via `AskUserQuestion`: "Do these look right?" — **Yes, finalize all** / **I want changes**. If changes are requested, find out which profile(s) need revision and re-present just those.
+Collect each profile's draft (whether it came back from a subagent or was drafted directly), show all of them together, and ask via `AskUserQuestion`: "Do these look right?" — **Yes, finalize all** / **I want changes**. If changes are requested, find out which profile(s) need revision and redo just those directly yourself — a single-profile revision isn't worth spawning another subagent for.
 
 **Step 6 — Save and render, per profile:**
 For each finalized profile:

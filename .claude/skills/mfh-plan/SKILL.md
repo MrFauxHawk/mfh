@@ -7,11 +7,12 @@ description: Create an implementation plan for the active phase
 You are creating an implementation plan for a phase established by `/mfh-start`. The active milestone and phase context has been passed to you.
 
 **Step 1 — Read context:**
-Read the following files:
+Read the following files — they're independent, so read them together in one message rather than one after another:
 - `.mfh/design/roadmap.md` — project vision, tech stack, goals
 - `.mfh/design/milestones.md` — milestone and phase details
-- All files in `.mfh/library/` — coding standards and architectural rules
 - `.mfh/state/decisions.md` — review past decisions; don't contradict them without discussion
+
+Don't read `.mfh/library/` yet — Step 3 handles that, after the user's expectations are known, in a way that doesn't dump every library file into this conversation.
 
 **Check for an existing plan file** (`.mfh/plans/m{N}-p{N}-plan.md`, `wi-p{N}-plan.md`, or `{prefix}-p{N}-plan.md` for an App Backlog phase, e.g. `emp-p3-plan.md`) for this phase. If one exists, read it in full before drafting anything new — it may already contain a prior "Round" of work (goals, design decisions, tasks) that this new planning pass needs to build on rather than duplicate or contradict. This phase is being re-planned (reopened for a new round of substantial work), not planned from scratch.
 
@@ -22,7 +23,14 @@ Before drafting anything, identify the active phase from `milestones.md` and ask
 
 Wait for their response. Use it to shape the plan. Do not skip this step or assume you already know the answer from the milestone description alone.
 
-**Step 3 — Draft a plan and present it to the user:**
+**Step 3 — Gather relevant library context via a subagent:**
+Reading every file in `.mfh/library/` directly into this conversation is wasteful — most phases only touch a handful of the documented areas, and the plan's "Relevant Library Context" section (Step 4) already calls for being selective about what actually applies. Delegate the read instead: use the `Agent` tool with `subagent_type: general-purpose` and `run_in_background: false` (Step 4 can't start drafting without the result, and there's nothing else useful to do meanwhile).
+
+Give the subagent: the phase name and description (from `milestones.md`), the user's expectations from Step 2, and an instruction to read every file in `.mfh/library/` itself and return only the specific conventions, patterns, or architectural rules that plausibly apply to this phase — already condensed and worded for the plan's "Relevant Library Context" section, not a dump of the source files. This keeps the raw library docs out of this conversation for the rest of the planning session, and beyond it if the user continues straight into `/mfh-execute` here — only the distilled excerpt sticks around.
+
+Skip the subagent and just read the relevant file(s) directly yourself when it's already obvious which one or two docs apply (e.g. a phase that's explicitly UI-only touching nothing else) — the subagent earns its keep when the alternative is reading the whole library blind, not when the answer is already obvious.
+
+**Step 4 — Draft a plan and present it to the user:**
 
 The plan must include these sections:
 
@@ -43,7 +51,7 @@ Follow the paragraph with a **"What's changing:"** bullet list — 3–6 items, 
 One sentence: what does this phase deliver when done?
 
 ### Relevant Library Context
-Pull out the specific conventions, patterns, or architectural rules from `.mfh/library/` that apply to this phase. Be selective — not everything.
+Use the excerpt Step 3 gathered (from the subagent, or from your own direct read if you skipped it). Still be selective when dropping it into the plan — the subagent was asked to condense already, but the bar is the same: not everything, just what applies to this phase.
 
 ### Implementation Tasks
 A numbered, step-by-step task list. Each step concrete enough to act on without further clarification.
@@ -51,14 +59,14 @@ A numbered, step-by-step task list. Each step concrete enough to act on without 
 ### Verification Checklist
 "How do I know this is done correctly?" — UI tested in browser, API response verified, correct fallback behavior shown, code follows library conventions, no dead code, etc.
 
-**Step 4 — Wait for approval:**
+**Step 5 — Wait for approval:**
 After presenting the plan, you must actually invoke the `AskUserQuestion` tool — do not just end the plan with "Does this plan look good?" as plain text and wait for a free-form reply. A long plan write-up makes it easy to treat that closing line as enough; it isn't. Call `AskUserQuestion`: "Does this plan look good?" — **Approved** / **Request changes** / **Reject — I want something different**.
 
-- If approved: proceed to Step 5
+- If approved: proceed to Step 6
 - If changes requested: revise and re-present
 - If rejected: ask what they want instead, then stop
 
-**Step 5 — Save the approved plan:**
+**Step 6 — Save the approved plan:**
 
 **If no plan file existed yet for this phase** (first planning pass), write a new file:
 - Milestone phase: `.mfh/plans/m{N}-p{N}-plan.md`
