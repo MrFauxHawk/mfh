@@ -26,7 +26,7 @@ Read `.mfh/state/progress.md`.
 - If no argument and multiple active phases exist, ask via `AskUserQuestion`: "Which phase are you closing?" — one option per active phase found in `progress.md`.
 
 **Step 3 — Gather context automatically:**
-Read `.mfh/state/progress.md`, `.mfh/design/milestones.md`, and `.mfh/state/decisions.md`. Do NOT ask the user for a summary or decisions — derive them from what is already recorded in these files.
+Read `.mfh/state/progress.md`, `.mfh/design/milestones.md`, and `.mfh/state/decisions.md` — three independent reads, so issue them together in one message rather than one after another. Do NOT ask the user for a summary or decisions — derive them from what is already recorded in these files.
 
 **Step 4 — Check for unresolved verification:**
 If a plan file is referenced for this phase, read it and check for a Verification Checklist section. If it contains any unchecked `- [ ]` items, tell the user which ones and ask via `AskUserQuestion`: "This phase's Verification Checklist has unchecked items. Close anyway, or walk through them first?" — **Close anyway** / **Walk through them first**. Proceed to Step 5 only once they've answered — don't silently close over an unverified checklist, and don't check items off on their behalf.

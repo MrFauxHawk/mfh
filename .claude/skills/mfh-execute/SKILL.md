@@ -45,6 +45,9 @@ Read `.mfh/design/milestones.md`. Find the table row for the active phase — Mi
 
 If this is an App Backlog phase, also update the icon on its matching line in the **At a Glance** section at the top of the App Backlogs area to match (same change, same line).
 
+**Steps 5–7 — Read plan, git log, and library/decisions:**
+These three reads don't depend on each other — issue them together in one message (plan file read, `git log`, and the library/decisions reads below) rather than working through them one step at a time.
+
 **Step 5 — Read plan (if one exists and session mode is "continue plan" or "ad-hoc"):**
 If a plan file is referenced, read it from `.mfh/plans/`. In "ad-hoc" mode this is for context only — do not treat its tasks as this session's work.
 

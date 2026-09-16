@@ -7,7 +7,7 @@ description: Group changes into logical Conventional Commits
 You are committing completed work to git using Conventional Commits format.
 
 **Step 1 — Review changes:**
-Run `git status` and `git diff` to see all uncommitted changes. Read the output carefully.
+Run `git status` and `git diff` to see all uncommitted changes — they're independent reads, so run both in the same message rather than one after the other. Read the output carefully.
 
 **Step 2 — Group into logical commits:**
 Analyze the changes and group them into logical commits based on what changed and why. Consider:
