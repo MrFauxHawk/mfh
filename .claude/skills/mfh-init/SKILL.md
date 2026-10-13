@@ -1,5 +1,5 @@
 ---
-description: Initialize a new project with MFH planning structure
+description: Initialize a new project with MFH planning structure, or change an existing project's setup (track, push & release, tags, optional docs, scopes)
 ---
 
 # /mfh-init
@@ -14,14 +14,16 @@ Ask: "What is the path to your project root? Press enter to use the current work
 If the user presses enter or provides no path, use the current working directory.
 
 **Step 2 — Check for existing MFH structure:**
-Check if `.mfh/` already exists at the project root. If it does, say:
-"An `.mfh/` folder already exists in this project. Run `/mfh-status` to see the current state."
-Then stop.
+Check if `.mfh/` already exists at the project root. If it does, this project is already set up. Don't re-initialize anything. Switch to **Settings mode** (the section at the end of this file) and follow it instead of Steps 3–7.
 
 **Step 3 — Gather setup info:**
 Ask via `AskUserQuestion`: "Is this a monorepo?" — **Yes** (multiple apps/packages in one repo; uses the App Backlogs track) / **No** (single app or codebase; uses the Weekly Improvements track). This is a structural fork the rest of setup depends on, so offer it as a pick rather than free text.
 
-Also ask via `AskUserQuestion` (multi-select): "Does this project have any of these?" — **A database** / **User accounts or authentication** / **Role-based permissions**. Leave all unselected if none apply. This decides which conditional library docs get scaffolded in Step 5 — unlike `style.md`, `helpers.md`, `architecture.md`, `deploy.md`, and `components.md` (scaffolded for every project regardless, since they apply universally), `database.md`/`auth.md`/`roles.md` only make sense when the project actually has that concern.
+Also ask via `AskUserQuestion` (multi-select): "Does this project have any of these?" — **A database** / **User accounts or authentication** / **Role-based permissions**. Leave all unselected if none apply. This decides which conditional library docs get scaffolded in Step 5 — unlike `style.md`, `helpers.md`, `architecture.md`, `deploy.md`, `components.md`, and `testing.md` (scaffolded for every project regardless, since they apply universally), `database.md`/`auth.md`/`roles.md` only make sense when the project actually has that concern.
+
+Also ask via `AskUserQuestion`: "How does code reach production?" — **Pushing main deploys it** (CI/CD) / **I deploy manually** (a script or command; pushing changes nothing live) / **From a release branch** (production runs only from a separate `release` branch that `main` is released into) / **Not deployed yet**. If they pick release branch, also ask what happens after it's pushed: **CI deploys it automatically** / **I run a deploy command** (ask which, free text). This fills the **Push & Release** section of `git.md` (Step 5). `/mfh-push` reads it on every push: in a single-branch project a push is just a push, and in a release-branch project it asks **Normal push** (backup) or **Release** (ship `main` to `release`).
+
+If the answer was **Pushing main deploys it** or **From a release branch** (the two styles where MFH knows when a release happens), also ask via `AskUserQuestion`: "How should releases be tagged?". Each release gets a permanent git tag marking exactly what went live, with release notes in the tag message. The options are **Date tags** (`2026.10.20`, with `.2` for a second release that day) / **Semantic versions** (`v1.4.0`: major.minor.patch, chosen each release) / **No tags**. Recommend based on what the project is. For an internal app or a website, recommend **Date tags**: nobody depends on its version number and it releases whenever work is ready, so a date never forces a "minor or major?" judgment that means nothing. For a library, package, API or installable app that other people depend on, recommend **Semantic versions**: there, the number tells consumers whether a release can break them. Put the recommended option first, mark it (Recommended), and say why in one line. For the other two styles, write `n/a`.
 
 Then ask together in one message:
 1. "What is the project name?"
@@ -132,6 +134,10 @@ This file has two tracks:
 
 # App Backlogs — Continuous
 
+## At a Glance — Open Work
+
+_Every non-complete (⬜ / 🔄 / 🟡) phase across the app backlogs below, grouped by app. Apps with nothing open aren't listed. Maintained automatically by `/mfh-start`, `/mfh-execute`, `/mfh-progress`, `/mfh-done` and `/mfh-newfeature`; never hand-edit._
+
 ---
 
 ## PLT — Platform
@@ -211,11 +217,20 @@ Use the affected module or area as the scope:
 [One example commit per module, e.g. `feat(api): add user list endpoint`]
 
 ## Branch Rules
-- [e.g. work on `main` / feature branches off `main`]
-- [e.g. always push after each commit]
+- Work on `main`
+
+## Push & Release
+- **Release style:** [single branch | release branch, from the Step 3 answer]
+- **Release branch:** [`release` | none]
+- **What a push does:** [one of: "Pushing `main` deploys to production automatically (CI)." / "Nothing live; deploys are run manually ([machine/command if given])." / "Nothing live; production runs only from `release`." / "Nothing live; not deployed yet."]
+- **After a release:** [release-branch style only: "CI deploys `release` automatically." / "Run `<command>`." | n/a]
+- **Release tags:** [date (`YYYY.MM.DD`, `.2` for a second that day) | semver (`vMAJOR.MINOR.PATCH`) | none | n/a]
+- **Hold:** none
 ```
 
-**Every project gets these five, regardless of type or size** — the value here isn't the placeholder content (there isn't any), it's that the file exists from day one so Claude reads it as a matter of course during `/mfh-execute`/`/mfh-plan` and other skills, and so `/mfh-update`'s brand-color detection and the `helpers.md` convention have something to check against immediately rather than only after a project happens to create one organically:
+The **Push & Release** section is the contract `/mfh-push` reads. **Release style** decides whether a push is just a push or `/mfh-push` offers Normal push / Release. **What a push does** decides whether it warns before pushing. **After a release** is what it tells the user to do once the release branch is pushed. **Release tags** decides whether each release is tagged, and how; the tag message carries the release notes. **Hold** is a temporary "don't push `main` until …" (e.g. `M3-P2: commits stay local until its coordinated deploy`) that the user sets and clears by hand. Leave it `none` at init. Don't create the `release` branch here; `/mfh-push`'s first Release creates it.
+
+**Every project gets these six, regardless of type or size** — the value here isn't the placeholder content (there isn't any), it's that the file exists from day one so Claude reads it as a matter of course during `/mfh-execute`/`/mfh-plan` and other skills, and so `/mfh-update`'s brand-color detection and the `helpers.md` convention have something to check against immediately rather than only after a project happens to create one organically:
 
 `.mfh/library/style.md`:
 ```markdown
@@ -252,6 +267,20 @@ Server config, commands, deploy workflow, and secrets. Read before touching depl
 Shared UI component index. Read before reaching for or adding a shared component — worth documenting even in a small project, before an extraction into a dedicated shared package would otherwise force the issue.
 ```
 
+`.mfh/library/testing.md`:
+```markdown
+# [Project Name] — Testing
+
+Project specifics for `/mfh-test` (the general workflow lives in the skill). `/mfh-test` fills this in on its first run and adds to it as test rounds learn things.
+
+## Automated checks
+## Dev site
+## Test data
+## Viewing as another user
+## Cleaning up test data
+## Gotchas
+```
+
 **Conditional on Step 3's answers** — only create the ones that apply:
 
 If the project has a database, `.mfh/library/database.md`:
@@ -284,14 +313,61 @@ Check if `{project}/.gitignore` exists. If it does, check whether the MFH entrie
 # MFH
 .mfh/plans/
 .mfh/state/progress.md
+.mfh/state/testing-setup.md
+.mfh/test-reports/
 ```
 
 If `.gitignore` doesn't exist, create it with those entries.
 
 **Step 7 — Confirm:**
 Tell the user:
-"MFH initialized. `.mfh/library/` was seeded with starter docs (style.md, helpers.md, architecture.md, deploy.md, components.md[, database.md][, auth.md][, roles.md] — list whichever were actually created) — empty for now, fill them in as the project takes shape. Next steps:
+"MFH initialized. `.mfh/library/` was seeded with starter docs (style.md, helpers.md, architecture.md, deploy.md, components.md, testing.md[, database.md][, auth.md][, roles.md] — list whichever were actually created) — empty for now, fill them in as the project takes shape. Next steps:
 1. Fill in `.mfh/design/roadmap.md` with your project vision and stack.
-2. Review `.mfh/library/git.md` and add your branch rules.
+2. Review `.mfh/library/git.md` — its **Push & Release** section tells `/mfh-push` what a push does in this project; adjust it if the answer changes.
 3. Run `/mfh-newfeature` to define your first milestone — it'll ask for the name, goal, phases, and a priority for each, rather than hand-editing `milestones.md`.
 4. Run `/mfh-start` to begin your first phase."
+
+---
+
+# Settings mode — changing an existing project's setup
+
+Used when `/mfh-init` runs on a project that already has `.mfh/`. Projects outgrow choices made at init: a single app becomes a monorepo, deploys move to a release branch, a database gets added. This mode changes one setting at a time, using the **same questions and recommendations as Step 3**, so first-time setup and later changes can never drift apart.
+
+**Two rules for every change:**
+- **Never rewrite history.** `built.md`, closed phases, past commits, tags and archive files keep their original IDs and wording. A change applies from now on.
+- **Never rename an in-progress phase.** Plan files, `progress.md` entries and commit scopes all key off the phase ID. Leave active phases under their current IDs until they close, or wait until none are active, whichever the user prefers.
+
+**S1 — Read the current settings** (from the files themselves, not memory) and show them as a short list:
+- **Track:** App Backlogs if `milestones.md` has `# App Backlogs`, Weekly Improvements if it has `# Weekly Improvements`
+- **Push & Release:** **Release style**, **What a push does**, **After a release** and **Release tags** from `.mfh/library/git.md` (or "not set up")
+- **Optional library docs:** which of `database.md`, `auth.md`, `roles.md` exist in `.mfh/library/`
+- **Commit scopes:** the **Scopes** list in `git.md`
+- **Project name:** from `roadmap.md`'s title
+- **Active phases:** the `## …` sections in `progress.md`. These matter for the track change.
+
+**S2 — Pick one:** ask via `AskUserQuestion`: "What do you want to change?" — **Track (single repo ↔ monorepo)** / **Push & release method** / **Optional library docs** / **Commit scopes**. Its Other fallback covers project name or anything else. Change one setting per pass, and offer another pass at the end.
+
+**S3 — Ask the setting's Step 3 question** with the same options and the same recommendation rule, with the current value marked "(current)".
+
+**S4 — Show the plan, then confirm.** List every file that will change and what will happen to each. Ask via `AskUserQuestion`: **Make these changes** / **Cancel**.
+
+**S5 — Make the change:**
+
+- **Push & release method or tags:** rewrite git.md's **Push & Release** section using the Step 5 template.
+  - **Switching to a release branch:** ask which commit production runs right now (default: the current `main`), and create `release` there with `git branch release <commit>`. Never switch the working checkout's branch. Then warn: "Your build/deploy setup must now build from `release`. That's project-specific (deploy scripts, CI config), so MFH can't change it for you." Offer to log that work as a phase via `/mfh-newfeature`.
+  - **Switching away from a release branch:** leave the `release` branch and existing tags in place. Mention they can be deleted by hand once nothing builds from them.
+  - **Changing the tag scheme:** existing tags stay. Add a line under git.md's **Versioning** heading (create it if absent) noting which scheme applies from today.
+- **Optional library docs:** create each newly selected doc from the Step 5 template. Never delete a doc that's being deselected. Point out that it's still there and the user can delete it themselves if it's truly unused.
+- **Commit scopes:** update the **Scopes** list and examples in `git.md`. Old commits keep their old scopes.
+- **Track: single repo → monorepo:**
+  1. Ask which apps the repo contains, each with a 3-letter prefix, plus whether to keep a cross-app `PLT — Platform` section (recommend yes).
+  2. In `milestones.md`, replace the `# Weekly Improvements — Continuous Track` heading and its explanatory text with `# App Backlogs — Continuous` and one `## {PREFIX} — {App Name}` section per app (Step 5's monorepo template). Update the file's intro paragraph to describe App Backlogs instead of Weekly Improvements.
+  3. **Open WI phases (⬜):** ask, one by one or as a batch table, which app each belongs to, and move each into that app's table under the next free `{PREFIX}-P#`. Note the old ID in its description ("formerly WI-P12").
+  4. **Active WI phases (🔄/🟡)** keep their `WI-P#` IDs until they close. Put them in a short `## WI — Legacy (closing out)` table at the end of App Backlogs. `/mfh-done` closes them there as usual. Delete that section once it's empty.
+  5. **Completed WI phases (✅/❌)** stay exactly as written, moved under a `## WI — Weekly Improvements (history)` section at the end of App Backlogs.
+  6. Add the **At a Glance — Open Work** section directly under `# App Backlogs — Continuous` (Step 5's monorepo template). Give it one `- {icon} {PREFIX}-P# {Short Title} ({Priority})` line per open phase, grouped under a `**{PREFIX}**` heading per app, and a `**WI**` group for the legacy phases from step 4. See the README's "At a Glance summary" for the format.
+  7. Update `roadmap.md`'s **Current Track** to the App Backlogs line from the Step 5 template.
+- **Track: monorepo → single repo:** the reverse. Replace App Backlogs with `# Weekly Improvements — Continuous Track` (Step 5's non-monorepo template). Move open phases in as `WI-P#` (next free numbers, noting "formerly EMP-P3"). Active phases keep their IDs in a legacy table until closed. Completed per-app history stays verbatim under a history heading. Remove the **At a Glance** section; Weekly Improvements is a single list and doesn't use one. Update `roadmap.md`'s **Current Track**.
+
+**S6 — Record and confirm:** append an entry to `.mfh/state/decisions.md`: "`[Setting]` changed from X to Y ([date])", with the user's reason in one line (ask if it wasn't given). Then tell the user what changed, that it's uncommitted (`/mfh-commit` will pick it up), and ask via `AskUserQuestion` whether to change another setting: **Change another** / **Done**.
+

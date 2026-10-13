@@ -67,6 +67,8 @@ Then run `/mfh-newfeature` to define your first milestone — it asks for the na
     progress.md       ← all active phases (gitignored)
     built.md          ← permanent changelog (git-tracked)
     decisions.md      ← non-obvious decisions and rationale (git-tracked)
+    testing-setup.md  ← how THIS machine runs /mfh-test (gitignored — differs per machine)
+  test-reports/       ← one folder per /mfh-test run: report.md + screenshots (gitignored; removed by /mfh-done / prune)
   updates/            ← optional; created by /mfh-update on first run
     last-run.md       ← last-used profile selection + color source/mode, offered as a quick-repeat default next run
     {profile}/        ← one folder per audience profile (e.g. mine/, users/, stakeholders/)
@@ -123,7 +125,7 @@ Only applies going forward — phases created before this existed have no value 
 
 | Command | What it does |
 |---|---|
-| `/mfh-init` | Scaffold `.mfh/` structure into a new project |
+| `/mfh-init` | Scaffold `.mfh/` structure into a new project; on an existing project, change a setup choice (track, push & release, tags, optional docs, scopes) |
 | `/mfh-status` | Snapshot of active milestones, open WI/app backlog phases, current work, and anything ready to close |
 | `/mfh-start` | Start a new milestone phase, WI phase, or app backlog phase |
 | `/mfh-plan` | Create an implementation plan for the active phase |
@@ -132,9 +134,10 @@ Only applies going forward — phases created before this existed have no value 
 | `/mfh-done [phase]` | Close out a completed phase (or cancel one), update changelog |
 | `/mfh-newfeature` | Add a new milestone, WI phase, or app backlog phase to the project |
 | `/mfh-commit` | Group changes into logical Conventional Commits |
-| `/mfh-push` | Push to remote and handle errors |
+| `/mfh-push` | Push to remote, following git.md's Push & Release rules; in release-branch projects, choose Normal push or Release (fast-forward `release` to `main` and push it) |
 | `/mfh-audit` | Retroactive sweep for stale library docs, orphaned plan files, stuck phases, and broken decision references |
 | `/mfh-update` | Generate friendly, shareable project updates — recent progress and what's next, one or more audience profiles at a time |
+| `/mfh-test [phase]` | Browser-test the active phase — runs it directly when a browser is on this machine, or writes a paste-ready prompt for a desktop Claude when Claude runs on a remote server. `report` reads a finished report and ticks the plan's Verification Checklist; `cleanup` deletes test data; `prune` clears old report folders |
 
 Commands marked `[phase]` accept an optional phase argument (e.g. `/mfh-done M4-P3`, `/mfh-done WI-P5`, or `/mfh-done FIN-P1`). If omitted and only one phase is active, it uses that automatically. If multiple phases are active, it asks.
 
@@ -235,6 +238,8 @@ Prose stays underneath for anything non-obvious — *why* a field exists, a gotc
 | `.mfh/state/decisions.md` | ✅ yes |
 | `.mfh/state/progress.md` | ❌ no (local session state) |
 | `.mfh/plans/` | ❌ no (ephemeral) |
+| `.mfh/state/testing-setup.md` | ❌ no (per-machine) |
+| `.mfh/test-reports/` | ❌ no (ephemeral) |
 | `.mfh/updates/last-run.md` | ✅ yes |
 | `.mfh/updates/{profile}/latest.md` | ✅ yes |
 | `.mfh/updates/{profile}/latest.html` | ✅ yes |
