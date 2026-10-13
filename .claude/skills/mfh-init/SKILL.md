@@ -25,13 +25,19 @@ Also ask via `AskUserQuestion`: "How does code reach production?" — **Pushing 
 
 If the answer was **Pushing main deploys it** or **From a release branch** (the two styles where MFH knows when a release happens), also ask via `AskUserQuestion`: "How should releases be tagged?". Each release gets a permanent git tag marking exactly what went live, with release notes in the tag message. The options are **Date tags** (`2026.10.20`, with `.2` for a second release that day) / **Semantic versions** (`v1.4.0`: major.minor.patch, chosen each release) / **No tags**. Recommend based on what the project is. For an internal app or a website, recommend **Date tags**: nobody depends on its version number and it releases whenever work is ready, so a date never forces a "minor or major?" judgment that means nothing. For a library, package, API or installable app that other people depend on, recommend **Semantic versions**: there, the number tells consumers whether a release can break them. Put the recommended option first, mark it (Recommended), and say why in one line. For the other two styles, write `n/a`.
 
+Also ask via `AskUserQuestion`: "How should commit scopes be chosen?" The scope is the label in `type(scope): description`. The options are:
+- **Phase IDs:** the scope is the MFH phase the work belongs to (`feat(emp-p3)`, `fix(m4-p2)`), or a plain area name for ad-hoc work outside any phase. It says *which piece of planned work* a commit is part of. `git log --grep emp-p3` pulls up a whole phase, matching MFH's records exactly.
+- **Modules:** the scope is the part of the codebase touched (`feat(api)`, `fix(ui)`). It says *where* in the code the change is.
+
+Recommend **Phase IDs** for a monorepo, since one phase often spans several apps and a module scope can't name them all. Recommend **Modules** for a single-app project, where "which part of the code" is the more useful thing to know. Put the recommended option first, mark it (Recommended), and say why in one line.
+
 Then ask together in one message:
 1. "What is the project name?"
-2. "What are the main modules or areas of this codebase? These become your commit scopes. (e.g. `api, ui, auth, db, config`)"
+2. Only if the scope style is **Modules:** "What are the main modules or areas of this codebase? These become your commit scopes. (e.g. `api, ui, auth, db, config`)"
 
-Use the project name to replace `[Project Name]` in all template files. Use the modules list to populate the Scopes section of `git.md`.
+Use the project name to replace `[Project Name]` in all template files. Use the scope style (and the modules list, if any) to fill the Scopes section of `git.md`.
 
-If the user isn't sure what their modules are, ask: "What is the app for?" Then suggest sensible scope defaults based on the answer — for example, a web app might default to `api, ui, auth, db, config`; a mobile app to `screens, api, state, config`; a CLI tool to `cmd, core, config`. Offer the suggested list via `AskUserQuestion` as a selectable option (its free-text fallback covers "something else entirely") rather than asking them to type it back.
+If the user picked Modules but isn't sure what their modules are, ask: "What is the app for?" Then suggest sensible scope defaults based on the answer — for example, a web app might default to `api, ui, auth, db, config`; a mobile app to `screens, api, state, config`; a CLI tool to `cmd, core, config`. Offer the suggested list via `AskUserQuestion` as a selectable option (its free-text fallback covers "something else entirely") rather than asking them to type it back.
 
 **Step 4 — Create the folder structure:**
 Create these directories:
@@ -189,7 +195,7 @@ Tracks all currently active phases. Updated by `/mfh-start`, `/mfh-plan`, `/mfh-
 _(no active phases)_
 ```
 
-`.mfh/library/git.md` — populate the Scopes section using the module names the user provided in Step 3. Generate one example commit per module:
+`.mfh/library/git.md`: fill the Scopes and Examples sections from Step 3's scope style, using the matching variant below:
 ```markdown
 # Git Conventions
 
@@ -209,12 +215,23 @@ type(scope): short description
 - `test` — tests only
 
 ### Scopes
+[MODULES variant:]
 Use the affected module or area as the scope:
 
 [List each module from Step 3 as a bullet: `- \`module-name\``]
 
+[PHASE IDS variant:]
+Use the MFH phase identifier when the work belongs to a phase, or a short area name for ad-hoc work outside any phase.
+
+| Situation | Scope format | Example |
+|---|---|---|
+| Milestone phase work | `m{N}-p{N}` | `feat(m2-p3)` |
+| [NON-MONOREPO: Weekly improvement phase] [MONOREPO: App backlog phase] | [NON-MONOREPO: `wi-p{N}`] [MONOREPO: `{prefix}-p{N}` (lowercase prefix)] | [NON-MONOREPO: `fix(wi-p12)`] [MONOREPO: `feat(emp-p3)`] |
+| Ad-hoc outside any phase | area name | `chore(config)` |
+
 ### Examples
-[One example commit per module, e.g. `feat(api): add user list endpoint`]
+[MODULES: one example commit per module, e.g. `feat(api): add user list endpoint`]
+[PHASE IDS: three examples, one per row above, e.g. `feat(m2-p3): add user list page`]
 
 ## Branch Rules
 - Work on `main`
@@ -341,7 +358,7 @@ Used when `/mfh-init` runs on a project that already has `.mfh/`. Projects outgr
 - **Track:** App Backlogs if `milestones.md` has `# App Backlogs`, Weekly Improvements if it has `# Weekly Improvements`
 - **Push & Release:** **Release style**, **What a push does**, **After a release** and **Release tags** from `.mfh/library/git.md` (or "not set up")
 - **Optional library docs:** which of `database.md`, `auth.md`, `roles.md` exist in `.mfh/library/`
-- **Commit scopes:** the **Scopes** list in `git.md`
+- **Commit scopes:** the scope style in `git.md`'s **Scopes** section (phase IDs or modules), plus the module list if it uses modules
 - **Project name:** from `roadmap.md`'s title
 - **Active phases:** the `## …` sections in `progress.md`. These matter for the track change.
 
@@ -358,7 +375,7 @@ Used when `/mfh-init` runs on a project that already has `.mfh/`. Projects outgr
   - **Switching away from a release branch:** leave the `release` branch and existing tags in place. Mention they can be deleted by hand once nothing builds from them.
   - **Changing the tag scheme:** existing tags stay. Add a line under git.md's **Versioning** heading (create it if absent) noting which scheme applies from today.
 - **Optional library docs:** create each newly selected doc from the Step 5 template. Never delete a doc that's being deselected. Point out that it's still there and the user can delete it themselves if it's truly unused.
-- **Commit scopes:** update the **Scopes** list and examples in `git.md`. Old commits keep their old scopes.
+- **Commit scopes:** ask Step 3's scope-style question (same recommendation rule; the current style is marked "(current)"), plus the modules question if they pick Modules. Rewrite git.md's **Scopes** and **Examples** from the matching Step 5 variant. Old commits keep their old scopes. If the track is changing too, the phase-ID table follows the new track (`wi-p{N}` vs `{prefix}-p{N}`).
 - **Track: single repo → monorepo:**
   1. Ask which apps the repo contains, each with a 3-letter prefix, plus whether to keep a cross-app `PLT — Platform` section (recommend yes).
   2. In `milestones.md`, replace the `# Weekly Improvements — Continuous Track` heading and its explanatory text with `# App Backlogs — Continuous` and one `## {PREFIX} — {App Name}` section per app (Step 5's monorepo template). Update the file's intro paragraph to describe App Backlogs instead of Weekly Improvements.

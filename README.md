@@ -40,13 +40,13 @@ Open any project in Claude Code and run:
 /mfh-init
 ```
 
-This asks for your project name, the main modules or areas of your codebase, and whether the project has a database/auth/roles, then scaffolds the full `.mfh/` folder structure — including `library/git.md` pre-populated with your commit scopes, plus empty starter docs for the rest of `.mfh/library/` (see [What goes in `.mfh/library/`](#what-goes-in-mfhlibrary) below). It also adds the required `.gitignore` entries.
+This asks for your project name, how commit scopes are chosen (MFH phase IDs or codebase modules), and whether the project has a database/auth/roles, then scaffolds the full `.mfh/` folder structure — including `library/git.md` pre-populated with your commit scopes, plus empty starter docs for the rest of `.mfh/library/` (see [What goes in `.mfh/library/`](#what-goes-in-mfhlibrary) below). It also adds the required `.gitignore` entries.
 
 ### 3. Seed your project
 
 Fill in:
 - `.mfh/design/roadmap.md` — your project vision, tech stack, and goals
-- `.mfh/library/git.md` — review and add your branch rules (scopes are pre-filled by init)
+- `.mfh/library/git.md` — review it; scopes and Push & Release rules are pre-filled by init
 
 The rest of `.mfh/library/`'s starter docs (`style.md`, `architecture.md`, etc.) can stay empty for now — fill them in as the project actually takes shape, there's no rush.
 
