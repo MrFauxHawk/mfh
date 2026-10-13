@@ -29,7 +29,7 @@ Read `.mfh/state/progress.md`.
 Read `.mfh/state/progress.md`, `.mfh/design/milestones.md`, and `.mfh/state/decisions.md` — three independent reads, so issue them together in one message rather than one after another. Do NOT ask the user for a summary or decisions — derive them from what is already recorded in these files.
 
 **Step 4 — Check for unresolved verification:**
-If a plan file is referenced for this phase, read it and check for a Verification Checklist section. If it contains any unchecked `- [ ]` items, tell the user which ones and ask via `AskUserQuestion`: "This phase's Verification Checklist has unchecked items. Close anyway, or walk through them first?" — **Close anyway** / **Walk through them first**. Proceed to Step 5 only once they've answered — don't silently close over an unverified checklist, and don't check items off on their behalf.
+If a plan file is referenced for this phase, read it and check for a Verification Checklist section. First, if `.mfh/test-reports/` holds a report folder for this phase that hasn't been reflected in the checklist yet (no `✅/❌ <folder>` evidence note citing it), run the `/mfh-test report` flow on it now — that ticks every item the report proves, with evidence. Then, if it still contains any unchecked `- [ ]` items, tell the user which ones (with any reason already noted beside them — e.g. `❌ failed in <folder>`, `⏭ skipped`) and ask via `AskUserQuestion`: "This phase's Verification Checklist has unchecked items. Close anyway, or walk through them first?" — **Close anyway** / **Walk through them first**. Proceed to Step 5 only once they've answered — don't silently close over an unverified checklist, and don't check items off on their behalf.
 
 **Step 5 — Write to built.md:**
 Append a new entry to `.mfh/state/built.md` at the top (most recent first), using the phase description and any notes from progress.md and milestones.md.
@@ -101,6 +101,9 @@ _(no active phases)_
 
 **Step 8 — Delete the plan file (if one exists):**
 If a plan file was referenced, delete it. Milestone plans follow `m{N}-p{N}-plan.md` naming; WI plans follow `wi-p{N}-plan.md` naming; App Backlog plans follow `{prefix}-p{N}-plan.md` naming (e.g. `emp-p3-plan.md`).
+
+**Step 8b — Delete the phase's test reports (if any):**
+Delete every folder in `.mfh/test-reports/` whose name contains this phase ID (`*-{PHASE}-*`, e.g. `*-MAT-P22-*`) — their outcome now lives in `built.md` and the evidence notes went with the plan file. Don't touch other phases' folders. Mention how many were removed in the confirmation. (Any test *data* the phase created in a dev database is separate — leave it unless the user asks for `/mfh-test cleanup`.)
 
 **Step 9 — Confirm:**
 Tell the user: "Phase complete. Run `/mfh-status` to see the updated project picture, or `/mfh-commit` to commit the work."

@@ -81,7 +81,7 @@ Throughout all work:
 
 Wait for the user's response before continuing. If they choose to stop, do not proceed to the next task — let them run `/mfh-progress` themselves. If they ask for the check, run **Step 10 — Verification** now, scoped to whatever's touched so far, then return to this same question rather than assuming they want to stop.
 
-**When the last plan task is ticked** (whether or not it landed on a 3-task pause), ask once more via `AskUserQuestion`: "All plan tasks are done. Run the TypeScript/ESLint check now, or hold off in case you're adding more to this phase?" — **Run the check** / **Hold off**. Either way, tell them to run `/mfh-progress` when they're ready to log this.
+**When the last plan task is ticked** (whether or not it landed on a 3-task pause), ask once more via `AskUserQuestion`: "All plan tasks are done. Run the TypeScript/ESLint check now, or hold off in case you're adding more to this phase?" — **Run the check** / **Hold off**. Either way, tell them to run `/mfh-progress` when they're ready to log this. If the plan's Verification Checklist has browser-testable items (UI, flows, layout), also suggest `/mfh-test` to run them — a test report ticks those items with evidence, so `/mfh-done` won't stall on them later.
 
 Do not run Step 10 unless they choose to run the check here.
 
